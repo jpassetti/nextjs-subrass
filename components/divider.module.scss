@@ -1,0 +1,9 @@
+@use '../styles/variables';
+
+.divider {
+	margin: 2rem 0;
+    flex-shrink: 0;
+    border-width: 0px 0px thin;
+    border-style: solid;
+    border-color: variables.$color__blue;
+}

@@ -1,0 +1,16 @@
+@use '../styles/variables';
+
+.listitem {
+	font-size: 1.1rem;
+	line-height: 1.4;
+	font-family: variables.$font__sherman_sans;
+	color: variables.$color__blue;
+	width: 100%;
+	display: flex;
+	margin-bottom: 1rem;
+}
+.listicon {
+	width: 1.5rem;
+	margin-right: 1rem;
+}
+

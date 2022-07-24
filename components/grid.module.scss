@@ -1,0 +1,13 @@
+@use '../styles/mixins';
+
+.grid {
+	//background-color: pink;
+	display: flex;
+	flex-wrap: wrap;
+	.grid--item {
+		width: 100%;
+		@include mixins.breakpoint(sm) {
+			width: 100%;
+		}
+	}
+}

@@ -1,0 +1,41 @@
+@use '../styles/mixins';
+
+.container {
+    //background-color: coral;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin: 0px auto;
+    @include mixins.breakpoint(sm){
+        width: 640px;
+    }
+    @include mixins.breakpoint(md){
+        width: 768px;
+    }
+    @include mixins.breakpoint(lg){
+        width: 1024px;
+    }
+	@include mixins.breakpoint(xl){
+        width: 1280px;
+    }
+	@include mixins.breakpoint(2xl){
+        width: 1536px;
+    }
+	&--content{
+		width: 100%;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		margin: 0 auto;
+		@include mixins.breakpoint(tablet) {
+			width: 40em;
+		}
+		@include mixins.breakpoint(laptop) {
+			width: 45em;
+		}
+		@include mixins.breakpoint(desktop) {
+			width: 50em;
+		}
+	}
+	&.full {
+		width: 100%;
+	}
+}

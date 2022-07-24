@@ -1,0 +1,22 @@
+@use '../styles/variables';
+
+.paragraph {
+	font-size: 1.1rem;
+	line-height: 1.4;
+	font-family: variables.$font__sherman_sans;
+	color: variables.$color__blue;
+	&.intro {
+		font-size: 2rem;
+		font-family: variables.$font__sherman_serif;
+		max-width: 35em;
+		&:after {
+			content: '';
+			display: block;
+			width: 5rem;
+			height: 0.5rem;
+			background-color: variables.$color__gray__light;
+			margin-top: 3rem;
+			margin-bottom: 3rem;
+		}
+	}
+}

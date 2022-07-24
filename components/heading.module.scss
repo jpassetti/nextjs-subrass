@@ -1,0 +1,40 @@
+@use '../styles/variables';
+
+.heading {
+    font-family: variables.$font__sherman_sans;
+	font-weight: 700;
+	&.h1 {
+		line-height: 1;
+    	color: variables.$color__orange;
+		font-size: 3.4rem;
+		text-transform: uppercase;
+		span {
+			color: variables.$color__blue;
+		}
+	}
+	&.h2 {
+		color: variables.$color__blue;
+		font-size: 2rem;
+	}
+	&.h3 {
+		color: variables.$color__blue;
+		font-size: 1.5rem;
+		line-height: 1.35;
+		a {
+			color: variables.$color__blue;
+			text-decoration: none;
+		}
+		&.instrument {
+			font-weight: 400;
+		}
+	}
+	&.h4 {
+		color: variables.$color__blue;
+		font-size: 1rem;
+		a {
+			color: variables.$color__blue;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+	}
+}

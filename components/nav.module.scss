@@ -1,0 +1,43 @@
+@use '../styles/variables';
+
+.nav {
+	//background-color: limegreen;
+	margin-top: 2rem;
+	ul {
+		li {
+			a {
+				font-family: variables.$font__sherman_sans;
+				color: variables.$color__blue;
+				font-size: 1.2rem;
+				font-weight: 700;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+				display: block;
+				text-decoration: none;
+				&.active {
+					color: variables.$color__orange__medium;
+				}
+				&:hover, &:focus {
+					color: variables.$color__orange__medium;
+				}
+			}
+		}
+	}
+}
+
+.socialnav {
+	border-top: 1px solid variables.$color__blue;
+	padding-top: 1rem;
+	margin-top: 1rem;
+	a {
+		font-size: 1rem;
+		display: block;
+		padding: .5rem 0;
+		font-family: variables.$font__sherman_sans;
+		text-decoration: none;
+		color: variables.$color__blue;
+		&:hover, &:focus {
+			color: variables.$color__orange;
+		}
+	}
+}

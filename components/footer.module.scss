@@ -1,0 +1,13 @@
+@use '../styles/mixins';
+@use '../styles/variables';
+
+.footer {
+	width: 100%;
+	padding: 1rem;
+	background-color: variables.$color__blue;
+	color: #ffffff;
+	font-family: variables.$font__sherman_sans;
+	@include mixins.breakpoint(sm) {
+		padding: 2rem;
+	}
+}

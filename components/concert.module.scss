@@ -1,0 +1,24 @@
+@use '../styles/mixins';
+@use '../styles/variables';
+
+.concert {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid lightgray;
+}
+.month {
+	font-family: variables.$font__sherman_sans;
+	color: variables.$color__orange;
+	font-size: 1.3rem;
+	font-weight: 700;
+	display: block;
+	margin-bottom: 0.5rem;
+	text-transform: uppercase;
+}
+.numeral {
+	font-family: variables.$font__sherman_sans;
+	color: variables.$color__orange;
+	font-size: 2rem;
+	font-weight: 700;
+	display: block;
+}

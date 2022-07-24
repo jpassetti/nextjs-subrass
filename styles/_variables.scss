@@ -1,0 +1,21 @@
+// Typography
+$baseTextSize: 1.1rem;
+$textSizeIncrement: 1.4;
+
+$color__orange: #f06600;
+$color__orange_10: #fef0e8;
+$color__orange__medium: #d13f00;
+$color__blue: #001168;
+$color__gray__light: #c9cbd0;
+
+$font__sherman_sans: 'ShermanSans', Verdana, sans-serif;
+$font__sherman_serif: 'ShermanSerif', Georgia, serif;
+
+$text-4 : $baseTextSize;
+$text-5 : $baseTextSize * 0.95;
+$text-6 : $text-5 * 0.95;
+
+
+$text-3 : $text-4 * $textSizeIncrement;
+$text-2 : $text-3 * $textSizeIncrement;
+$text-1 : $text-2 * $textSizeIncrement;

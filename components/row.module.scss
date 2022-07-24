@@ -1,0 +1,19 @@
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -1rem;
+	margin-right: -1rem;
+	&.justifyContentSpaceBetween {
+		justify-content: space-between;
+	}
+	&.alignItemsCenter {
+		align-items: center;
+	}
+	&.tableHeader {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		border-top: 1px solid lightgray;
+		border-bottom: 1px solid lightgray;
+		margin-bottom: 1rem;
+	}
+}

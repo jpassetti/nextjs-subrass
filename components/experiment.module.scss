@@ -1,0 +1,17 @@
+.bar {
+	background-color: yellow;
+}
+.nav {
+	display: flex;
+	background-color: orange;
+	li {
+		padding: 1rem;
+		position: relative;
+		ul {
+			position: absolute;
+			top: 50;
+			left: 0;
+			background-color: limegreen;
+		}
+	}
+}

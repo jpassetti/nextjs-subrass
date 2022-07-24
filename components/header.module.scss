@@ -1,0 +1,29 @@
+@use '../styles/mixins';
+@use '../styles/variables';
+
+.header {
+	width: 100%;
+	background-color: variables.$color__orange_10;
+	padding: 1rem;
+	@include mixins.breakpoint(sm) {
+		width: 18rem;
+		padding: 2rem;
+	}
+	@include mixins.breakpoint(md) {
+		padding-top: 6rem;
+	}
+	h1 {
+		font-family: variables.$font__sherman_sans;
+		font-weight: 700;
+		line-height: 1;
+    	color: variables.$color__orange;
+		font-size: 2rem;
+		text-transform: uppercase;
+		margin-bottom: 2rem;
+		span {
+			color: variables.$color__blue;
+		}
+	}
+	
+}
+
