@@ -48,9 +48,9 @@ const Concert = ({ data, teaser = false }) => {
 			</ListItem>
 		</Col>
 		<Col sm="3" textAlign="right">
-			<Paragraph><Link href={`concerts/${data.slug}`}>
+			<Paragraph>{/*<Link href={`concerts/${data.slug}`}>
 				<a>View concert details</a>
-			</Link></Paragraph>
+</Link>*/}</Paragraph>
 		</Col>
 	</Row>;
 	return (
