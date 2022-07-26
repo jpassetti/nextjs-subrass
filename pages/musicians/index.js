@@ -21,6 +21,7 @@ const Musicians = () => {
 	const sections = getSections();
 	return <Layout>
 		<Section>
+		
 		<Heading level="1" className="mb-6">Musicians</Heading>
 		{/* <Musician key={index} data={musician} teaser />*/}
 		{sections.map((section, index) => {

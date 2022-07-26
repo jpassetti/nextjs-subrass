@@ -17,21 +17,18 @@
 	@include mixins.breakpoint(xl){
         width: 1280px;
     }
-	@include mixins.breakpoint(2xl){
-        width: 1536px;
-    }
 	&--content{
 		width: 100%;
 		padding-left: 1rem;
 		padding-right: 1rem;
 		margin: 0 auto;
-		@include mixins.breakpoint(tablet) {
+		@include mixins.breakpoint(md) {
 			width: 40em;
 		}
-		@include mixins.breakpoint(laptop) {
+		@include mixins.breakpoint(lg) {
 			width: 45em;
 		}
-		@include mixins.breakpoint(desktop) {
+		@include mixins.breakpoint(xl) {
 			width: 50em;
 		}
 	}

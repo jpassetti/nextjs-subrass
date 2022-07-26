@@ -4,9 +4,6 @@ $sizes: xs, sm, md, lg;
 
 .col {
 	width: 100%;
-	padding: 0 1rem;
-	//background-color: orange;
-	margin-bottom: 1rem;
 	@each $size in $sizes {
 		@include mixins.breakpoint(#{$size}) {
 			@for $i from 1 through 12 {
@@ -16,4 +13,5 @@ $sizes: xs, sm, md, lg;
 			}
 		}
 	} // for each loop end
+	@include mixins.marginAndPadding();
 }

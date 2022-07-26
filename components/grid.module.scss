@@ -4,10 +4,14 @@
 	//background-color: pink;
 	display: flex;
 	flex-wrap: wrap;
+	//justify-content: center;
 	.grid--item {
 		width: 100%;
 		@include mixins.breakpoint(sm) {
-			width: 100%;
+			width: calc(100% / 2);
+		}
+		@include mixins.breakpoint(xl) {
+			width: calc(100% / 3);
 		}
 	}
 }

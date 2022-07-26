@@ -24,6 +24,11 @@
 				@content;
 			}
 		}
+		@else if($value =="xl" or $value =="tvscreen") {
+			@media (min-width: 1260px) {
+				@content;
+			}
+		}
 
 		@else {
 			@warn "Breakpoint mixin supports: xs or phone, sm or tablet, md or laptop, lg or desktop, xl or tvscreen as string variables";
@@ -44,4 +49,172 @@
 
 	// error warn if string does not match or it is not a length
 	
+}
+@mixin marginAndPadding() {
+	$sizes: xs,
+	sm,
+	md,
+	lg;
+	$sides: top,
+	right,
+	bottom,
+	left,
+	all;
+
+	@each $side in $sides {
+		@each $size in $sizes {
+			@for $i from 0 through 16 {
+				@if $side ==all {
+					&.margin-#{$side}-#{$i} {
+						margin: #{$i}rem;
+					}
+
+					@include breakpoint($size) {
+						&.#{$size}-margin-#{$side}-#{$i} {
+							margin: #{$i}rem;
+						}
+					}
+
+					&.padding-#{$side}-#{$i} {
+						padding: #{$i}rem;
+					}
+
+					@include breakpoint($size) {
+						&.#{$size}-padding-#{$side}-#{$i} {
+							padding: #{$i}rem;
+						}
+					}
+				}
+
+				@else {
+					&.margin-#{$side}-#{$i} {
+						margin-#{$side}: #{$i}rem;
+					}
+
+					@include breakpoint($size) {
+						&.#{$size}-margin-#{$side}-#{$i} {
+							margin-#{$side}: #{$i}rem;
+						}
+					}
+
+					&.padding-#{$side}-#{$i} {
+						padding-#{$side}: #{$i}rem;
+					}
+
+					@include breakpoint($size) {
+						&.#{$size}-padding-#{$side}-#{$i} {
+							padding-#{$side}: #{$i}rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin alignItems() {
+	$values: stretch,
+	center,
+	flex-start,
+	flex-end,
+	baseline,
+	initial,
+	inherit;
+
+	@each $value in $values {
+		&.align-items-#{$value} {
+			display: flex;
+			align-items: #{$value};
+		}
+	}
+}
+
+@mixin textTransform() {
+	$values: uppercase, lowercase, none;
+
+	@each $value in $values {
+		&.text-transform-#{$value} {
+			text-transform: #{$value};
+		}
+	}
+}
+
+@mixin fontWeight() {
+	$values: 400, 700, normal, bold;
+
+	@each $value in $values {
+		&.font-weight-#{$value} {
+			font-weight: #{$value};
+		}
+	}
+}
+
+@mixin justifyContent() {
+	$values: flex-start,
+	flex-end,
+	center,
+	space-between,
+	space-around,
+	space-evenly,
+	initial,
+	inherit;
+
+	@each $value in $values {
+		&.justify-content-#{$value} {
+			display: flex;
+			justify-content: #{$value};
+		}
+	}
+}
+
+@mixin flexDirection() {
+	$values: row,
+	row-reverse,
+	column,
+	column-reverse,
+	initial,
+	inherit;
+
+	@each $value in $values {
+		&.flex-direction-#{$value} {
+			display: flex;
+			flex-direction: #{$value};
+		}
+	}
+}
+
+@mixin textAlign() {
+	$sizes: xs,
+	sm,
+	md,
+	lg;
+	$values: left,
+	right,
+	center,
+	justify,
+	initial,
+	inherit;
+
+	@each $value in $values {
+		@each $size in $sizes {
+			&.text-align-#{$value} {
+				text-align: #{$value};
+			}
+
+			@include breakpoint($size) {
+				&.#{$size}-text-align-#{$value} {
+					text-align: #{$value};
+				}
+			}
+		}
+	}
+
+}
+
+@mixin minHeights() {
+	@for $i from 1 through 16 {
+		&.height-#{$i}x {
+			min-height: ($i*25) + vh;
+		}
+	}
 }

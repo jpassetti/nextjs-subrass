@@ -3,13 +3,8 @@
 .main {
 	background-color: #fff;
 	width: 100%;
-	//padding: 1rem;
 	min-height: 100vh;
-	@include mixins.breakpoint(sm) {
-		width: calc(100% - 18rem);
-		//padding: 2rem;
-	}
 	@include mixins.breakpoint(md) {
-		//padding: 6rem 3rem 3rem 3rem;
+		width: calc(100% - 18rem);
 	}
 }
