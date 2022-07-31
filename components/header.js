@@ -11,6 +11,7 @@ const Header = ({position}) => {
 		<Head>
 			<title>Syracuse University Brass Ensemble</title>
 		</Head>
+		<header className={styles.mobileHeader}>Mobile header</header>
 		<header className={styles.header}>
 			
 			<h1>Syracuse University<br />

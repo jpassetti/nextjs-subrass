@@ -1,11 +1,18 @@
+@use '../styles/variables';
+@use '../styles/mixins';
+
 .profileimage {
 	width: 100%;
 	background-color: lightgray;
 	border-radius: 100%;
+	border: 3px solid lightgray;
 	&::before {
 		content: '';
 		width: 100%;
 		padding-bottom: 100%;
 		display: block;
+	}
+	&.su_grad, &.su_professor, &.su_staff {
+		border-color: variables.$color__orange;
 	}
 }

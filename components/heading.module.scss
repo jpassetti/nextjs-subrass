@@ -7,19 +7,33 @@
 	&.h1 {
 		line-height: 1;
     	color: variables.$color__orange;
-		font-size: 3.4rem;
-		text-transform: uppercase;
+		font-size: 2rem;
+		//text-transform: uppercase;
 		span {
 			color: variables.$color__blue;
+		}
+		@include mixins.breakpoint(sm) {
+			font-size: 2.75rem;
+		}
+
+		@include mixins.breakpoint(md) {
+			font-size: 3.4rem;
 		}
 	}
 	&.h2 {
 		color: variables.$color__blue;
-		font-size: 2rem;
+		font-size: 1.5rem;
+		@include mixins.breakpoint(sm) {
+			font-size: 1.75rem;
+		}
+	
+		@include mixins.breakpoint(md) {
+			font-size: 2rem;
+		}
 	}
 	&.h3 {
 		color: variables.$color__blue;
-		font-size: 1.5rem;
+		font-size: 1.3rem;
 		line-height: 1.35;
 		a {
 			color: variables.$color__blue;
@@ -27,6 +41,12 @@
 		}
 		&.instrument {
 			font-weight: 400;
+		}
+		@include mixins.breakpoint(sm) {
+			font-size: 1.4rem;
+		}
+		@include mixins.breakpoint(md) {
+			font-size: 1.5rem;
 		}
 	}
 	&.h4 {

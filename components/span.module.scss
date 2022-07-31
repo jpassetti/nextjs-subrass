@@ -4,4 +4,10 @@
 .span {
 	@include mixins.fontWeight();
 	@include mixins.textTransform();
+	&.font-size-larger {
+		//font-size: 1.1;
+	}
+	&.font-size-smaller {
+		font-size: 1.35rem;
+	}
 }

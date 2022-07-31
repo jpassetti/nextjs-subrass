@@ -11,26 +11,11 @@ import ProfileImage from './profileimage';
 import Row from './row'
 import Span from './span'
 
-const displayGraduation = (graduate) => {
-	let graduateArr = [];
-	const apostrophe = "&rsquo;";
-	graduate.map((graduateItem, index) => {
-		const gradYearTrimmed = graduateItem.year.substring(2);
-		if (graduateItem.type === "undergraduate") {
-			graduateArr.push(`${apostrophe}${gradYearTrimmed}`);
-		} else if (graduateItem.type === "graduate") {
-			graduateArr.push(`G${apostrophe}${gradYearTrimmed}`);
-		} else if (graduateItem.type === "law") {
-			graduateArr.push(`L${apostrophe}${gradYearTrimmed}`);
-		}
-	})
-	const graduateStr = graduateArr.join(', ');
-	return { __html: graduateStr };
-	//return <span>&deg;F</span>
-}
+
+import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity } from '../lib/utilities'
 
 const Musician = ({data, teaser=false}) => {
-	const {prefix, firstName, middleInitial, lastName, suffix} = data.personInformation;
+	const {prefix, firstName, middleInitial, lastName, suffix, education, work} = data.personInformation;
 
 	let musicianClasses = cx({
 		musician: true,
@@ -40,12 +25,14 @@ const Musician = ({data, teaser=false}) => {
 	
 	if (teaser) return <Row alignItems="center" marginBottom="2">
 		<Col xs="4" sm="3" md="4" marginBottom="0">
-			<ProfileImage />
+			<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
 		</Col>
 		<Col xs="8" sm="9" md="8" marginBottom="0">
 			<Heading level="3">
-				<Span fontWeight="normal">{prefix ? prefix : ''} {firstName} {middleInitial ? middleInitial : ''}</Span><br />
-				<Span fontWeight="bold" textTransform="uppercase">{lastName} {suffix ? `, ${suffix}` : ''}</Span>
+				<Span fontWeight="normal" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''} </Span><br />
+				<Span fontWeight="bold" textTransform="uppercase">{lastName}{suffix ? `, ${suffix}` : ''} {education?.map((item, index) => {
+					return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
+				})}</Span>
 			</Heading>
 		</Col>
 		{/*jobs && jobs.map((job, index) => {
