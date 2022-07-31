@@ -13,7 +13,8 @@ const Heading = ({
 	marginLeft, 
 	marginRight, 
 	borderTop,
-	textTransform
+	textTransform,
+	fontWeight = "bold"
 }) => {
 	const Tag = level > 6 ? 'h6' : `h${level}`
 
@@ -26,7 +27,8 @@ const Heading = ({
 		[`margin-bottom-${marginBottom}`]: marginBottom,
 		[`margin-left-${marginLeft}`]: marginLeft,
 		[`border-top-${borderTop}`] : borderTop,
-		[`text-transform-${textTransform}`] : textTransform
+		[`text-transform-${textTransform}`] : textTransform,
+		[`font-weight-${fontWeight}`] : fontWeight
 	});
 
 	return <Tag className={`${headingClasses} ${className}`}>{children}</Tag>

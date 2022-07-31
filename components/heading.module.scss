@@ -3,7 +3,7 @@
 
 .heading {
     font-family: variables.$font__sherman_sans;
-	font-weight: 700;
+	//font-weight: 700;
 	&.h1 {
 		line-height: 1;
     	color: variables.$color__orange;
@@ -65,4 +65,5 @@
 	@include mixins.marginAndPadding();
 	@include mixins.textAlign();
 	@include mixins.textTransform();
+	@include mixins.fontWeight();
 }

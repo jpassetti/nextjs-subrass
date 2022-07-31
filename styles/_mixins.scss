@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin breakpoint($value) {
 	// need to validate $value
 
@@ -63,47 +65,48 @@
 
 	@each $side in $sides {
 		@each $size in $sizes {
-			@for $i from 0 through 16 {
+			@for $i from 0 through 32 {
+				$newValue: math.div($i,2);
 				@if $side ==all {
 					&.margin-#{$side}-#{$i} {
-						margin: #{$i}rem;
+						margin: #{$newValue}rem;
 					}
 
 					@include breakpoint($size) {
 						&.#{$size}-margin-#{$side}-#{$i} {
-							margin: #{$i}rem;
+							margin: #{$newValue}rem;
 						}
 					}
 
 					&.padding-#{$side}-#{$i} {
-						padding: #{$i}rem;
+						padding: #{$newValue}rem;
 					}
 
 					@include breakpoint($size) {
 						&.#{$size}-padding-#{$side}-#{$i} {
-							padding: #{$i}rem;
+							padding: #{$newValue}rem;
 						}
 					}
 				}
 
 				@else {
 					&.margin-#{$side}-#{$i} {
-						margin-#{$side}: #{$i}rem;
+						margin-#{$side}: #{$newValue}rem;
 					}
 
 					@include breakpoint($size) {
 						&.#{$size}-margin-#{$side}-#{$i} {
-							margin-#{$side}: #{$i}rem;
+							margin-#{$side}: #{$newValue}rem;
 						}
 					}
 
 					&.padding-#{$side}-#{$i} {
-						padding-#{$side}: #{$i}rem;
+						padding-#{$side}: #{$newValue}rem;
 					}
 
 					@include breakpoint($size) {
 						&.#{$size}-padding-#{$side}-#{$i} {
-							padding-#{$side}: #{$i}rem;
+							padding-#{$side}: #{$newValue}rem;
 						}
 					}
 				}

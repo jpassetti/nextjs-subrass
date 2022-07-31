@@ -12,7 +12,7 @@ import Row from './row'
 import Span from './span'
 
 
-import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity } from '../lib/utilities'
+import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity, displaySyracuseUniversityJobTitles } from '../lib/utilities'
 
 const Musician = ({data, teaser=false}) => {
 	const {prefix, firstName, middleInitial, lastName, suffix, education, work} = data.personInformation;
@@ -34,6 +34,12 @@ const Musician = ({data, teaser=false}) => {
 					return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
 				})}</Span>
 			</Heading>
+			{work && doesWorkIncludeSyracuseUniversity(work) ? 
+				<Heading level="4" fontWeight="400" marginTop="1">
+				{displaySyracuseUniversityJobTitles(work)}
+				</Heading>
+			: ''}
+			
 		</Col>
 		{/*jobs && jobs.map((job, index) => {
 			return <Paragraph key={index} className="mb-1">
