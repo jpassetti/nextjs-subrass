@@ -1,4 +1,5 @@
 @use '../styles/variables';
+@use '../styles/mixins';
 
 .paragraph {
 	font-size: 1.1rem;
@@ -6,9 +7,15 @@
 	font-family: variables.$font__sherman_sans;
 	color: variables.$color__blue;
 	&.intro {
-		font-size: 2rem;
+		font-size: 1.3rem;
 		font-family: variables.$font__sherman_serif;
 		max-width: 35em;
+		@include mixins.breakpoint(sm) {
+			font-size: 1.5rem;
+		}
+		@include mixins.breakpoint(md) {
+			font-size: 2rem;
+		}
 		&:after {
 			content: '';
 			display: block;
