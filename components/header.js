@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import Head from 'next/head'
+import { useRouter } from "next/router";
 
 import Nav from './nav'
 
@@ -8,9 +9,29 @@ import styles from './header.module.scss'
 import Overlay from './overlay'
 import ButtonUI from './buttonui'
 
+// context
+import { ModalContext } from '../lib/context';
+
 const Header = ({position}) => {
+	const { events } = useRouter();
 	const [isMobileMenuVisible, setMobileMenuVisible] = useState(false);
-	
+	const [isModalOpen, setModalOpen] = useContext(ModalContext);
+
+	const close = () => {
+		//call modal close here or place inline in the events
+		setMobileMenuVisible(false);
+		setModalOpen(false);
+	}
+
+	useEffect(() => {
+		// subscribe to next/router event
+		events.on('routeChangeStart', close);
+		return () => {
+			// unsubscribe to event on unmount to prevent memory leak
+			events.off('routeChangeStart', close);
+		};
+	}, [close, events]);
+
 	return (
 		<>
 		<Head>
@@ -19,11 +40,15 @@ const Header = ({position}) => {
 		<header className={styles.mobileHeader}>
 				<AnimatePresence>
 				{isMobileMenuVisible && 
-					<Overlay closeHandler={setMobileMenuVisible} />
+					<Overlay closeHandler={() => {
+						setMobileMenuVisible(false);
+						setModalOpen(false);
+					}} />
 				}
 				</AnimatePresence>
 				<ButtonUI icon="menu" clickHandler={() => {
-					setMobileMenuVisible(true)
+					setMobileMenuVisible(true);
+					setModalOpen(true);
 				}} />
 		</header>
 		<header className={styles.header}>

@@ -40,9 +40,7 @@ const Overlay = ({closeHandler}) => {
 		variants={variants}
 		exit="exit"
 	>
-		<ButtonUI icon="close" clickHandler={() => {
-			closeHandler(false)
-		}}>Close</ButtonUI>
+		<ButtonUI icon="close" clickHandler={closeHandler}>Close</ButtonUI>
 		<Nav.Mobile />
 	</motion.div>
 }
