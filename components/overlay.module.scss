@@ -1,0 +1,23 @@
+@use '../styles/variables';
+@use '../styles/mixins';
+
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background-color: variables.$color__blue;
+	color: white;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	.closeBtn {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+	}
+}
+

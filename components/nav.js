@@ -80,4 +80,25 @@ const Members = () => {
 	</nav>
 }
 Nav.Members = Members;
+const Mobile = () => {
+	const router = useRouter();
+	let mobileNavClasses = cx({
+		mobileNav: true
+	});
+	return <nav className={mobileNavClasses}>
+		<ul>
+			{navLinks.map((navLink, index) => {
+				const { path, title } = navLink;
+				return <li key={index}>
+					<Link href={path}>
+						<a className={router.pathname == path ? styles.active : ""}>
+							{title}
+						</a>
+					</Link>
+				</li>
+			})}
+		</ul>
+	</nav>
+}
+Nav.Mobile = Mobile;
 export default Nav;

@@ -41,3 +41,31 @@
 		}
 	}
 }
+.mobileNav {
+	//background-color: limegreen;
+	margin-top: 2rem;
+
+	ul {
+		li {
+			a {
+				font-family: variables.$font__sherman_sans;
+				color: white;
+				font-size: 1.5rem;
+				font-weight: 700;
+				padding-top: 1rem;
+				padding-bottom: 1rem;
+				display: block;
+				text-decoration: none;
+				text-align: center;
+				&.active {
+					color: variables.$color__orange__medium;
+				}
+
+				&:hover,
+				&:focus {
+					color: variables.$color__orange__medium;
+				}
+			}
+		}
+	}
+}
