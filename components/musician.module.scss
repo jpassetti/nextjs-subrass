@@ -1,6 +1,23 @@
+@use '../styles/variables';
+@use '../styles/mixins';
+
 .musician {
 	//margin-left: 2rem;
 	//border-left: 1px solid #ccc;
 //	padding-left: 1rem;
 	margin-bottom: 2rem;
+	
+}
+.showcase {
+	background-color: variables.$color__blue;
+	padding: 2rem;
+	margin-top: -2rem;
+	margin-left: -2rem;
+	margin-right: -2rem;
+	color: white;
+}
+.main_content {
+	p {
+		font-family: variables.$font__sherman_sans;
+	}
 }

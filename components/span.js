@@ -3,12 +3,25 @@ import styles from './span.module.scss';
 
 let cx = classNames.bind(styles);
 
-const Span = ({children, fontWeight, textTransform, fontSize}) => {
+const Span = ({
+	children, 
+	display="inline-block", 
+	fontColor,
+	fontSize,
+	fontStyle="normal",
+	fontWeight,
+	letterSpacing = "normal",
+	textTransform, 
+	}) => {
 	let spanClasses = cx({
 		span: true,
 		[`font-weight-${fontWeight}`] : fontWeight,
 		[`text-transform-${textTransform}`]: textTransform,
-		[`font-size-${fontSize}`] : fontSize
+		[`font-size-${fontSize}`] : fontSize,
+		[`display-${display}`] : display,
+		[`font-style-${fontStyle}`] : fontStyle,
+		[`font-color-${fontColor}`] : fontColor,
+		[`letter-spacing-${letterSpacing}`] : letterSpacing
 	});
 	return <span className={spanClasses}>{children}</span>
 }

@@ -6,7 +6,8 @@ let cx = classNames.bind(styles);
 const Heading = ({
 	level, 
 	children, 
-	className, 
+	className,
+	color="blue", 
 	textAlign="left", 
 	marginTop, 
 	marginBottom, 
@@ -14,7 +15,9 @@ const Heading = ({
 	marginRight, 
 	borderTop,
 	textTransform,
-	fontWeight = "bold"
+	fontStyle = "normal",
+	fontWeight = "bold",
+	lineHeight = "normal"
 }) => {
 	const Tag = level > 6 ? 'h6' : `h${level}`
 
@@ -28,7 +31,10 @@ const Heading = ({
 		[`margin-left-${marginLeft}`]: marginLeft,
 		[`border-top-${borderTop}`] : borderTop,
 		[`text-transform-${textTransform}`] : textTransform,
-		[`font-weight-${fontWeight}`] : fontWeight
+		[`font-weight-${fontWeight}`] : fontWeight,
+		[`font-color-${color}`] : color,
+		[`font-style-${fontStyle}`] : fontStyle,
+		[`line-height-${lineHeight}`] : lineHeight
 	});
 
 	return <Tag className={`${headingClasses} ${className}`}>{children}</Tag>

@@ -4,13 +4,20 @@
 .heading {
     font-family: variables.$font__sherman_sans;
 	//font-weight: 700;
+	a {
+		color: inherit;
+		text-decoration: none;
+		&:hover, &:focus {
+			text-decoration: underline;
+		}
+	}
 	&.h1 {
-		line-height: 1;
-    	color: variables.$color__orange;
+		//line-height: 1.1;
+    	//color: variables.$color__orange;
 		font-size: 2rem;
 		//text-transform: uppercase;
 		span {
-			color: variables.$color__blue;
+			//color: variables.$color__blue;
 		}
 		@include mixins.breakpoint(sm) {
 			font-size: 2.75rem;
@@ -21,7 +28,7 @@
 		}
 	}
 	&.h2 {
-		color: variables.$color__blue;
+		//color: variables.$color__blue;
 		font-size: 1.5rem;
 		@include mixins.breakpoint(sm) {
 			font-size: 1.75rem;
@@ -32,13 +39,9 @@
 		}
 	}
 	&.h3 {
-		color: variables.$color__blue;
+		//color: variables.$color__blue;
 		font-size: 1.3rem;
-		line-height: 1.35;
-		a {
-			color: variables.$color__blue;
-			text-decoration: none;
-		}
+		//line-height: 1.35;
 		&.instrument {
 			font-weight: 400;
 		}
@@ -50,11 +53,9 @@
 		}
 	}
 	&.h4 {
-		color: variables.$color__blue;
+		//color: variables.$color__blue;
 		font-size: 1rem;
 		a {
-			color: variables.$color__blue;
-			text-decoration: none;
 			text-transform: uppercase;
 		}
 	}
@@ -62,8 +63,25 @@
 		border-top: 1px solid variables.$color__blue;
 		padding-top: 2rem;
 	}
+	&.line-height-normal {
+		line-height: 1.1;
+	}
+	&.line-height-tight {
+		line-height: 1;
+	}
+	&.line-height-more {
+		line-height: 1.35;
+	}
+	&.line-height-space {
+		line-height: 1.5;
+	}
+	&.line-height-double {
+		line-height: 2;
+	}
 	@include mixins.marginAndPadding();
 	@include mixins.textAlign();
 	@include mixins.textTransform();
 	@include mixins.fontWeight();
+	@include mixins.fontColor();
+	@include mixins.fontStyle();
 }

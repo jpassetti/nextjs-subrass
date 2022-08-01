@@ -1,11 +1,10 @@
-import classNames from 'classnames/bind';
-import * as styles from './musician.module.scss';
-
-let cx = classNames.bind(styles);
+import { Fragment } from 'react'
+import styles from './musician.module.scss';
 
 import Col from './col'
 import Link from 'next/link'
 import Heading from './heading';
+import MainContent from './maincontent'
 import Paragraph from './paragraph';
 import ProfileImage from './profileimage';
 import Row from './row'
@@ -15,55 +14,125 @@ import Span from './span'
 import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity, displaySyracuseUniversityJobTitles } from '../lib/utilities'
 
 const Musician = ({data, teaser=false}) => {
-	const {prefix, firstName, middleInitial, lastName, suffix, education, work} = data.personInformation;
+	const { slug, content, instruments } = data;
+	const { prefix, firstName, middleInitial, lastName, suffix, education, work } = data.personInformation;
 
-	let musicianClasses = cx({
-		musician: true,
-	});
+	const displayInstruments = (instruments) => {
+		const instrumentsArr = instruments.edges.map((instrument) => {
+			return instrument.node.name;
+		})
+		console.log({instrumentsArr});
+		const instrumentsString = instrumentsArr.join(', ');
+		return instrumentsString;
+	}
 
-	const fullName = `${prefix ? prefix: ''} ${firstName} ${middleInitial ? middleInitial : ''} `;
-	
-	if (teaser) return <Row alignItems="center" marginBottom="2">
-		<Col xs="4" sm="3" md="4" marginBottom="0">
-			<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
-		</Col>
-		<Col xs="8" sm="9" md="8" marginBottom="0">
-			<Heading level="3">
+	const fullName = (teaser) => {
+		return teaser ?
+			<Fragment>
 				<Span fontWeight="normal" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''} </Span><br />
 				<Span fontWeight="bold" textTransform="uppercase">{lastName}{suffix ? `, ${suffix}` : ''} {education?.map((item, index) => {
 					return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
 				})}</Span>
+			</Fragment>
+		: 
+		<Fragment>
+			<Span fontWeight="400" fontColor="white" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''} </Span><br />
+			<Span fontWeight="bold" textTransform="uppercase">{lastName}{suffix ? `, ${suffix}` : ''} {education?.map((item, index) => {
+				return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
+			})}</Span>
+		</Fragment>		
+	}
+	
+	return teaser ? <Row alignItems="center" marginBottom="2">
+		<Col xs="4" sm="3" md="4" marginBottom="0">
+			<Link href={`/about/musicians/${slug}`}>
+				<a>
+				<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
+				</a>
+			</Link>
+		</Col>
+		<Col xs="8" sm="9" md="8" marginBottom="0">
+			<Heading level="3">
+				<Link href={`/about/musicians/${slug}`}>
+					<a>
+				<Span fontWeight="normal" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''} </Span><br />
+				<Span fontWeight="bold" textTransform="uppercase">{lastName}{suffix ? `, ${suffix}` : ''} {education?.map((item, index) => {
+					return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
+				})}</Span>
+				</a></Link>
 			</Heading>
 			{work && doesWorkIncludeSyracuseUniversity(work) ? 
-				<Heading level="4" fontWeight="400" marginTop="1">
+				<Heading level="4" fontWeight="400" marginTop="1" fontStyle="italic">
 				{displaySyracuseUniversityJobTitles(work)}
 				</Heading>
 			: ''}
 			
 		</Col>
-		{/*jobs && jobs.map((job, index) => {
-			return <Paragraph key={index} className="mb-1">
-				<em>{job.title}</em><br />
-				{job.dept && (
-					<>
-						{job.dept}<br />
-					</>
-				)}
-				{job.college.map((coll, index) => {
-					return <span style={{ display: "block"}} dangerouslySetInnerHTML={{__html:coll}}></span>
-				})}
-				<span>Syracuse University</span>
-			</Paragraph>
-		})*/}
-	</Row>;
-	return (
-	<>
-			<Heading level="4" marginBottom="4"><Link href="/musicians">
+	</Row>
+
+	:
+	<Fragment>
+		<div className={styles.showcase}>
+			<Heading level="4" marginBottom="4" color="white"><Link href="/ensembles/2022-23">
 				<a>
-					Musicians
+					&laquo; Musicians
 				</a></Link></Heading>
-			<Heading level="1" marginBottom="2">{fullName}</Heading>
-	</>
-	)
+			<Row alignItems="flex-start">
+				<Col xs="3" sm="2">
+					<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
+				</Col>
+				<Col xs="8" sm="8">
+					<Heading level="1" marginBottom="2" color="white" lineHeight="normal">{fullName()}</Heading>
+					
+					{work && work.map((item, index) => {
+						const { jobTitle, companySubdivision, companySubdivisionUrl, companyName, companyUrl } = item;
+						return <Heading key={index} level="3" marginBottom="1" color="white" fontWeight="400" lineHeight="space">
+							{jobTitle &&
+								<Span display="block" fontStyle="italic">
+									{jobTitle}
+								</Span>
+							}
+							{companySubdivision &&
+								<Span display="block">
+									{companySubdivisionUrl ?
+										<a href={companySubdivisionUrl} target="_blank">
+												{companySubdivision}
+										</a>
+									: 
+										companySubdivision
+									}	
+									</Span>
+							}
+							{companyName && 
+								<Span display="block" fontSize="smaller" textTransform="uppercase" letterSpacing="spaced">
+									{companyUrl ?
+										<a href={companyUrl} target="_blank">
+											{companyName}
+										</a>
+										:
+										companyName
+									}	
+								</Span>
+							}
+							</Heading>
+					})}
+					{instruments &&
+						<Fragment>
+							<Heading level="4" color="orange" textTransform="uppercase" marginBottom="1" marginTop="4">Instrument{instruments.edges.length > 1 ? 's' : ''}</Heading>
+							<Heading level="3" marginBottom="2" color="white" fontWeight="400">{displayInstruments(instruments)}
+							</Heading>
+						</Fragment>
+					}
+			</Col>
+			</Row>
+		</div>
+		<Row justifyContent="center">
+			<Col xs="12" sm="8" paddingTop="8">
+				{content &&
+					<MainContent content={content} />
+				}
+			</Col>
+		</Row>	
+	</Fragment>
 }
 export default Musician;

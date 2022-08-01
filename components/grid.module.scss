@@ -1,17 +1,13 @@
 @use '../styles/mixins';
 
 .grid {
-	//background-color: pink;
-	display: flex;
-	flex-wrap: wrap;
-	//justify-content: center;
-	.grid--item {
-		width: 100%;
-		@include mixins.breakpoint(sm) {
-			width: calc(100% / 2);
-		}
-		@include mixins.breakpoint(xl) {
-			width: calc(100% / 3);
-		}
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	grid-gap: 1rem;
+	@include mixins.breakpoint(sm) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@include mixins.breakpoint(xl) {
+		grid-template-columns: repeat(3, 1fr);
 	}
 }
