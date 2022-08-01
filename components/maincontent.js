@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 
 import ContentParser from '../lib/parser'
 
-import Div from './Div'
+import Div from './div'
 
 import styles from './maincontent.module.scss'
 
