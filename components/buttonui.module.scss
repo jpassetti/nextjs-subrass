@@ -1,0 +1,11 @@
+.buttonui {
+	padding: 1rem;
+	border: 1px solid white;
+	background-color: transparent;
+	cursor: pointer;
+	&.close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+	}
+}
