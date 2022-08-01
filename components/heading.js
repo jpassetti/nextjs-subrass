@@ -8,6 +8,7 @@ const Heading = ({
 	children, 
 	className,
 	color="blue", 
+	fontFamily = "primary",
 	fontStyle = "normal",
 	fontWeight = "bold",
 	level, 
@@ -34,7 +35,8 @@ const Heading = ({
 		[`font-weight-${fontWeight}`] : fontWeight,
 		[`font-color-${color}`] : color,
 		[`font-style-${fontStyle}`] : fontStyle,
-		[`line-height-${lineHeight}`] : lineHeight
+		[`line-height-${lineHeight}`] : lineHeight,
+		[`font-family-${fontFamily}`] : fontFamily
 	});
 
 	return <Tag className={`${headingClasses} ${className}`}>{children}</Tag>

@@ -162,7 +162,24 @@
 		}
 	}
 }
+@mixin lineHeight() {
+	$values: ("normal" : 1.1, "tight": 1, "spaced": 1.5, "more" : 1.35, "double" : 2);
 
+	@each $key, $value in $values {
+		&.line-height-#{$key} {
+			line-height: #{$value};
+		}
+	}
+}
+@mixin fontFamily() {
+	$values: ("primary" : variables.$font__sherman_sans, "secondary" : variables.$font__sherman_serif);
+	@each $key,
+	$value in $values {
+		&.font-family-#{$key} {
+			font-family: #{$value};
+		}
+	}
+}
 @mixin justifyContent() {
 	$values: flex-start,
 	flex-end,

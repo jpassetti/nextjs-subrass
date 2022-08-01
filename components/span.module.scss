@@ -2,10 +2,12 @@
 @use '../styles/mixins';
 
 .span {
+	@include mixins.fontFamily();
 	@include mixins.fontWeight();
 	@include mixins.textTransform();
 	@include mixins.fontColor();
 	@include mixins.fontStyle();
+	@include mixins.marginAndPadding();
 	&.font-size-larger {
 		//font-size: 1.1;
 	}

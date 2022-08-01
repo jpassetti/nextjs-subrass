@@ -62,7 +62,7 @@ const Musician = ({data, teaser=false}) => {
 				</a></Link>
 			</Heading>
 			{work && doesWorkIncludeSyracuseUniversity(work) ? 
-				<Heading level="4" fontWeight="400" marginTop="1" fontStyle="italic">
+				<Heading level="4" fontWeight="400" marginTop="1" fontStyle="italic" fontFamily="secondary">
 				{displaySyracuseUniversityJobTitles(work)}
 				</Heading>
 			: ''}
@@ -86,14 +86,14 @@ const Musician = ({data, teaser=false}) => {
 					
 					{work && work.map((item, index) => {
 						const { jobTitle, companySubdivision, companySubdivisionUrl, companyName, companyUrl } = item;
-						return <Heading key={index} level="3" marginBottom="1" color="white" fontWeight="400" lineHeight="space">
+						return <Heading key={index} level="3" marginBottom="2" color="white" fontWeight="400" lineHeight="normal">
 							{jobTitle &&
-								<Span display="block" fontStyle="italic">
+								<Span display="block" fontStyle="italic" marginBottom="1" fontFamily="secondary">
 									{jobTitle}
 								</Span>
 							}
 							{companySubdivision &&
-								<Span display="block">
+								<Span display="block" marginBottom="1">
 									{companySubdivisionUrl ?
 										<a href={companySubdivisionUrl} target="_blank">
 												{companySubdivision}
