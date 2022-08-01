@@ -78,10 +78,10 @@ const Musician = ({data, teaser=false}) => {
 					&laquo; Musicians
 				</a></Link></Heading>
 			<Row alignItems="flex-start">
-				<Col xs="6" sm="2">
+				<Col xs="6" sm="6" md="2">
 					<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
 				</Col>
-				<Col xs="12" sm="8">
+				<Col xs="12" sm="12" md="8">
 					<Heading level="1" marginBottom="2" color="white" lineHeight="normal">{fullName()}</Heading>
 					
 					{work && work.map((item, index) => {
