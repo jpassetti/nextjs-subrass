@@ -145,7 +145,7 @@
 }
 
 @mixin fontWeight() {
-	$values: 400, 700, normal, bold;
+	$values: 500, 700, normal, bold;
 
 	@each $value in $values {
 		&.font-weight-#{$value} {
