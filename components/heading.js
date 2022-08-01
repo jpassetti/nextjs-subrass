@@ -4,20 +4,20 @@ import styles from './heading.module.scss';
 let cx = classNames.bind(styles);
 
 const Heading = ({
-	level, 
+	borderTop,
 	children, 
 	className,
 	color="blue", 
-	textAlign="left", 
+	fontStyle = "normal",
+	fontWeight = "bold",
+	level, 
+	lineHeight = "normal",
 	marginTop, 
 	marginBottom, 
 	marginLeft, 
 	marginRight, 
-	borderTop,
+	textAlign = "left", 
 	textTransform,
-	fontStyle = "normal",
-	fontWeight = "bold",
-	lineHeight = "normal"
 }) => {
 	const Tag = level > 6 ? 'h6' : `h${level}`
 
