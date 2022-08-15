@@ -19,38 +19,37 @@ const Concert = ({ data, teaser = false }) => {
 	const {name, street, city, state, zip} = location;
 
 	if (teaser) return <Row className={concertClasses}>
-		<Col sm="1">
+		<Col xs="3" sm="2">
 			<span className={styles.month}>{data.date.month}</span>
 			<span className={styles.numeral}>{data.date.numeral}</span>
 			
 		</Col>
-		<Col sm="3">
-			<Heading level="3" className="mb-2">
-				<Link href={`concerts/${data.slug}`}>
-				<a>
-					{data.title}
-				</a>
-				</Link>
-			</Heading>
-			<Paragraph>{city}, {state}</Paragraph>
-		</Col>
-		<Col sm="5">
-			<ListItem type="date" className="mb-0">
-				{day}, {month}. {numeral}, {year}
-			</ListItem>
-			<ListItem type="time" className="mb-2">
-				{time}
-			</ListItem>
-			<ListItem type="location">
-				<Paragraph>{name}<br />
-				{street}<br />
-				{city}, {state} {zip}</Paragraph>
-			</ListItem>
-		</Col>
-		<Col sm="3" textAlign="right">
-			<Paragraph>{/*<Link href={`concerts/${data.slug}`}>
-				<a>View concert details</a>
-</Link>*/}</Paragraph>
+		<Col xs="9" sm="10">
+			<Row>
+				<Col xs="9" sm="6" md="5">
+					<Heading level="3" marginBottom="1">
+						<Link href={`concerts/${data.slug}`}>
+						<a>
+							{data.title}
+						</a>
+						</Link>
+					</Heading>
+					<Paragraph>{city}, {state}</Paragraph>
+				</Col>
+				<Col sm="6" md="7">
+					<ListItem type="date" className="mb-0">
+						{day}, {month}. {numeral}, {year}
+					</ListItem>
+					<ListItem type="time" className="mb-2">
+						{time}
+					</ListItem>
+					<ListItem type="location">
+						<Paragraph>{name}<br />
+						{street}<br />
+						{city}, {state} {zip}</Paragraph>
+					</ListItem>
+				</Col>
+			</Row>
 		</Col>
 	</Row>;
 	return (

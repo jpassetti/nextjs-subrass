@@ -14,14 +14,14 @@ import Span from './span'
 import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity, displaySyracuseUniversityJobTitles } from '../lib/utilities'
 
 const Musician = ({data, teaser=false}) => {
-	const { slug, content, instruments } = data;
+	const { slug, content, instruments, featuredImage } = data;
 	const { prefix, firstName, middleInitial, lastName, suffix, education, work } = data.personInformation;
 
 	const displayInstruments = (instruments) => {
 		const instrumentsArr = instruments.edges.map((instrument) => {
 			return instrument.node.name;
 		})
-		console.log({instrumentsArr});
+		//console.log({instrumentsArr});
 		const instrumentsString = instrumentsArr.join(', ');
 		return instrumentsString;
 	}
@@ -47,7 +47,7 @@ const Musician = ({data, teaser=false}) => {
 		<Col xs="4" sm="3" md="4" marginBottom="0">
 			<Link href={`/about/musicians/${slug}`}>
 				<a>
-				<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
+				<ProfileImage featuredImage={featuredImage} isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
 				</a>
 			</Link>
 		</Col>
@@ -62,7 +62,7 @@ const Musician = ({data, teaser=false}) => {
 				</a></Link>
 			</Heading>
 			{work && doesWorkIncludeSyracuseUniversity(work) ? 
-				<Heading level="4" fontWeight="500" marginTop="1" fontStyle="italic" fontFamily="secondary">
+				<Heading level="4" fontWeight="500" marginTop="1" fontFamily="secondary">
 				{displaySyracuseUniversityJobTitles(work)}
 				</Heading>
 			: ''}
@@ -86,9 +86,9 @@ const Musician = ({data, teaser=false}) => {
 					
 					{work && work.map((item, index) => {
 						const { jobTitle, companySubdivision, companySubdivisionUrl, companyName, companyUrl } = item;
-						return <Heading key={index} level="3" marginBottom="2" color="white" fontWeight="500" lineHeight="normal">
+						return <Heading key={index} level="3" marginBottom="4" color="white" fontWeight="500" lineHeight="normal">
 							{jobTitle &&
-								<Span display="block" fontStyle="italic" marginBottom="1" fontFamily="secondary" fontWeight="500">
+								<Span display="block" marginBottom="1" fontFamily="secondary" fontWeight="500">
 									{jobTitle}
 								</Span>
 							}
