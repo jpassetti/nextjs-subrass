@@ -47,7 +47,11 @@ const Musician = ({data, teaser=false}) => {
 		<Col xs="4" sm="3" md="4" marginBottom="0">
 			<Link href={`/about/musicians/${slug}`}>
 				<a>
-				<ProfileImage featuredImage={featuredImage} isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
+					<ProfileImage
+						featuredImage={featuredImage}
+						isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false}
+						isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false}
+					/>
 				</a>
 			</Link>
 		</Col>
@@ -79,7 +83,11 @@ const Musician = ({data, teaser=false}) => {
 				</a></Link></Heading>
 			<Row alignItems="flex-start">
 				<Col xs="6" sm="6" md="2">
-					<ProfileImage isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} />
+					<ProfileImage 
+					featuredImage={featuredImage} 
+					isSUGraduate={education ? doesEducationIncludeSyracuseUniversity(education) : false} 
+					isSUProfessor={work ? doesWorkIncludeSyracuseUniversity(work) : false} 
+					/>
 				</Col>
 				<Col xs="12" sm="12" md="8">
 					<Heading level="1" marginBottom="2" color="white" lineHeight="normal">{fullName()}</Heading>
