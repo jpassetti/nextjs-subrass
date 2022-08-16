@@ -4,19 +4,35 @@ import Layout from '../../components/layout'
 import Heading from '../../components/heading'
 import Paragraph from '../../components/paragraph'
 import Section from '../../components/section'
-import { getConcertsDataByYear } from '../../lib/concerts'
+import { getAllConcerts } from '../../lib/api'
 
 import Concert from '../../components/concert'
 
-const Concerts = () => {
-	const concerts2022 = getConcertsDataByYear("2022-23");
+export async function getStaticProps() {
+	// Fetch necessary data for the blog post using params.id
+	const concertsData = await getAllConcerts()
+	return {
+		props: {
+			concertsData
+		}
+	}
+}
+
+const Concerts = ({concertsData}) => {
+	
+	const orderedConcerts = concertsData.sort(function (a, b) {
+		// Turn your strings into dates, and then subtract them
+		// to get a value that is either negative, positive, or zero.
+		return new Date(a.node.concertInformation.date) - new Date(b.node.concertInformation.date);
+	});
+
 	return <Layout>
 		<Section>
-		<Heading level="1" className="mb-4">Concerts</Heading>
+		<Heading level="1" marginTop="8" marginBottom="4">Concerts</Heading>
 		<Paragraph type="intro">We're proud to bring you a new season packed with a wide range of repertoire.</Paragraph>
-		<Heading level="2" className="mb-2 mt-6">2022-23</Heading>
-		{concerts2022.map((concert, index) => {
-			return <Concert key={index} data={concert} teaser />
+		<Heading level="2" marginTop="3" marginBottom="3">2022-23</Heading>
+		{orderedConcerts.map((concert, index) => {
+			return <Concert key={index} data={concert.node} teaser />
 		})}
 		</Section>
 	</Layout>
