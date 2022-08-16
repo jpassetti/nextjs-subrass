@@ -26,4 +26,5 @@
 			margin-bottom: 3rem;
 		}
 	}
+	@include mixins.marginAndPadding();
 }

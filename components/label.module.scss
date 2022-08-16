@@ -1,0 +1,10 @@
+@use '../styles/variables';
+
+.label {
+	text-transform: uppercase;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 0.5rem;
+	letter-spacing: 1px;
+	color: variables.$color__orange;
+}
