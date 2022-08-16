@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { getConcertsData } from '../lib/concerts'
+import { getAllConcerts } from '../lib/api'
 
 import Layout from '../components/layout'
 import Concert from '../components/concert'
@@ -10,9 +10,17 @@ import Paragraph from '../components/paragraph'
 import Section from '../components/section'
 import Showcase from '../components/showcase'
 
-const Home = ({children}) => {
+export async function getStaticProps() {
+	// Fetch necessary data for the blog post using params.id
+	const concertsData = await getAllConcerts()
+	return {
+		props: {
+			concertsData
+		}
+	}
+}
 
-	const concerts = getConcertsData();
+const Home = ({concertsData}) => {
 
   return (
     <Layout>
@@ -22,8 +30,8 @@ const Home = ({children}) => {
 			 <Heading level="2" className="mb-2">
 				 Upcoming concert
 			 </Heading>
-			<Concert data={concerts[0]} teaser />
-				<Paragraph><Link href="/concerts"><a>View full schedule</a></Link></Paragraph>
+			  <Concert data={concertsData[concertsData.length-1].node} teaser />
+			{/*<Paragraph><Link href="/concerts"><a>View full schedule</a></Link></Paragraph>*/}
 			
 		</Section>
     </Layout>

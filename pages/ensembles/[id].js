@@ -40,7 +40,7 @@ export default function Ensemble({ ensembleData }) {
 	const { title, ensembleInformation } = ensembleData;
 	return <Layout>
 		<Section>
-		<Heading level="1" className="mb-6">{title} Ensemble</Heading>
+			<Heading level="1" marginTop="8" marginBottom="4">{title} Ensemble</Heading>
 		</Section>
 		<Section>
 		{ensembleInformation.conductor.map((part, index) => {
