@@ -4,12 +4,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper";
 
 // Import Swiper styles
-import 'swiper/css';
+import "swiper/css";
+import "swiper/css/pagination";
 
 import Card from '../components/card'
 import Concert from '../components/concert'
 import Heading from '../components/heading'
 import Section from '../components/section'
+
+import styles from './concertslider.module.scss'
 
 const ConcertSlider = ({concerts}) => {
 	return <Section>
@@ -34,7 +37,7 @@ const ConcertSlider = ({concerts}) => {
 				},
 			}}
 			modules={[Pagination]}
-			className="mySwiper"
+			className={styles.mySwiper}
 		>
 			{concerts.map((concert, index) => {
 				return <SwiperSlide key={index}>
