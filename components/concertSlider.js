@@ -6,6 +6,7 @@ import { Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import Card from '../components/card'
 import Concert from '../components/concert'
@@ -19,8 +20,10 @@ const ConcertSlider = ({concerts}) => {
 		<Swiper
 			slidesPerView={1.5}
 			spaceBetween={16}
+			navigation={false}
 			pagination={{
 				clickable: true,
+				bulletActiveClass: styles.bulletActive
 			}}
 			breakpoints={{
 				700: {

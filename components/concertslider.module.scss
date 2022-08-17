@@ -1,4 +1,12 @@
+@use '../styles/variables';
+@use '../styles/mixins';
+
 .mySwiper {
 	//background-color: red;
+	//padding: 0 3rem 3rem 3rem;
 	padding-bottom: 3rem;
+}
+.bulletActive {
+	background-color: variables.$color__blue;
+	opacity: 1;
 }
