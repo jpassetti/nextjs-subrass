@@ -53,21 +53,25 @@ const Concert = ({ data, teaser = false }) => {
 		</ListItem>
 	</Fragment>;
 	return (
-		<>
+		<Fragment>
 			<Heading level="4" marginBottom="4"><Link href="/concerts">
 				<a>
-					Concerts
+					&laquo; Concerts
 				</a></Link></Heading>
 			<Heading level="1" marginBottom="2">{concertTitle}</Heading>
-			<Heading level="3" marginBottom="2">{formattedDate}<br />
+			<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
+			<ListItem type="date" className="mb-0">
+				{formattedDate}
+			</ListItem>
+			<ListItem type="time" className="mb-2">
 				{formattedTime}
-			</Heading>
-			<Paragraph>
-				<strong>{venueTitle}</strong><br />
-				{street}<br />
-				{city}, {state.toUpperCase()} {zipCode}
-			</Paragraph>
-		</>
+			</ListItem>
+			<ListItem type="location">
+				<Paragraph>{venueTitle}<br />
+					{street}<br />
+					{city}, {state.toUpperCase()} {zipCode}</Paragraph>
+			</ListItem>
+		</Fragment>
 	)
 }
 export default Concert;
