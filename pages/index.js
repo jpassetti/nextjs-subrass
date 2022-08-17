@@ -3,12 +3,14 @@ import Image from 'next/image'
 
 import { getAllConcerts } from '../lib/api'
 
+import ConcertSlider from '../components/concertSlider'
 import Layout from '../components/layout'
-import Concert from '../components/concert'
 import Heading from '../components/heading'
+
 import Paragraph from '../components/paragraph'
-import Section from '../components/section'
+
 import Showcase from '../components/showcase'
+
 
 export async function getStaticProps() {
 	// Fetch necessary data for the blog post using params.id
@@ -26,15 +28,10 @@ const Home = ({concertsData}) => {
   return (
     <Layout>
 		<Showcase />
-       <Section>
-
-			 <Heading level="2" className="mb-2">
-				 Upcoming concert
-			 </Heading>
-			  <Concert data={concertsData[concertsData.length-1].node} teaser />
-			{/*<Paragraph><Link href="/concerts"><a>View full schedule</a></Link></Paragraph>*/}
-			
-		</Section>
+		  <Heading level="2" marginTop="4" marginBottom="2">
+			  Upcoming concerts
+		  </Heading>
+		<ConcertSlider concerts={concertsData} />
     </Layout>
   )
 }

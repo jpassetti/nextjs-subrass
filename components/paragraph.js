@@ -7,15 +7,17 @@ const Paragraph = ({
 	type, 
 	children, 
 	className,
+	diminish,
 	marginBottom, 
-	marginTop
+	marginTop,
 }) => {
 
 	let paragraphClasses = cx({
 		paragraph: true,
 		intro: type === 'intro',
 		[`margin-bottom-${marginBottom}`] : marginBottom,
-		[`margin-top-${marginTop}`]: marginTop
+		[`margin-top-${marginTop}`]: marginTop,
+		diminish : diminish
 	});
 	return <p className={`${paragraphClasses} ${className}`}>{children}</p>
 }

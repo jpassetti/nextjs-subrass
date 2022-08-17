@@ -26,5 +26,8 @@
 			margin-bottom: 3rem;
 		}
 	}
+	&.diminish {
+		opacity: 0.7;
+	}
 	@include mixins.marginAndPadding();
 }

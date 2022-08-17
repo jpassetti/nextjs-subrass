@@ -27,7 +27,9 @@ const ListItem = ({ children, className, type }) => {
 						alt="Date icon"
 						/>
 				</div>
+				<div className={styles.listcontent}>
 				{children}
+				</div>
 			</li>
 }
 export default ListItem;

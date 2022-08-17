@@ -7,17 +7,17 @@ const Grid = ({children}) => {
 	let gridClasses = cx({
 		grid: true,
 	});
-	return <section className={gridClasses}>
+	return <ul className={gridClasses}>
 		{children}
-	</section>
+	</ul>
 }
 const GridItem = ({children}) => {
 	let gridItemClasses = cx({
 		[`grid--item`]: true,
 	});
-	return <article className={gridItemClasses}>
+	return <li className={gridItemClasses}>
 		{children}
-	</article>
+	</li>
 }
 Grid.Item = GridItem;
 export default Grid;

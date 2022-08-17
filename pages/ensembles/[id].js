@@ -39,21 +39,21 @@ export async function getStaticProps({ params }) {
 export default function Ensemble({ ensembleData }) {
 	const { title, ensembleInformation } = ensembleData;
 	return <Layout>
-		<Section>
+		
 			<Heading level="1" marginTop="8" marginBottom="4">{title} Ensemble</Heading>
-		</Section>
-		<Section>
+		
+		
 		{ensembleInformation.conductor.map((part, index) => {
-			return <section key={index}>
+			return <Section key={index}>
 				<Heading level="2" marginTop="6" marginBottom="2" borderTop="1" textTransform="uppercase">Conductor</Heading>
 				<Grid>
 					<Grid.Item key={index}><Musician data={part} teaser /></Grid.Item>
 				</Grid>
-			</section>
+			</Section>
 		})}
 		{ensembleInformation.instruments.map((part, index) => {
 			const {instrument, musicians} = part;
-			return <section key={index}>
+			return <Section key={index}>
 				<Heading level="2" marginTop="6" marginBottom="2" borderTop="1" textTransform="uppercase">{instrument.name}{instrument.name !== "Percussion" ? `s` : ''}</Heading>
 				<Grid>
 					{
@@ -62,8 +62,8 @@ export default function Ensemble({ ensembleData }) {
 						})
 					}
 				</Grid>
-			</section>
+			</Section>
 		})}
-		</Section>
+		
 	</Layout>
 }

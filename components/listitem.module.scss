@@ -7,10 +7,15 @@
 	color: variables.$color__blue;
 	width: 100%;
 	display: flex;
+	flex-wrap: wrap;
 	margin-bottom: 1rem;
 }
 .listicon {
 	width: 1.5rem;
 	margin-right: 1rem;
+	opacity: .4;
+}
+.listcontent {
+	width: calc(100% - 2.5rem);
 }
 

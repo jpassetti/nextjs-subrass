@@ -10,6 +10,7 @@ import ListItem from './listitem'
 import * as styles from './concert.module.scss';
 
 import { formatMonth, formatHour, formatDayOfTheWeek } from '../lib/utilities'
+import { Fragment } from 'react';
 
 let cx = classNames.bind(styles);
 
@@ -30,40 +31,27 @@ const Concert = ({ data, teaser = false }) => {
 
 	const formattedDate = `${ dayOfTheWeek }, ${ month }. ${ monthDate }, ${ year }`;
 
-	if (teaser) return <Row className={concertClasses}>
-		<Col xs="3" sm="2">
-			<span className={styles.month}>{month}</span>
-			<span className={styles.numeral}>{monthDate}</span>
-			
-		</Col>
-		<Col xs="9" sm="10">
-			<Row>
-				<Col xs="9" sm="6" md="5">
-					<Heading level="3" marginBottom="1">
-						<Link href={`concerts/${slug}`}>
-						<a>
-							{concertTitle}
-						</a>
-						</Link>
-					</Heading>
-					<Paragraph>{city}, {state.toUpperCase()}</Paragraph>
-				</Col>
-				<Col sm="6" md="7">
-					<ListItem type="date" className="mb-0">
-						{formattedDate}
-					</ListItem>
-					<ListItem type="time" className="mb-2">
-						{formattedTime}
-					</ListItem>
-					<ListItem type="location">
-						<Paragraph>{venueTitle}<br />
-						{street}<br />
-						{city}, {state.toUpperCase()} {zipCode}</Paragraph>
-					</ListItem>
-				</Col>
-			</Row>
-		</Col>
-	</Row>;
+	if (teaser) return <Fragment>
+		<Heading level="3" marginBottom="1">
+			<Link href={`concerts/${slug}`}>
+			<a>
+				{concertTitle}
+			</a>
+			</Link>
+		</Heading>
+		<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
+		<ListItem type="date" className="mb-0">
+			{formattedDate}
+		</ListItem>
+		<ListItem type="time" className="mb-2">
+			{formattedTime}
+		</ListItem>
+		<ListItem type="location">
+			<Paragraph>{venueTitle}<br />
+			{street}<br />
+			{city}, {state.toUpperCase()} {zipCode}</Paragraph>
+		</ListItem>
+	</Fragment>;
 	return (
 		<>
 			<Heading level="4" marginBottom="4"><Link href="/concerts">

@@ -4,7 +4,15 @@
 	background-color: #fff;
 	width: 100%;
 	min-height: 100vh;
+	padding: 2rem;
+	@include mixins.breakpoint(sm) {
+		//padding: 1.5rem;
+	}
 	@include mixins.breakpoint(md) {
 		width: calc(100% - 18rem);
+		//padding: 2rem;
+	}
+	@include mixins.breakpoint(lg) {
+	
 	}
 }
