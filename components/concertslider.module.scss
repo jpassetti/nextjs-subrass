@@ -3,8 +3,9 @@
 
 .mySwiper {
 	//background-color: red;
-	//padding: 0 3rem 3rem 3rem;
-	padding-bottom: 3rem;
+	margin-left: -2rem;
+	margin-right: -2rem;
+	padding: 0 .5rem 3rem 2rem;
 }
 .bulletActive {
 	background-color: variables.$color__blue;
