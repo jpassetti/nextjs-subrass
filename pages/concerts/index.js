@@ -14,7 +14,8 @@ export async function getStaticProps() {
 	return {
 		props: {
 			concertsData
-		}
+		},
+		revalidate: 86400, // In seconds
 	}
 }
 

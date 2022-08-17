@@ -25,7 +25,11 @@ export async function getStaticProps({ params }) {
 	return {
 		props: {
 			musicianData
-		}
+		},
+		// Next.js will attempt to re-generate the page:
+		// - When a request comes in
+		// - At most once every 10 seconds
+		revalidate: 86400, // In seconds
 	}
 }
 

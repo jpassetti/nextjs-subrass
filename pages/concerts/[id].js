@@ -33,6 +33,7 @@ export async function getStaticProps({ params }) {
 	return {
 		props: {
 			concertData
-		}
+		},
+		revalidate: 86400, // In seconds
 	}
 }
