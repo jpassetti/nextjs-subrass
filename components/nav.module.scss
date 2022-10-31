@@ -1,4 +1,5 @@
 @use '../styles/variables';
+@use '../styles/mixins';
 
 .nav {
 	//background-color: limegreen;
@@ -26,20 +27,30 @@
 }
 
 .socialnav {
-	border-top: 1px solid variables.$color__blue;
 	padding-top: 1rem;
 	margin-top: 1rem;
+	border-top: 1px solid #fff;
 	a {
 		font-size: 1rem;
 		display: block;
 		padding: .5rem 0;
 		font-family: variables.$font__sherman_sans;
 		text-decoration: none;
-		color: variables.$color__blue;
-		&:hover, &:focus {
+		color: white;
+		text-align: center;
+		&:hover,
+		&:focus {
 			color: variables.$color__orange;
 		}
 	}
+	@include mixins.breakpoint(laptop) {
+		border-top: 1px solid variables.$color__blue;
+		a {
+			color: variables.$color__blue;
+			text-align: left;
+		}
+	}
+	
 }
 .mobileNav {
 	//background-color: limegreen;
