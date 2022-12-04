@@ -1,4 +1,5 @@
 import Layout from '../../components/layout'
+import Head from 'next/head'
 import Concert from '../../components/concert'
 import Section from '../../components/section'
 import { getAllConcertSlugs, getConcertBySlug } from '../../lib/api'

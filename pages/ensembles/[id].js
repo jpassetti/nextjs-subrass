@@ -3,6 +3,7 @@ import Heading from '../../components/heading'
 import Layout from '../../components/layout'
 import Musician from '../../components/musician'
 import Section from '../../components/section'
+import SEO from '../../components/SEO'
 
 import { getEnsembleBySlug, getAllEnsembleSlugs } from '../../lib/api'
 
@@ -37,9 +38,12 @@ export async function getStaticProps({ params }) {
 	}
 }
 export default function Ensemble({ ensembleData }) {
-	const { title, ensembleInformation } = ensembleData;
+	const { title, ensembleInformation, slug } = ensembleData;
 	return <Layout>
-		
+		<SEO 
+		title={`${title} Ensemble`}
+		url={`https://subrass.syr.edu/ensembles/${slug}`}
+		/>
 			<Heading level="1" marginTop="8" marginBottom="4">{title} Ensemble</Heading>
 		
 		

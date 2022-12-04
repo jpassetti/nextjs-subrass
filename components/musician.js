@@ -8,6 +8,7 @@ import MainContent from './maincontent'
 import Paragraph from './paragraph';
 import ProfileImage from './profileimage';
 import Row from './row'
+import SEO from './SEO'
 import Span from './span'
 
 
@@ -76,6 +77,10 @@ const Musician = ({data, teaser=false}) => {
 
 	:
 	<Fragment>
+		<SEO 
+			title={`${prefix ? prefix : ''} ${firstName} ${middleInitial ? `${middleInitial}.` : ''} ${lastName}${suffix ? `, ${suffix}` : ''}`}
+			url={`https://subrass.syr.edu/about/musicians/${slug}`}
+			/>
 		<div className={styles.showcase}>
 			<Heading level="4" marginBottom="4" color="white"><Link href="/ensembles/2022-23">
 				<a>

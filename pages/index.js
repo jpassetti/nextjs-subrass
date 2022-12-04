@@ -6,9 +6,6 @@ import { getAllConcerts } from '../lib/api'
 import ConcertSlider from '../components/concertSlider'
 import Layout from '../components/layout'
 import Heading from '../components/heading'
-
-import Paragraph from '../components/paragraph'
-
 import Showcase from '../components/showcase'
 
 
@@ -24,14 +21,17 @@ export async function getStaticProps() {
 }
 
 const Home = ({concertsData}) => {
-
+	const filterOldConcerts = concertsData.filter((concert) => {
+		return new Date(concert.node.concertInformation.date) >= new Date();
+		
+	});
   return (
     <Layout>
 		<Showcase />
 		  <Heading level="2" marginTop="4" marginBottom="2">
 			  Upcoming concerts
 		  </Heading>
-		<ConcertSlider concerts={concertsData} />
+		<ConcertSlider concerts={filterOldConcerts} />
     </Layout>
   )
 }

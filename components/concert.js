@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Head from 'next/head'
 import classNames from 'classnames/bind';
 import moment from 'moment';
 
@@ -7,6 +8,7 @@ import Paragraph from './paragraph'
 import Row from './row'
 import Col from './col'
 import ListItem from './listitem'
+import SEO from './SEO';
 import * as styles from './concert.module.scss';
 
 import { formatMonth, formatHour, formatDayOfTheWeek } from '../lib/utilities'
@@ -29,14 +31,48 @@ const Concert = ({ data, teaser = false }) => {
 	const dayOfTheWeek = moment(date).format("dddd");
 	const formattedTime = moment(date).format("h:mm a");
 
-	const formattedDate = `${ dayOfTheWeek }, ${ month }. ${ monthDate }, ${ year }`;
+	const formattedDate = `${dayOfTheWeek}, ${month}. ${monthDate}, ${year}`;
+
+	function addProductJsonLd() {
+		return {
+			__html: `{
+		  "@context": "https://schema.org/",
+		  "@type": "Event",
+		  "name": "${concertTitle}",
+		  "description": "Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.",
+		  "startDate": "${date}",
+		  "eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+		  "location":{
+			"name": "${venueTitle}",
+			"address":{
+				"@type":"PostalAddress",
+				"streetAddress" "${street}",
+				"addressLocality":"New York",
+				"addressRegion":"NY",
+				"postalCode": "${zipCode}",
+				"addressCountry":"US"
+			},
+			"@type":"Place"
+			},
+			"performer":{
+				"@type":"PerformingGroup",
+				"name":"Syracuse University Brass Ensemble"
+			},
+			"organizer":{
+				"@type":"Organization",
+				"name":"Syracuse University Brass Ensemble","url":"https://subrass.syr.edu"
+			}
+		}
+	  `,
+		};
+	}
 
 	if (teaser) return <Fragment>
 		<Heading level="3" marginBottom="1">
 			<Link href={`concerts/${slug}`}>
-			<a>
-				{concertTitle}
-			</a>
+				<a>
+					{concertTitle}
+				</a>
 			</Link>
 		</Heading>
 		<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
@@ -48,12 +84,23 @@ const Concert = ({ data, teaser = false }) => {
 		</ListItem>
 		<ListItem type="location">
 			<Paragraph>{venueTitle}<br />
-			{street}<br />
-			{city}, {state.toUpperCase()} {zipCode}</Paragraph>
+				{street}<br />
+				{city}, {state.toUpperCase()} {zipCode}</Paragraph>
 		</ListItem>
 	</Fragment>;
 	return (
 		<Fragment>
+			<SEO 
+			title={concertTitle}
+			url={`https://subrass.syr.edu/concerts/${slug}`}
+			/>
+			<Head>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={addProductJsonLd()}
+					key="product-jsonld"
+				/>
+			</Head>
 			<Heading level="4" marginBottom="4"><Link href="/concerts">
 				<a>
 					&laquo; Concerts

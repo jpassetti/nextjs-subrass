@@ -35,7 +35,7 @@ const ConcertSlider = ({concerts}) => {
 					// spaceBetween: 40,
 				},
 				1140: {
-					slidesPerView: 4,
+					slidesPerView: 3,
 					// spaceBetween: 50,
 				},
 			}}

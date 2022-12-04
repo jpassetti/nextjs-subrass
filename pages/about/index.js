@@ -6,10 +6,15 @@ import Heading from '../../components/heading'
 import Section from '../../components/section';
 import Paragraph from '../../components/paragraph';
 import Row from '../../components/row';
+import SEO from '../../components/SEO';
 
 
 const About = () => {
 	return <Layout>
+		<SEO 
+		title="About"
+		url="https://subrass.syr.edu/about"
+		/>
 		<Section>
 			<Row justifyContent="center">
 				<Col xs="12" sm="8" paddingTop="8">
