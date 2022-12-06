@@ -26,6 +26,7 @@ const SEO = ({
     <meta name='robots' content='index,follow' />
     <meta name="language" content="EN" />
 	<meta name="copyright" content="Syracuse University" />
+    <meta name="google-site-verification" content="axCJkiNnnco1_eFCM3DMVXx2-PZEGmZ9ldfmq1E6dVM" />
     {siteName && 
         <meta property="og:site_name" content={siteName} />
     }
