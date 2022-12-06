@@ -14,6 +14,7 @@ const About = () => {
 		<SEO 
 		title="About"
 		url="https://subrass.syr.edu/about"
+		description="Led by Music &amp; Artistic Director James T. Spencer, this ensemble performs music from all major musical periods and often features new compositions commissioned by nationally known composers."
 		/>
 		<Section>
 			<Row justifyContent="center">
