@@ -46,7 +46,7 @@ const Concert = ({ data, teaser = false }) => {
 			"name": "${venueTitle}",
 			"address":{
 				"@type":"PostalAddress",
-				"streetAddress" "${street}",
+				"streetAddress": "${street}",
 				"addressLocality":"New York",
 				"addressRegion":"NY",
 				"postalCode": "${zipCode}",
