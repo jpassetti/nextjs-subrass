@@ -1,67 +1,77 @@
-import { Fragment } from 'react';
-import { SitemapStream, streamToPromise } from 'sitemap';
-import { Readable } from 'stream';
 import { getAllMusicians, getAllConcertSlugs, getAllEnsembleSlugs } from '../lib/api';
 
-export async function getStaticProps() {
-    const hostname = 'https://subrass.syr.edu';
+
+const EXTERNAL_DATA_URL = 'https://subrass.syr.edu';
+
+function generateSiteMap(posts) {
+    return `<?xml version="1.0" encoding="UTF-8"?>
+     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+       ${posts.map(({ path }) => {
+           return `
+         <url>
+             <loc>${`${EXTERNAL_DATA_URL}/${path}`}</loc>
+         </url>
+       `;
+         })
+         .join('')}
+     </urlset>
+   `;
+  }
+
+
+  export async function getServerSideProps({ res }) {
     const paths = [];
-  
+    paths.push({
+        path: ``
+    });
+    paths.push({
+        path: `about`
+    });
+   
     const musicians = await getAllMusicians();
     musicians.forEach((edge) => {
       paths.push({
-        url: `/about/musicians/${edge.node.slug}`,
-        changefreq: 'daily',
-        priority: 0.7,
+        path: `about/musicians/${edge.node.slug}`,
       });
+    });
+
+    paths.push({
+        path: `concerts`
     });
   
     const concerts = await getAllConcertSlugs();
     concerts.forEach((edge) => {
       paths.push({
-        url: `/concerts/${edge.node.slug}`,
-        changefreq: 'daily',
-        priority: 0.7,
+        path: `concerts/${edge.node.slug}`,
       });
     });
 
     const ensembles = await getAllEnsembleSlugs();
     ensembles.forEach((edge) => {
       paths.push({
-        url: `/ensembles/${edge.node.slug}`,
-        changefreq: 'daily',
-        priority: 0.7,
+        path: `ensembles/${edge.node.slug}`,
       });
     });
+
+    paths.push({
+        path: `contact`
+    });
   
-    const stream = new SitemapStream({ hostname });
-
-  const xmlString = await streamToPromise(
-    Readable.from(paths).pipe(stream)
-  ).then((data) => data.toString());
-
-  return {
-    props: {
-      sitemapXml: xmlString,
-    },
-    // Regenerate the sitemap every hour
-    revalidate: 3600,
-  };
+    // We generate the XML sitemap with the posts data
+    const sitemap = generateSiteMap(paths);
+  
+    res.setHeader('Content-Type', 'text/xml');
+    // we send the XML to the browser
+    res.write(sitemap);
+    res.end();
+  
+    return {
+      props: {},
+    };
   }
 
-function SitemapXml({ sitemapXml }) {
-    return (
-      <Fragment>
-        <head>
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Sitemap</title>
-        </head>
-        <body>
-            <pre dangerouslySetInnerHTML={{ __html: sitemapXml }} />
-        </body>
-      </Fragment>
-    );
+function Sitemap() {
+     // getServerSideProps will do the heavy lifting
   }
   
-  export default SitemapXml;
+export default Sitemap;
