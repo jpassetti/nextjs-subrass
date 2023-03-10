@@ -59,6 +59,13 @@ const SEO = ({
     }
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@thesubrass" />	
+
+    <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png" />
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96.png" />
+	<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/favicon-144.png" />
+	<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/favicon-192.png" />
 </Head>
 }
 export default SEO; 
