@@ -35,35 +35,51 @@ const Concert = ({ data, teaser = false }) => {
 
 	function addProductJsonLd() {
 		return {
-			__html: `{
-		  "@context": "https://schema.org/",
-		  "@type": "Event",
-		  "name": "${concertTitle}",
-		  "description": "Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.",
-		  "startDate": "${date}",
-		  "eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-		  "location":{
-			"name": "${venueTitle}",
-			"address":{
-				"@type":"PostalAddress",
-				"streetAddress": "${street}",
-				"addressLocality":"New York",
-				"addressRegion":"NY",
-				"postalCode": "${zipCode}",
-				"addressCountry":"US"
-			},
-			"@type":"Place"
-			},
-			"performer":{
-				"@type":"PerformingGroup",
-				"name":"Syracuse University Brass Ensemble"
-			},
-			"organizer":{
-				"@type":"Organization",
-				"name":"Syracuse University Brass Ensemble","url":"https://subrass.syr.edu"
-			}
-		}
-	  `,
+__html: `{
+	"@context": "https://schema.org/",
+	"@type": "Event",
+	"name": "${concertTitle}",
+	"description": "Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.",
+	"startDate": "${date}",
+	"endDate": "${moment(date).add(2, 'h')}"
+	"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+	"location":{
+		"name": "${venueTitle}",
+		"address":{
+			"@type":"PostalAddress",
+			"streetAddress": "${street}",
+			"addressLocality":"New York",
+			"addressRegion":"NY",
+			"postalCode": "${zipCode}",
+			"addressCountry":"US"
+		},
+		"@type":"Place"
+	},
+	"image": [
+		"https://subrass.syr.edu/photos/1x1/photo.jpg",
+		"https://subrass.syr.edu/photos/4x3/photo.jpg",
+		"https://subrass.syr.edu/photos/16x9/photo.jpg"
+	],
+	"offers": {
+        "@type": "Offer",
+        "url": "",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "",
+        "validFrom": ""
+      },
+	"isAccessibleForFree": true,
+	"performer":{
+		"@type":"PerformingGroup",
+		"name":"Syracuse University Brass Ensemble"
+	},
+	"organizer":{
+		"@type":"Organization",
+		"name":"Syracuse University Brass Ensemble",
+		"url":"https://subrass.syr.edu"
+	}
+}
+`,
 		};
 	}
 
