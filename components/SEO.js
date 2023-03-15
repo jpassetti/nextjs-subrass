@@ -29,8 +29,7 @@ const SEO = ({
     <meta key="google_site_verification" name="google-site-verification" content="axCJkiNnnco1_eFCM3DMVXx2-PZEGmZ9ldfmq1E6dVM" />
     <meta key="twitter_card" name="twitter:card" content="summary" />
     <meta key="twitter_site" name="twitter:site" content="@thesubrass" />	
-   
-    <meta key="keywords" name="keywords" content="Syracuse, Syracuse University, Syracuse University Brass, Syracuse University Brass Ensemble, Hendricks Chapel, SU Brass, Brass, Classical, Music, James T. Spencer, New York, Concerts" />
+    <meta key="keywords" name="keywords" content="Syracuse, Syracuse University, Syracuse University Brass, Syracuse University Brass Ensemble, Hendricks Chapel, SU Brass, SUBE, CNY Brass, Brass, Classical, Music, James T. Spencer, New York, Concerts" />
     <link key="icon_apple_touch" rel="apple-touch-icon" href="/images/favicons/apple-touch-icon.png" />
 	<link key="icon_16" rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png" />
 	<link key="icon_32" rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png" />
