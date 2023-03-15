@@ -38,7 +38,7 @@ const SEO = ({
 	<link key="icon_192" rel="icon" type="image/png" sizes="192x192" href="/images/favicons/favicon-192.png" />
     {description &&
         <Fragment>
-            <meta key="twitter_description" name="description" content={description} />
+            <meta key="description" name="description" content={description} />
             <meta key="og_description" property="og:description" content={description} />
             <meta key="twitter_description" name="twitter_description" content={description} />
         </Fragment>
