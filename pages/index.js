@@ -7,6 +7,7 @@ import ConcertSlider from '../components/concertSlider'
 import Layout from '../components/layout'
 import Heading from '../components/heading'
 import Showcase from '../components/showcase'
+import SEO from '../components/SEO'
 
 
 export async function getStaticProps() {
@@ -27,6 +28,7 @@ const Home = ({concertsData}) => {
 	});
   return (
     <Layout>
+		<SEO />
 		<Showcase />
 		  <Heading level="2" marginTop="4" marginBottom="2">
 			  Upcoming concerts

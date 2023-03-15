@@ -4,7 +4,7 @@ import Concert from '../../components/concert'
 import Section from '../../components/section'
 import { getAllConcertSlugs, getConcertBySlug } from '../../lib/api'
 
-export default function Post({ concertData }) {
+export default function SingleConcert({ concertData }) {
 	return <Layout>
 		<Section>
 		<Concert data={concertData} />

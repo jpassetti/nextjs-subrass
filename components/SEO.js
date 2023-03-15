@@ -5,7 +5,7 @@ const DOMAIN = 'https://subrass.syr.edu';
 
 const SEO = ({
     title=false,
-    description=false,
+    description="The Syracuse University Brass Ensemble (SUBE) is a group of 35 professional-level brass and percussion musicians.",
     image=false,
     url=DOMAIN,
     siteName=false

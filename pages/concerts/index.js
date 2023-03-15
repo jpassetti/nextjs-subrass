@@ -28,9 +28,9 @@ const Concerts = ({concertsData}) => {
 	});
 	return <Layout>
 		<SEO 
-		title="Concerts"
-		url="https://subrass.syr.edu/concerts"
-		description="We're proud to bring you a new season packed with a wide range of repertoire. We hope you'll join us for a concert soon!"
+			title="Concerts"
+			url="https://subrass.syr.edu/concerts"
+			description="We're proud to bring you a new season packed with a wide range of repertoire. We hope you'll join us for a concert soon!"
 		/>
 		<Section>
 			<Heading level="1" marginTop="8" marginBottom="4">Concerts</Heading>
