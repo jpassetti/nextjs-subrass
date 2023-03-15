@@ -27,6 +27,16 @@ const SEO = ({
     <meta name="language" content="EN" />
 	<meta name="copyright" content="Syracuse University" />
     <meta name="google-site-verification" content="axCJkiNnnco1_eFCM3DMVXx2-PZEGmZ9ldfmq1E6dVM" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@thesubrass" />	
+
+    <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png" />
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96.png" />
+	<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/favicon-144.png" />
+	<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/favicon-192.png" />
+    <meta name="keywords" content="Syracuse, Syracuse University, Syracuse University Brass, Syracuse University Brass Ensemble, Hendricks Chapel, SU Brass, Brass, Classical, Music, James T. Spencer, New York, Concerts" />
     {siteName && 
         <meta property="og:site_name" content={siteName} />
     }
@@ -37,7 +47,6 @@ const SEO = ({
             <meta name="twitter:description" content={description} />
         </Fragment>
     }
-    <meta name="keywords" content="Syracuse, Syracuse University, Syracuse University Brass, Syracuse University Brass Ensemble, Hendricks Chapel, SU Brass, Brass, Classical, Music, James T. Spencer, New York, Concerts" />
     {image &&
         <Fragment>
              <meta
@@ -57,15 +66,6 @@ const SEO = ({
             <meta name="twitter:url" content={url} />
         </Fragment>
     }
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@thesubrass" />	
-
-    <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png" />
-	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96.png" />
-	<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/favicon-144.png" />
-	<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/favicon-192.png" />
 </Head>
 }
 export default SEO; 
