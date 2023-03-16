@@ -35,9 +35,6 @@ const Header = ({position}) => {
 
 	return (
 		<>
-		<Head>
-			<title>Syracuse University Brass Ensemble</title>
-		</Head>
 		<header className={styles.mobileHeader}>
 				<AnimatePresence>
 				{isMobileMenuVisible && 
