@@ -11,6 +11,7 @@ import ButtonUI from './buttonui'
 
 // context
 import { ModalContext } from '../lib/context';
+import Link from 'next/link';
 
 const Header = ({position}) => {
 	const { events } = useRouter();
@@ -49,8 +50,12 @@ const Header = ({position}) => {
 				<ButtonUI icon="menu" clickHandler={() => {
 					setMobileMenuVisible(true);
 					setModalOpen(true);
-				}} /><h1>Syracuse University<br />
-				<span>Brass Ensemble</span></h1>
+				}} /><h1>
+					<Link href="/">
+					<a>Syracuse University<br />
+					<span>Brass Ensemble</span>
+					</a>
+				</Link></h1>
 		</header>
 		<header className={styles.header}>
 			

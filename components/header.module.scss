@@ -44,6 +44,13 @@
 		span {
 			color: white;
 		}
+		a {
+			color: variables.$color__orange;
+			text-decoration: none;
+			span {
+				color: white;
+			}
+		}
 	}
 	@include mixins.breakpoint(md) {
 		display: none;
