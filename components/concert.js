@@ -40,8 +40,8 @@ __html: `{
 	"@type": "Event",
 	"name": "${concertTitle}",
 	"description": "Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.",
-	"startDate": "${date}",
-	"endDate": "${moment(date).add(2, 'h')}",
+	"startDate": "${moment(date).format()}",
+	"endDate": "${moment(date).add(2, 'h').format()}",
 	"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
 	"location":{
 		"name": "${venueTitle}",
