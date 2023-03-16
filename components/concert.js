@@ -44,17 +44,17 @@ __html: `{
 	"endDate": "${moment(date).add(2, 'h').format()}",
 	"eventStatus": "https://schema.org/EventScheduled",
 	"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-	"location":{
+	"location": {
 		"name": "${venueTitle}",
 		"address":{
-			"@type":"PostalAddress",
+			"@type": "PostalAddress",
 			"streetAddress": "${street}",
-			"addressLocality":"New York",
-			"addressRegion":"NY",
+			"addressLocality": "New York",
+			"addressRegion": "NY",
 			"postalCode": "${zipCode}",
-			"addressCountry":"US"
+			"addressCountry": "US"
 		},
-		"@type":"Place"
+		"@type": "Place"
 	},
 	"image": [
 		"https://subrass.syr.edu/photos/1x1/photo.jpg",
@@ -71,13 +71,13 @@ __html: `{
       },
 	"isAccessibleForFree": true,
 	"performer":{
-		"@type":"PerformingGroup",
-		"name":"Syracuse University Brass Ensemble"
+		"@type": "PerformingGroup",
+		"name": "Syracuse University Brass Ensemble"
 	},
 	"organizer":{
-		"@type":"Organization",
-		"name":"Syracuse University Brass Ensemble",
-		"url":"https://subrass.syr.edu"
+		"@type": "Organization",
+		"name": "Syracuse University Brass Ensemble",
+		"url": "https://subrass.syr.edu"
 	}
 }
 `,
