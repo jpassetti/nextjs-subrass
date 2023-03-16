@@ -49,7 +49,8 @@ const Header = ({position}) => {
 				<ButtonUI icon="menu" clickHandler={() => {
 					setMobileMenuVisible(true);
 					setModalOpen(true);
-				}} />
+				}} /><h1>Syracuse University<br />
+				<span>Brass Ensemble</span></h1>
 		</header>
 		<header className={styles.header}>
 			

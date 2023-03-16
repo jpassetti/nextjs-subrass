@@ -31,6 +31,20 @@
 	width: 100%;
 	padding: 1rem;
 	border-bottom: 1px solid rgba(255,255,255,.25);
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	h1 {
+		font-family: variables.$font__sherman_sans;
+		font-weight: 700;
+		line-height: 1.1;
+    	color: variables.$color__orange;
+		font-size: 1.2rem;
+		text-transform: uppercase;
+		span {
+			color: white;
+		}
+	}
 	@include mixins.breakpoint(md) {
 		display: none;
 	}
