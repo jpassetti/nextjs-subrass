@@ -35,7 +35,7 @@ const Concert = ({ data, teaser = false }) => {
 
 	function addProductJsonLd() {
 		return {
-__html: `{
+			__html: `{
 	"@context": "https://schema.org",
 	"@type": "Event",
 	"name": "${concertTitle}",
@@ -46,7 +46,7 @@ __html: `{
 	"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
 	"location": {
 		"name": "${venueTitle}",
-		"address":{
+		"address": {
 			"@type": "PostalAddress",
 			"streetAddress": "${street}",
 			"addressLocality": "New York",
@@ -68,13 +68,13 @@ __html: `{
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "validFrom": "${moment(date).subtract(2, 'months').format()}"
-      },
+    },
 	"isAccessibleForFree": true,
-	"performer":{
+	"performer": {
 		"@type": "PerformingGroup",
 		"name": "Syracuse University Brass Ensemble"
 	},
-	"organizer":{
+	"organizer": {
 		"@type": "Organization",
 		"name": "Syracuse University Brass Ensemble",
 		"url": "https://subrass.syr.edu"
@@ -107,9 +107,9 @@ __html: `{
 	</Fragment>;
 	return (
 		<Fragment>
-			<SEO 
-			title={concertTitle}
-			url={`https://subrass.syr.edu/concerts/${slug}`}
+			<SEO
+				title={concertTitle}
+				url={`https://subrass.syr.edu/concerts/${slug}`}
 			/>
 			<Head>
 				<script
