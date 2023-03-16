@@ -18,7 +18,7 @@ const About = () => {
 		/>
 		<Section>
 			<Row justifyContent="center">
-				<Col xs="12" sm="8" paddingTop="8">
+				<Col xs="12" sm="8" paddingTop="0">
 					<Heading level="1" marginTop="8" marginBottom="4">About</Heading>
 					<Image 
 						src="/images/group-photo-2019-crop-m_orig.jpg"
