@@ -110,6 +110,7 @@ const Concert = ({ data, teaser = false }) => {
 			<SEO
 				title={concertTitle}
 				url={`https://subrass.syr.edu/concerts/${slug}`}
+				description={`Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}, on ${moment(date).format("dddd, MMMM D, YYYY, h:mm a")}.`}
 			/>
 			<Head>
 				<script
