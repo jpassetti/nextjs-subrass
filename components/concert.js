@@ -36,13 +36,14 @@ const Concert = ({ data, teaser = false }) => {
 	function addProductJsonLd() {
 		return {
 __html: `{
-	"@context": "https://schema.org/",
+	"@context": "https://schema.org",
 	"@type": "Event",
 	"name": "${concertTitle}",
 	"description": "Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.",
 	"startDate": "${moment(date).format()}",
 	"endDate": "${moment(date).add(2, 'h').format()}",
-	"eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+	"eventStatus": "https://schema.org/EventScheduled",
+	"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
 	"location":{
 		"name": "${venueTitle}",
 		"address":{
@@ -62,11 +63,11 @@ __html: `{
 	],
 	"offers": {
         "@type": "Offer",
-        "url": "",
+        "url": "${`https://subrass.syr.edu/concerts/${slug}`}",
         "price": "0",
         "priceCurrency": "USD",
-        "availability": "",
-        "validFrom": ""
+        "availability": "https://schema.org/InStock",
+        "validFrom": "${moment(date).subtract(2, 'months').format()}"
       },
 	"isAccessibleForFree": true,
 	"performer":{
