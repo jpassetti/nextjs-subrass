@@ -1,25 +1,15 @@
-import Link from 'next/link'
-import Head from 'next/head'
-import classNames from 'classnames/bind';
+import { Fragment } from 'react';
 import moment from 'moment';
 
-import Heading from './heading'
-import Paragraph from './paragraph'
-import Row from './row'
-import Col from './col'
-import ListItem from './listitem'
+import Head from 'next/head';
+import Heading from './heading';
+import Link from 'next/link';
+import List from './list';
+import Paragraph from './paragraph';
+import ListItem from './listitem';
 import SEO from './SEO';
-import * as styles from './concert.module.scss';
-
-import { formatMonth, formatHour, formatDayOfTheWeek } from '../lib/utilities'
-import { Fragment } from 'react';
-
-let cx = classNames.bind(styles);
 
 const Concert = ({ data, teaser = false }) => {
-	let concertClasses = cx({
-		concert: true,
-	});
 	const { title: concertTitle, slug, concertInformation } = data;
 	const { date, venue } = concertInformation;
 	const { title: venueTitle, venueInformation } = venue;
@@ -125,17 +115,19 @@ const Concert = ({ data, teaser = false }) => {
 				</a></Link></Heading>
 			<Heading level="1" marginBottom="2">{concertTitle}</Heading>
 			<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
-			<ListItem type="date" className="mb-0">
-				{formattedDate}
-			</ListItem>
-			<ListItem type="time" className="mb-2">
-				{formattedTime}
-			</ListItem>
-			<ListItem type="location">
-				<Paragraph>{venueTitle}<br />
-					{street}<br />
-					{city}, {state.toUpperCase()} {zipCode}</Paragraph>
-			</ListItem>
+			<List>
+				<ListItem type="date" className="mb-0">
+					{formattedDate}
+				</ListItem>
+				<ListItem type="time" className="mb-2">
+					{formattedTime}
+				</ListItem>
+				<ListItem type="location">
+					<Paragraph>{venueTitle}<br />
+						{street}<br />
+						{city}, {state.toUpperCase()} {zipCode}</Paragraph>
+				</ListItem>
+			</List>
 		</Fragment>
 	)
 }

@@ -35,8 +35,7 @@ const Header = ({position}) => {
 
 	return (
 		<>
-		<header className={styles.mobileHeader}>
-				<AnimatePresence>
+		<AnimatePresence>
 				{isMobileMenuVisible && 
 					<Overlay closeHandler={() => {
 						setMobileMenuVisible(false);
@@ -44,6 +43,7 @@ const Header = ({position}) => {
 					}} />
 				}
 				</AnimatePresence>
+		<header className={styles.mobileHeader}>
 				<ButtonUI icon="menu" clickHandler={() => {
 					setMobileMenuVisible(true);
 					setModalOpen(true);
