@@ -9,19 +9,23 @@ import Paragraph from './paragraph';
 import ListItem from './listitem';
 import SEO from './SEO';
 
+import { getAPStyleFormattedMonth, getFormattedAMPM } from '../lib/utilities';
+
 const Concert = ({ data, teaser = false }) => {
 	const { title: concertTitle, slug, concertInformation } = data;
 	const { date, venue } = concertInformation;
 	const { title: venueTitle, venueInformation } = venue;
 	const { street, city, state, zipCode, coordinates } = venueInformation;
 
-	const month = moment(date).format("MMM");
+	const month = parseInt(moment(date).format("M"));
 	const monthDate = moment(date).format("D");
 	const year = moment(date).format("YYYY");
 	const dayOfTheWeek = moment(date).format("dddd");
-	const formattedTime = moment(date).format("h:mm a");
+	const formattedTime = moment(date).format("h:mm");
+	const formattedTimeAMPM = getFormattedAMPM(moment(date).format("a"));
+	
 
-	const formattedDate = `${dayOfTheWeek}, ${month}. ${monthDate}, ${year}`;
+	const formattedDate = `${dayOfTheWeek}, ${getAPStyleFormattedMonth(month)} ${monthDate}, ${year}`;
 
 	function addProductJsonLd() {
 		return {
@@ -87,7 +91,7 @@ const Concert = ({ data, teaser = false }) => {
 			{formattedDate}
 		</ListItem>
 		<ListItem type="time" className="mb-2">
-			{formattedTime}
+			{formattedTime} {formattedTimeAMPM}
 		</ListItem>
 		<ListItem type="location">
 			<Paragraph>{venueTitle}<br />
@@ -120,7 +124,7 @@ const Concert = ({ data, teaser = false }) => {
 					{formattedDate}
 				</ListItem>
 				<ListItem type="time" className="mb-2">
-					{formattedTime}
+					{formattedTime} {formattedTimeAMPM}
 				</ListItem>
 				<ListItem type="location">
 					<Paragraph>{venueTitle}<br />
