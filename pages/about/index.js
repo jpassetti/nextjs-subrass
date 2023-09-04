@@ -24,7 +24,7 @@ const About = () => {
 						src="/images/group-photo-2022.jpg"
 						alt="Syracuse University Brass Ensemble"
 						width={1100}
-						height={553}
+						height={435}
 					/>
 					<Paragraph marginBottom="2" marginTop="2">The Syracuse University Brass Ensemble (SUBE) is a group of 35 professional-level brass and percussion musicians; members include Syracuse University faculty, staff and students, the State University of New York Upstate Medical University faculty and staff, and accomplished musicians from Upstate New York communities. The group is directed by James T. Spencer.</Paragraph>
 
