@@ -21,7 +21,7 @@ const About = () => {
 				<Col xs="12" sm="8" paddingTop="0">
 					<Heading level="1" marginTop="8" marginBottom="4">About</Heading>
 					<Image 
-						src="/images/group-photo-2019-crop-m_orig.jpg"
+						src="/images/group-photo-2022.jpg"
 						alt="Syracuse University Brass Ensemble"
 						width={1100}
 						height={553}
