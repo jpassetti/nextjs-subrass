@@ -12,7 +12,7 @@ import SEO from './SEO';
 import { getAPStyleFormattedMonth, getFormattedAMPM } from '../lib/utilities';
 
 const Concert = ({ data, teaser = false }) => {
-	const { title: concertTitle, slug, concertInformation } = data;
+	const { title: concertTitle, slug, uri, concertInformation } = data;
 	const { date, venue } = concertInformation;
 	const { title: venueTitle, venueInformation } = venue;
 	const { street, city, state, zipCode, coordinates } = venueInformation;
@@ -80,7 +80,7 @@ const Concert = ({ data, teaser = false }) => {
 
 	if (teaser) return <Fragment>
 		<Heading level="3" marginBottom="1">
-			<Link href={`concerts/${slug}`}>
+			<Link href={uri}>
 				<a>
 					{concertTitle}
 				</a>
@@ -103,7 +103,7 @@ const Concert = ({ data, teaser = false }) => {
 		<Fragment>
 			<SEO
 				title={concertTitle}
-				url={`https://subrass.syr.edu/concerts/${slug}`}
+				url={`https://subrass.syr.edu/${uri}`}
 				description={`Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}, on ${moment(date).format("dddd, MMMM D, YYYY, h:mm a")}.`}
 			/>
 			<Head>

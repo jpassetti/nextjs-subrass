@@ -35,7 +35,7 @@ const Concerts = ({concertsData}) => {
 		<Section>
 			<Heading level="1" marginTop="8" marginBottom="4">Concerts</Heading>
 			<Paragraph type="intro">We're proud to bring you a new season packed with a wide range of repertoire. We hope you'll join us for a concert soon!</Paragraph>
-			<Heading level="2" marginTop="3" marginBottom="3">2022-23</Heading>
+			<Heading level="2" marginTop="3" marginBottom="3">2023-24</Heading>
 			<ConcertSlider concerts={filterOldConcerts} />
 		</Section>
 	</Layout>
