@@ -8,7 +8,7 @@ const Paragraph = ({
 	children, 
 	className,
 	diminish,
-	marginBottom, 
+	marginBottom=1, 
 	marginTop,
 }) => {
 
