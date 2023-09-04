@@ -1,3 +1,4 @@
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
@@ -10,14 +11,13 @@ import "swiper/css/navigation";
 
 import Card from '../components/card'
 import Concert from '../components/concert'
-import Heading from '../components/heading'
-import Section from '../components/section'
+
 
 import styles from './concertslider.module.scss'
 
+
 const ConcertSlider = ({concerts}) => {
-	return <Section>
-		<Swiper
+	return <Swiper
 			slidesPerView={1.5}
 			spaceBetween={16}
 			navigation={false}
@@ -49,8 +49,6 @@ const ConcertSlider = ({concerts}) => {
 					</Card>
 				</SwiperSlide>
 			})}
-		</Swiper>
-
-	</Section>
+	</Swiper>
 }
 export default ConcertSlider;

@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import { getAllConcerts } from '../lib/api'
 
-import ConcertSlider from '../components/concertSlider'
+import ConcertInteractive from '../components/concertInteractive'
 import Layout from '../components/layout'
 import Heading from '../components/heading'
 import Showcase from '../components/showcase'
@@ -30,10 +30,7 @@ const Home = ({concertsData}) => {
     <Layout>
 		<SEO />
 		<Showcase />
-		  <Heading level="2" marginTop="4" marginBottom="2">
-			  Upcoming concerts
-		  </Heading>
-		<ConcertSlider concerts={filterOldConcerts} />
+		<ConcertInteractive concerts={filterOldConcerts} label="Upcoming Concerts"/>
     </Layout>
   )
 }

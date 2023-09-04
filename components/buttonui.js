@@ -5,10 +5,16 @@ import styles from './buttonui.module.scss'
 
 let cx = classNames.bind(styles);
 
-const ButtonUI = ({icon, clickHandler}) => {
+const ButtonUI = ({
+	children, 
+	clickHandler,
+	icon, 
+	isActive=true
+}) => {
 	let buttonuiClasses = cx({
 		buttonui: true,
-		[`close`]: icon === "close"
+		[`close`]: icon === "close",
+		['active'] : isActive
 
 	})
 	return <button className={buttonuiClasses} onClick={clickHandler}>
@@ -18,6 +24,7 @@ const ButtonUI = ({icon, clickHandler}) => {
 			width={32}
 			height={32}
 		/>
+		{children}
 	</button>
 }
 export default ButtonUI

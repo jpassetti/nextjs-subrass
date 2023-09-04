@@ -9,6 +9,7 @@ import { getAllConcerts } from '../../lib/api'
 
 import Concert from '../../components/concert'
 import SEO from '../../components/SEO'
+import ConcertInteractive from '../../components/concertInteractive'
 
 export async function getStaticProps() {
 	// Fetch necessary data for the blog post using params.id
@@ -35,8 +36,7 @@ const Concerts = ({concertsData}) => {
 		<Section>
 			<Heading level="1" marginTop="8" marginBottom="4">Concerts</Heading>
 			<Paragraph type="intro">We're proud to bring you a new season packed with a wide range of repertoire. We hope you'll join us for a concert soon!</Paragraph>
-			<Heading level="2" marginTop="3" marginBottom="3">2023-24</Heading>
-			<ConcertSlider concerts={filterOldConcerts} />
+			<ConcertInteractive concerts={filterOldConcerts} label="2023-24" />
 		</Section>
 	</Layout>
 }

@@ -3,9 +3,13 @@
 	border: 1px solid white;
 	background-color: transparent;
 	cursor: pointer;
+	opacity: .3;
 	&.close {
 		position: absolute;
 		top: 1rem;
 		right: 1rem;
+	}
+	&.active {
+		opacity: 1;
 	}
 }
