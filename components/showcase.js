@@ -5,12 +5,12 @@ const Showcase = ({children}) => {
 	return <div 
 		className={styles.showcase}
 		style={{
-			backgroundImage: `url('/syracuse-university-brass-ensemble.jpeg')`
+			backgroundImage: `url('/syracuse-university-brass-ensemble-2023.jpg')`
 		}}
 	>	
 		<div className={styles.mobileShowcaseImage}>
 			<Image 
-				src="/syracuse-university-brass-ensemble.jpeg"
+				src="/syracuse-university-brass-ensemble-2023.jpg"
 				alt="Syracuse University Brass Ensemble"
 				width={1827}
 				height={1306}
