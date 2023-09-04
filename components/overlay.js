@@ -40,7 +40,7 @@ const Overlay = ({closeHandler}) => {
 		variants={variants}
 		exit="exit"
 	>
-		<ButtonUI icon="close" clickHandler={closeHandler}>Close</ButtonUI>
+		<ButtonUI icon="close" clickHandler={closeHandler} />
 		<Nav.Mobile />
 		<Nav.SocialNav />
 		<Nav.Members />
