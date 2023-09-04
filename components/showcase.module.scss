@@ -4,6 +4,7 @@
 	width: calc(100% + 4rem);
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: center center;
 	position: relative;
 	margin-top: -2rem;
 	margin-left: -2rem;
@@ -17,6 +18,7 @@
 	@include mixins.breakpoint(md) {
 		height: 100vh;
 		align-items: center;
+		background-image: none;
 		.mobileShowcaseImage {
 			display: none;
 		}
