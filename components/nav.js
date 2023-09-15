@@ -21,7 +21,7 @@ const navLinks = [
 	},
 	{
 		title: "Musicians",
-		path: "/ensembles/2022-23"
+		path: "/ensembles/2023-24"
 	},
 	{
 		title: "Contact",
