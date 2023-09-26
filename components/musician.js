@@ -82,7 +82,7 @@ const Musician = ({data, teaser=false}) => {
 			url={`https://subrass.syr.edu/about/musicians/${slug}`}
 			/>
 		<div className={styles.showcase}>
-			<Heading level="4" marginBottom="4" color="white"><Link href="/ensembles/2022-23">
+			<Heading level="4" marginBottom="4" color="white"><Link href="/ensembles/2023-24">
 				<a>
 					&laquo; Musicians
 				</a></Link></Heading>
