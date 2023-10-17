@@ -33,7 +33,7 @@ function generateSiteMap(posts) {
     const musicians = await getAllMusicians();
     const musicianPaths = musicians.map(musician => ({ 
       path: `${musician.node.uri}` ,
-      lastmod: musician.node.modified, // example
+      lastmod: musician.node.modifiedGmt, // example
       changefreq: 'monthly' // example value
     }));
     paths = [...paths, ...musicianPaths];
@@ -42,7 +42,7 @@ function generateSiteMap(posts) {
     const concerts = await getAllConcertSlugs();
     const concertPaths = concerts.map(concert => ({ 
       path: `${concert.node.uri}`,
-      lastmod: concert.node.modified, // example
+      lastmod: concert.node.modifiedGmt, // example
       changefreq: 'monthly' // example value
     }));
     paths = [...paths, ...concertPaths];
@@ -51,7 +51,7 @@ function generateSiteMap(posts) {
     const ensembles = await getAllEnsembleSlugs();
     const ensemblePaths = ensembles.map(ensemble => ({ 
       path: `${ensemble.node.uri}`,
-      lastmod: ensemble.node.modified, // example
+      lastmod: ensemble.node.modifiedGmt, // example
       changefreq: 'monthly' // example value 
     }));
     paths = [...paths, ...ensemblePaths];
