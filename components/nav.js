@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 
 import classNames from 'classnames/bind';
+import Paragraph from './paragraph';
+import PasswordModal from './passwordmodal';
 import * as styles from './nav.module.scss';
 
 let cx = classNames.bind(styles);
@@ -71,12 +74,32 @@ const SocialNav = () => {
 }
 Nav.SocialNav = SocialNav;
 const Members = () => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsModalOpen(true);
+  };
+  	const handlePasswordSubmit = () => {
+		// If the password is correct, navigate to the Google Drive folder
+		window.open('https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ', '_blank');
+
+		setIsModalOpen(false); // Close the modal
+	};
+
+
 	return <nav className={styles.socialnav}>
 		<ul>
-			<li>
-				<a href="https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ" target="_blank">Members login</a>
+			<li onClick={handleLinkClick}>
+				Members login
 			</li>
 		</ul>
+		{isModalOpen && (
+        <PasswordModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onPasswordSubmit={handlePasswordSubmit}
+        />
+      )}
 	</nav>
 }
 Nav.Members = Members;

@@ -6,6 +6,7 @@ import styles from './buttonui.module.scss'
 let cx = classNames.bind(styles);
 
 const ButtonUI = ({
+	backgroundColor="white",
 	children, 
 	clickHandler,
 	icon, 
@@ -14,16 +15,17 @@ const ButtonUI = ({
 	let buttonuiClasses = cx({
 		buttonui: true,
 		[`close`]: icon === "close",
-		['active'] : isActive
+		['active'] : isActive,
+		[`background-color-blue`] : backgroundColor === "blue",
 
 	})
 	return <button className={buttonuiClasses} onClick={clickHandler}>
-		<Image 
+		{icon && <Image 
 			src={`/icons/${icon}.svg`}
 			alt={`${icon} icon`}
 			width={32}
 			height={32}
-		/>
+		/>}
 		{children}
 	</button>
 }

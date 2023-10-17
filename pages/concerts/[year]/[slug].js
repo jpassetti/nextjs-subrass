@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 		return {
 			params: {
 				slug: slug,
-        year: academicYears.edges[0].node.slug
+        		year: academicYears.edges[0].node.slug
 			}
 		}
 	})

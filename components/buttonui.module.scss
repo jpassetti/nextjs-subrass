@@ -1,9 +1,12 @@
+@use '../styles/variables';
+
 .buttonui {
 	padding: 1rem;
 	border: 1px solid white;
 	background-color: transparent;
 	cursor: pointer;
 	opacity: .3;
+	font-family: variables.$font__sherman_sans;
 	&.close {
 		position: absolute;
 		top: 1rem;
@@ -11,5 +14,9 @@
 	}
 	&.active {
 		opacity: 1;
+	}
+	&.background-color-blue {
+		background-color: variables.$color__blue;
+		color: white;
 	}
 }

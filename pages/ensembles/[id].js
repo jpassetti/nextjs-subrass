@@ -10,11 +10,12 @@ import { getEnsembleBySlug, getAllEnsembleSlugs } from '../../lib/api'
 
 
 export async function getStaticPaths() {
+	console.log("get static paths");
 	// Return a list of possible value for id
 	const slugs = await getAllEnsembleSlugs()
 	//console.log({ slugs });
 	const paths = slugs.map(edge => {
-		const { slug } = edge.node
+		const { slug } = edge.node;
 		return {
 			params: {
 				id: slug,
