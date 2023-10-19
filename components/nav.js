@@ -79,12 +79,7 @@ const Members = () => {
   const handleLinkClick = () => {
     setIsModalOpen(true);
   };
-  	const handlePasswordSubmit = () => {
-		// If the password is correct, navigate to the Google Drive folder
-		window.open('https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ');
-
-		setIsModalOpen(false); // Close the modal
-	};
+  	
 
 
 	return <nav className={styles.socialnav}>
@@ -97,7 +92,6 @@ const Members = () => {
         <PasswordModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onPasswordSubmit={handlePasswordSubmit}
         />
       )}
 	</nav>
