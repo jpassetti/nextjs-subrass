@@ -11,7 +11,7 @@ function PasswordModal({ isOpen, onClose, onPasswordSubmit }) {
   
     const handleSubmit = async (event) => {
       event.preventDefault();
-    
+
       try {
         const response = await fetch('/api/passwordCheck', {
           method: 'POST',
@@ -20,11 +20,19 @@ function PasswordModal({ isOpen, onClose, onPasswordSubmit }) {
           },
           body: JSON.stringify({ password }),
         });
-    
+
         const data = await response.json();
-    
+
         if (data.success) {
-          onPasswordSubmit();
+          // If the password is correct, navigate to the Google Drive folder
+          const link = document.createElement('a');
+          link.href = 'https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ';
+          link.target = '_blank';  // Optional: to open in a new tab
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          onClose(); // Close the modal
         } else {
           alert('Incorrect password. Please try again.');
         }
