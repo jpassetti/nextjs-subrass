@@ -81,7 +81,7 @@ const Members = () => {
   };
   	const handlePasswordSubmit = () => {
 		// If the password is correct, navigate to the Google Drive folder
-		window.open('https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ', '_blank');
+		window.open('https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ');
 
 		setIsModalOpen(false); // Close the modal
 	};
