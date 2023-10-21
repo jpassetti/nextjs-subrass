@@ -3,6 +3,7 @@ import styles from './musician.module.scss';
 
 import Col from './col'
 import Link from 'next/link'
+import Head from 'next/head';
 import Heading from './heading';
 import MainContent from './maincontent'
 import Paragraph from './paragraph';
@@ -17,6 +18,31 @@ import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIn
 const Musician = ({data, teaser=false}) => {
 	const { slug, content, instruments, featuredImage } = data;
 	const { prefix, firstName, middleInitial, lastName, suffix, education, work } = data.personInformation;
+
+	function addProductJsonLd() {
+		let nameParts = [];
+		if (prefix) nameParts.push(prefix);
+		nameParts.push(firstName);
+		if (middleInitial) nameParts.push(`${middleInitial}.`);
+		nameParts.push(lastName);
+		if (suffix) nameParts.push(`, ${suffix}`);
+		
+		const fullName = nameParts.join(' ');
+
+		const schema = {
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": fullName,
+			"description": "A member of the Syracuse University Brass Ensemble",
+			"image": featuredImage ? featuredImage.node.sourceUrl : '',
+			"jobTitle": instruments.edges[0].node.name,
+			"affiliation": "Syracuse University Brass Ensemble"
+		  };
+	
+		return {
+			__html: JSON.stringify(schema)
+		};
+	}
 
 	const displayInstruments = (instruments) => {
 		const instrumentsArr = instruments.edges.map((instrument) => {
@@ -81,6 +107,13 @@ const Musician = ({data, teaser=false}) => {
 			title={`${prefix ? prefix : ''} ${firstName} ${middleInitial ? `${middleInitial}.` : ''} ${lastName}${suffix ? `, ${suffix}` : ''}`}
 			url={`https://subrass.syr.edu/about/musicians/${slug}`}
 			/>
+		<Head>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={addProductJsonLd()}
+				key="product-jsonld"
+			/>
+		</Head>
 		<div className={styles.showcase}>
 			<Heading level="4" marginBottom="4" color="white"><Link href="/ensembles/2023-24">
 				<a>
