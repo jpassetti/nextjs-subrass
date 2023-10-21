@@ -55,7 +55,7 @@ const SEO = ({
         </Fragment>
     }
    
-    <meta key="url" name="url" content={url} />
+    <link rel="canonical" href={url} />
     <meta key="og_url" property="og:url" content={url} />
     <meta key="twitter_url" property="twitter:url" content={url} />
     
