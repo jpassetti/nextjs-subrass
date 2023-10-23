@@ -16,7 +16,7 @@ import Span from './span'
 import { isGraduateOfSyracuseUniversity, truncateGraduationYear, doesEducationIncludeSyracuseUniversity, doesWorkIncludeSyracuseUniversity, displaySyracuseUniversityJobTitles } from '../lib/utilities'
 
 const Musician = ({data, teaser=false}) => {
-	const { slug, content, instruments, featuredImage } = data;
+	const { slug, content, instruments, featuredImage, peopleTypes } = data;
 	const { prefix, firstName, middleInitial, lastName, suffix, education, work } = data.personInformation;
 
 	const buildFullName = () => {
@@ -108,7 +108,7 @@ const Musician = ({data, teaser=false}) => {
 	:
 	<Fragment>
 		<SEO 
-			title={`${buildFullName()} - ${instruments.edges[0].node.name} - Syracuse University Brass Ensemble`}
+			title={`${buildFullName()} - ${slug === "james-t-spencer" ? "Music Director" : instruments.edges[0].node.name} - Syracuse University Brass Ensemble`}
 			url={`https://subrass.syr.edu/about/musicians/${slug}`}
 			/>
 		<Head>
