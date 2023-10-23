@@ -28,7 +28,7 @@ const Home = ({concertsData}) => {
 	});
   return (
     <Layout>
-		<SEO />
+		<SEO title="Syracuse University Brass Ensemble - Premier Brass Musicians of NY" />
 		<Showcase />
 		<ConcertInteractive concerts={filterOldConcerts} label="Upcoming Concerts"/>
     </Layout>

@@ -40,7 +40,7 @@ const SEO = ({
     <meta key="og_description" property="og:description" content={description} />
     <meta key="twitter_description" property="twitter:description" content={description} />
      
-    {image &&
+    {image ?
         <Fragment>
             <meta
                 key="og_image"
@@ -52,6 +52,20 @@ const SEO = ({
             <meta key="og_image_alt" property="og:image:alt" content={image.alt} />
             <meta key="twitter_image" name="twitter:image" content={image.src} />
             <meta key="twitter_image_alt" property="twitter:image:alt" content={image.alt} />
+        </Fragment>
+    : 
+    <Fragment>
+        <meta
+            key="og_image"
+            property="og:image"
+            content="images/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"
+        />
+        <meta key="og_image_width" property="og:image:width" content="1200" />
+        <meta key="og_image_height" property="og:image:height" content="630" />
+        <meta key="og_image_alt" property="og:image:alt" content="Syracuse University Brass Ensemble" />
+
+        <meta key="twitter_image" name="twitter:image" content="images/16x9/photo.jpg" />
+        <meta key="twitter_image_alt" property="twitter:image:alt" content="Syracuse University Brass Ensemble" />
         </Fragment>
     }
    
