@@ -28,7 +28,10 @@ const Home = ({concertsData}) => {
 	});
   return (
     <Layout>
-		<SEO title="Syracuse University Brass Ensemble - Premier Brass Musicians of NY" />
+		<SEO 
+			title="Syracuse University Brass Ensemble - Premier Brass Musicians of NY" 
+			description="Syracuse University's Brass Ensemble showcases the vibrancy and richness of brass music. Comprised of artists from SU, SUNY Upstate, and renowned NY musicians, our concerts are a celebration of sonic brilliance. Experience the power and warmth of live brass."	
+		/>
 		<Showcase />
 		<ConcertInteractive concerts={filterOldConcerts} label="Upcoming Concerts"/>
     </Layout>
