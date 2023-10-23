@@ -39,7 +39,7 @@ const Musician = ({data, teaser=false}) => {
 			"name": buildFullName(),
 			"description": "A member of the Syracuse University Brass Ensemble",
 			"image": featuredImage ? featuredImage.node.sourceUrl : '',
-			"jobTitle": instruments.edges[0].node.name,
+			"jobTitle": slug === "james-t-spencer" ? "Music Director" : instruments.edges[0].node.name,
 			"affiliation": "Syracuse University Brass Ensemble"
 		  };
 	
