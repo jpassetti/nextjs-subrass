@@ -99,7 +99,7 @@ export default function Ensemble({ ensembleData }) {
 	}
 	return <Layout>
 		<SEO 
-			title={`${title} Ensemble`}
+			title={`${title} Members & Instruments - Syracuse University Brass Ensemble`}
 			url={`https://subrass.syr.edu/ensembles/${slug}`}
 		/>
 		<Head>

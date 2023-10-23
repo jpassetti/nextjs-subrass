@@ -29,7 +29,7 @@ const Concerts = ({concertsData}) => {
 	});
 	return <Layout>
 		<SEO 
-			title="Concerts"
+			title="Upcoming Concerts & Performances - Syracuse University Brass Ensemble"
 			url="https://subrass.syr.edu/concerts"
 			description="We're proud to bring you a new season packed with a wide range of repertoire. We hope you'll join us for a concert soon!"
 		/>

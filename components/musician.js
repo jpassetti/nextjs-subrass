@@ -19,7 +19,7 @@ const Musician = ({data, teaser=false}) => {
 	const { slug, content, instruments, featuredImage } = data;
 	const { prefix, firstName, middleInitial, lastName, suffix, education, work } = data.personInformation;
 
-	function addProductJsonLd() {
+	const buildFullName = () => {
 		let nameParts = [];
 		if (prefix) nameParts.push(prefix);
 		nameParts.push(firstName);
@@ -27,12 +27,16 @@ const Musician = ({data, teaser=false}) => {
 		nameParts.push(lastName);
 		if (suffix) nameParts.push(`, ${suffix}`);
 		
-		const fullName = nameParts.join(' ');
+		return nameParts.join(' ');
+	}
+
+	function addProductJsonLd() {
+		
 
 		const schema = {
 			"@context": "https://schema.org",
 			"@type": "Person",
-			"name": fullName,
+			"name": buildFullName(),
 			"description": "A member of the Syracuse University Brass Ensemble",
 			"image": featuredImage ? featuredImage.node.sourceUrl : '',
 			"jobTitle": instruments.edges[0].node.name,
@@ -56,7 +60,7 @@ const Musician = ({data, teaser=false}) => {
 	const fullName = (teaser) => {
 		return teaser ?
 			<Fragment>
-				<Span fontWeight="normal" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''} </Span><br />
+				<Span fontWeight="normal" fontSize="smaller">{prefix ? prefix : ''} {firstName} {middleInitial ? `${middleInitial}.` : ''}</Span><br />
 				<Span fontWeight="bold" textTransform="uppercase">{lastName}{suffix ? `, ${suffix}` : ''} {education?.map((item, index) => {
 					return isGraduateOfSyracuseUniversity(item.university) ? `${truncateGraduationYear(item.graduationYear, item.degreeType)} ` : ''
 				})}</Span>
@@ -104,7 +108,7 @@ const Musician = ({data, teaser=false}) => {
 	:
 	<Fragment>
 		<SEO 
-			title={`${prefix ? prefix : ''} ${firstName} ${middleInitial ? `${middleInitial}.` : ''} ${lastName}${suffix ? `, ${suffix}` : ''}`}
+			title={`${buildFullName()} - ${instruments.edges[0].node.name} - Syracuse University Brass Ensemble`}
 			url={`https://subrass.syr.edu/about/musicians/${slug}`}
 			/>
 		<Head>

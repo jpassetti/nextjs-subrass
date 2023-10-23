@@ -29,7 +29,7 @@ const About = ({pageData}) => {
 	const {title, content, featuredImage} = pageData;
 	return <Layout>
 		<SEO 
-		title="About"
+		title="About the Syracuse University Brass Ensemble - History & Musical Excellence"
 		url="https://subrass.syr.edu/about"
 		description="Led by Music &amp; Artistic Director James T. Spencer, this ensemble performs music from all major musical periods and often features new compositions commissioned by nationally known composers."
 		/>

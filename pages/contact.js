@@ -8,7 +8,7 @@ import SEO from '../components/SEO';
 const Contact = () => {
 	return <Layout>
 		<SEO 
-			title="Contact"
+			title="Contact Us - Syracuse University Brass Ensemble"
 			url="https://subrass.syr.edu/contact"
 			description="Call us today at (315)443-3436 or email us at subrass@syr.edu."			
 			/>

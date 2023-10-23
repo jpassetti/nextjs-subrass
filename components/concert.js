@@ -102,7 +102,7 @@ const Concert = ({ data, teaser = false }) => {
 	return (
 		<Fragment>
 			<SEO
-				title={concertTitle}
+				title={`${concertTitle} - Live Concert by Syracuse University Brass Ensemble`}
 				url={`https://subrass.syr.edu/${uri}`}
 				description={`Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}, on ${moment(date).format("dddd, MMMM D, YYYY, h:mm a")}.`}
 			/>

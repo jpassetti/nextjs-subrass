@@ -11,7 +11,7 @@ const SEO = ({
     url=DOMAIN,
 }) => {
     return <Head>
-    <title>{`${title ? `${title} | ` : ''}${SITENAME}`}</title>
+    <title>{`${title ? title : SITENAME}`}</title>
     <meta key="og_title" property="og:title" content={`${title ? `${title} | ` : ''}${SITENAME}`} />
     <meta key="twitter_title" property="twitter:title" content={`${title ? `${title} | ` : ''}${SITENAME}`} />
     <meta key="viewport" name="viewport" content="initial-scale=1.0, width=device-width" />
