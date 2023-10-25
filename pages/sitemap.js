@@ -34,7 +34,7 @@ function generateSiteMap(posts) {
     // Fetching and adding musician paths
     const musicians = await getAllMusicians();
     const musicianPaths = musicians.map(musician => ({ 
-      path: `${musician.node.uri}` ,
+      path: `/about/musicians/${musician.node.slug}` ,
       lastmod: musician.node.modifiedGmt, // example
       changefreq: 'monthly' // example value
     }));
