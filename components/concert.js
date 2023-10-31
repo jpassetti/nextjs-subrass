@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
 import moment from 'moment';
 
+import Card from './card';
 import Head from 'next/head';
 import Heading from './heading';
+import Image from 'next/image';
 import Link from 'next/link';
 import List from './list';
 import Paragraph from './paragraph';
@@ -12,9 +14,9 @@ import SEO from './SEO';
 import { getAPStyleFormattedMonth, getFormattedAMPM } from '../lib/utilities';
 
 const Concert = ({ data, teaser = false }) => {
-	const { title: concertTitle, slug, uri, concertInformation } = data;
+	const { title: concertTitle, slug, uri, concertInformation, featuredImage } = data;
 	const { date, venue } = concertInformation;
-	const { title: venueTitle, venueInformation } = venue;
+	const { title: venueTitle, venueInformation, featuredImage : venueImage } = venue;
 	const { street, city, state, zipCode, coordinates } = venueInformation;
 
 	const month = parseInt(moment(date).format("M"));
@@ -79,6 +81,8 @@ const Concert = ({ data, teaser = false }) => {
 	}
 
 	if (teaser) return <Fragment>
+		<Card.CoverImage image={featuredImage || venueImage || null} />
+		<Card.Body>
 		<Heading level="3" marginBottom="1">
 			<Link href={uri}>
 				<a>
@@ -87,6 +91,7 @@ const Concert = ({ data, teaser = false }) => {
 			</Link>
 		</Heading>
 		<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
+		
 		<ListItem type="date" className="mb-0">
 			{formattedDate}
 		</ListItem>
@@ -98,6 +103,7 @@ const Concert = ({ data, teaser = false }) => {
 				{street}<br />
 				{city}, {state.toUpperCase()} {zipCode}</Paragraph>
 		</ListItem>
+		</Card.Body>
 	</Fragment>;
 	return (
 		<Fragment>
@@ -117,6 +123,28 @@ const Concert = ({ data, teaser = false }) => {
 				<a>
 					&laquo; Concerts
 				</a></Link></Heading>
+				{featuredImage ? (
+  <div style={{ marginBottom: "1rem" }}>
+    <Image
+      src={featuredImage.node.sourceUrl}
+      alt={featuredImage.node.altText}
+      width={featuredImage.node.mediaDetails.width}
+      height={featuredImage.node.mediaDetails.height}
+      layout="responsive"
+    />
+  </div>
+) : venueImage ? (
+  <div style={{ marginBottom: "1rem" }}>
+    <Image
+      src={venueImage.node.sourceUrl}
+      alt={venueImage.node.altText}
+      width={venueImage.node.mediaDetails.width}
+      height={venueImage.node.mediaDetails.height}
+      layout="responsive"
+    />
+  </div>
+) : null}
+
 			<Heading level="1" marginBottom="2">{concertTitle}</Heading>
 			<Paragraph marginBottom="4" diminish>{city}, {state.toUpperCase()}</Paragraph>
 			<List>

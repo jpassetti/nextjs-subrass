@@ -5,15 +5,20 @@
 	background-color: white;
 	border: 1px solid #dadada;
 	border-radius: .5rem;
-	padding: 1rem;
 	margin: .25rem;
-	//border-bottom: .5rem solid variables.$color__orange;
-	//cursor: pointer;
-	@include mixins.breakpoint(sm) {
-		padding: 1.25rem;
+	&__body {
+		padding: 1rem;
+		@include mixins.breakpoint(sm) {
+			padding: 1.25rem;
+		}
+	
+		@include mixins.breakpoint(md) {
+			padding: 1.5rem;
+		}
 	}
-
-	@include mixins.breakpoint(md) {
-		padding: 1.5rem;
+	&__image {
+		border-top-left-radius: .5rem;
+		border-top-right-radius: .5rem;
+		overflow: hidden;
 	}
 }

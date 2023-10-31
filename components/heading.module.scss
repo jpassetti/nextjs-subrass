@@ -11,23 +11,23 @@
 		}
 	}
 	&.h1 {
-		font-size: 2rem;
+		font-size: 1.75rem;
 		@include mixins.breakpoint(sm) {
-			font-size: 2.75rem;
+			font-size: 1.8rem;
 		}
 
 		@include mixins.breakpoint(md) {
-			font-size: 3.4rem;
+			font-size: 2.25rem;
 		}
 	}
 	&.h2 {
 		font-size: 1.5rem;
 		@include mixins.breakpoint(sm) {
-			font-size: 1.75rem;
+			font-size: 1.6rem;
 		}
 	
 		@include mixins.breakpoint(md) {
-			font-size: 2rem;
+			font-size: 1.8rem;
 		}
 	}
 	&.h3 {
