@@ -54,7 +54,7 @@ function PasswordModal({ isOpen, onClose}) {
             <ButtonUI icon="close" backgroundColor="blue" clickHandler={onClose} />
           </form>
           :  <Paragraph>
-          <a href="https://drive.google.com/drive/folders/1C6xiwHqxHxAEhfVABVyv9LBVYNQAt-MJ" target="_blank" rel="noopener noreferrer">
+          <a href="https://drive.google.com/drive/folders/1fz0C0C8LD5Q26HOQOfPCojyC6FjRk__K?usp=sharing" target="_blank" rel="noopener noreferrer">
               Click here to access the Google Drive folder
           </a>
       </Paragraph>}
