@@ -1,105 +1,105 @@
-@use '../styles/variables';
-@use '../styles/mixins';
+@use "../styles/variables";
+@use "../styles/mixins";
 
 .nav {
-	//background-color: limegreen;
-	margin-top: 2rem;
-	ul {
-		li {
-			font-family: variables.$font__sherman_sans;
-			color: variables.$color__blue;
-			font-size: 1.2rem;
-			font-weight: 700;
-			a {
-				color: variables.$color__blue;
-				padding-top: 0.5rem;
-				padding-bottom: 0.5rem;
-				display: block;
-				text-decoration: none;
-				&.active {
-					color: variables.$color__orange__medium;
-				}
-				&:hover, &:focus {
-					color: variables.$color__orange__medium;
-				}
-			}
-		}
-	}
+ //background-color: limegreen;
+ margin-top: 2rem;
+ ul {
+  li {
+   font-family: variables.$font__sherman_sans;
+   color: variables.$color__blue;
+   font-size: 1.2rem;
+   font-weight: 700;
+   a {
+    color: variables.$color__blue;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: block;
+    text-decoration: none;
+    &.active {
+     color: variables.$color__orange__medium;
+    }
+    &:hover,
+    &:focus {
+     color: variables.$color__orange__medium;
+    }
+   }
+  }
+ }
 }
 
 .socialnav {
-	padding-top: 1rem;
-	margin-top: 1rem;
-	border-top: 1px solid #fff;
-	ul {
-		li {
-			font-family: variables.$font__sherman_sans;
-			font-size: 1rem;
-			cursor: pointer;
-			text-align: center;
-			a {
-				display: block;
-				padding: .5rem 0;
-				text-decoration: none;
-				color: white;
-				&:hover,
-				&:focus {
-					color: variables.$color__orange;
-				}
-			}
-			&:hover,
-			&:focus {
-				color: variables.$color__orange;
-			}
-		}
-	}
-	@include mixins.breakpoint(laptop) {
-		border-top: 1px solid variables.$color__blue;
-		ul {
-			li {
-				color: variables.$color__blue;
-				text-align: left;
-				a {
-					color: variables.$color__blue;
-					&:hover,
-					&:focus {
-						color: variables.$color__orange;
-					}
-				}
-				&:hover,
-				&:focus {
-					color: variables.$color__orange;
-				}
-			}
-		}
-	}
-	
+ padding-top: 1rem;
+ margin-top: 1rem;
+ border-top: 1px solid #fff;
+ ul {
+  li {
+   font-family: variables.$font__sherman_sans;
+   font-size: 1rem;
+   cursor: pointer;
+   text-align: center;
+   a {
+    display: block;
+    padding: 0.35rem 0;
+    text-decoration: none;
+    color: white;
+    &:hover,
+    &:focus {
+     color: variables.$color__orange;
+    }
+   }
+   &:hover,
+   &:focus {
+    color: variables.$color__orange;
+   }
+  }
+ }
+ @include mixins.breakpoint(laptop) {
+  border-top: 1px solid variables.$color__blue;
+  ul {
+   li {
+    color: variables.$color__blue;
+    text-align: left;
+    a {
+     color: variables.$color__blue;
+     &:hover,
+     &:focus {
+      color: variables.$color__orange;
+     }
+    }
+    &:hover,
+    &:focus {
+     color: variables.$color__orange;
+    }
+   }
+  }
+ }
 }
 .mobileNav {
-	//background-color: limegreen;
-	margin-top: 2rem;
+ //background-color: limegreen;
+ margin-top: 2rem;
 
-	ul {
-		li {
-			a {
-				font-family: variables.$font__sherman_sans;
-				color: white;
-				font-size: 1.5rem;
-				font-weight: 700;
-				padding-top: 1rem;
-				padding-bottom: 1rem;
-				display: block;
-				text-decoration: none;
-				text-align: center;
-				&.active {
-					color: variables.$color__orange__medium;
-				}
+ ul {
+  li {
+   a {
+    font-family: variables.$font__sherman_sans;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    &.active {
+     color: variables.$color__orange__medium;
+    }
 
-				&:hover,
-				&:focus {
-					color: variables.$color__orange__medium;
-				}
-			}
-		}
-	}
+    &:hover,
+    &:focus {
+     color: variables.$color__orange__medium;
+    }
+   }
+  }
+ }
 }
