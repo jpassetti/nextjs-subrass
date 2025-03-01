@@ -1,21 +1,30 @@
-@use '../styles/variables';
+@use "../styles/variables";
 
 .listitem {
-	font-size: 1.1rem;
-	line-height: 1.4;
-	font-family: variables.$font__sherman_sans;
-	color: variables.$color__blue;
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	margin-bottom: 1rem;
-}
-.listicon {
-	width: 1.5rem;
-	margin-right: 1rem;
-	opacity: .4;
-}
-.listcontent {
-	width: calc(100% - 2.5rem);
+ font-size: 1.1rem;
+ line-height: 1.4;
+ font-family: variables.$font__sherman_sans;
+ color: variables.$color__blue;
+ width: 100%;
+ display: flex;
+ flex-wrap: wrap;
+ margin-bottom: 1rem;
+ list-style-type: none; // Default: no bullets
 }
 
+.listicon {
+ width: 1.5rem;
+ margin-right: 1rem;
+ opacity: 0.4;
+}
+
+.listcontent {
+ width: calc(100% - 2.5rem);
+}
+
+// ✅ Enable bullets when `.bullet` class is applied
+.bullet {
+ list-style-type: disc;
+ padding-left: 1rem;
+ display: list-item; // Allows bullets to appear correctly
+}

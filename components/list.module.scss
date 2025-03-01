@@ -1,6 +1,22 @@
 .list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    margin-bottom: 1rem;
+ margin: 0;
+ padding: 0;
+ list-style: none; // Default: no bullets
+ margin-bottom: 1rem;
+
+ &.bullets {
+  list-style: disc; // Enables bullets
+  padding-left: 1.5rem; // Indents bullets for readability
+ }
+
+ li {
+  margin-bottom: 0.5rem; // Adds spacing between list items
+ }
+
+ &.bullets li {
+  &::marker {
+   color: #333; // Adjust bullet color
+   font-size: 1rem; // Adjust bullet size
+  }
+ }
 }

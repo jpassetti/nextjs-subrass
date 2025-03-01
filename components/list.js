@@ -1,8 +1,15 @@
-import styles from './list.module.scss';
+import classNames from "classnames/bind";
+import styles from "./list.module.scss";
 
-const List = ({children}) => {
-    return <ul className={styles.list}>
-        {children}
-    </ul>
-}
+let cx = classNames.bind(styles);
+
+const List = ({ children, includeBullets = false, className = "" }) => {
+ const listClasses = cx({
+  list: true,
+  bullets: includeBullets, // ✅ Conditionally add "bullets" class
+ });
+
+ return <ul className={`${listClasses} ${className}`.trim()}>{children}</ul>;
+};
+
 export default List;
