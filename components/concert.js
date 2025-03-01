@@ -13,8 +13,6 @@ import SEO from "./SEO";
 
 import styles from "./concert.module.scss";
 
-import { getAPStyleFormattedMonth, getFormattedAMPM } from "../lib/utilities";
-
 const Concert = ({ data, teaser = false }) => {
  const {
   title: concertTitle,
@@ -31,69 +29,51 @@ const Concert = ({ data, teaser = false }) => {
   venueInformation,
   featuredImage: venueImage,
  } = venue;
- const { street, city, state, zipCode, coordinates } = venueInformation;
+ const { street, city, state, zipCode } = venueInformation;
 
- const month = parseInt(moment(date).format("M"));
- const monthDate = moment(date).format("D");
- const year = moment(date).format("YYYY");
- const dayOfTheWeek = moment(date).format("dddd");
- const formattedTime = moment(date).format("h:mm");
- const formattedTimeAMPM = getFormattedAMPM(moment(date).format("a"));
-
- const formattedDate = `${dayOfTheWeek}, ${getAPStyleFormattedMonth(
-  month
- )} ${monthDate}, ${year}`;
+ const formattedDate = moment(date).format("dddd, MMMM D, YYYY");
+ const formattedTime = moment(date).format("h:mm A");
 
  function addProductJsonLd() {
   return {
-   __html: `{
-	"@context": "https://schema.org",
-	"@type": "Event",
-	"name": "${concertTitle}",
-	"description": "${
-  excerpt ||
-  `Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}.`
- }",
-	"startDate": "${moment(date).format()}",
-	"endDate": "${moment(date).add(2, "h").format()}",
-	"eventStatus": "https://schema.org/EventScheduled",
-	"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-	"location": {
-		"name": "${venueTitle}",
-		"address": {
-			"@type": "PostalAddress",
-			"streetAddress": "${street}",
-			"addressLocality": "${city}",
-			"addressRegion": "NY",
-			"postalCode": "${zipCode}",
-			"addressCountry": "US"
-		},
-		"@type": "Place"
-	},
-	"image": [
-		"https://subrass.syr.edu/photos/1x1/photo.jpg",
-		"https://subrass.syr.edu/photos/4x3/photo.jpg",
-		"https://subrass.syr.edu/photos/16x9/photo.jpg"
-	],
-	"offers": {
-        "@type": "Offer",
-        "url": "${`https://subrass.syr.edu/concerts/${slug}`}",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "validFrom": "${moment(date).subtract(2, "months").format()}"
+   __html: JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: concertTitle,
+    description:
+     excerpt ||
+     `See the Syracuse University Brass Ensemble live at ${venueTitle} in ${city}, ${state.toUpperCase()} on ${formattedDate}.`,
+    startDate: moment(date).format(),
+    endDate: moment(date).add(2, "h").format(),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+     "@type": "Place",
+     name: venueTitle,
+     address: {
+      "@type": "PostalAddress",
+      streetAddress: street,
+      addressLocality: city,
+      addressRegion: state.toUpperCase(),
+      postalCode: zipCode,
+      addressCountry: "US",
+     },
     },
-	"isAccessibleForFree": true,
-	"performer": {
-		"@type": "PerformingGroup",
-		"name": "Syracuse University Brass Ensemble"
-	},
-	"organizer": {
-		"@type": "Organization",
-		"name": "Syracuse University Brass Ensemble",
-		"url": "https://subrass.syr.edu"
-	}
-}`,
+    image:
+     featuredImage?.node.sourceUrl ||
+     venueImage?.node.sourceUrl ||
+     "https://subrass.syr.edu/images/social/default-concert.jpg",
+    isAccessibleForFree: true,
+    performer: {
+     "@type": "PerformingGroup",
+     name: "Syracuse University Brass Ensemble",
+    },
+    organizer: {
+     "@type": "Organization",
+     name: "Syracuse University Brass Ensemble",
+     url: "https://subrass.syr.edu",
+    },
+   }),
   };
  }
 
@@ -110,22 +90,19 @@ const Concert = ({ data, teaser = false }) => {
      <Paragraph marginBottom="4" diminish>
       {city}, {state.toUpperCase()}
      </Paragraph>
-
-     <ListItem type="date" className="mb-0">
-      {formattedDate}
-     </ListItem>
-     <ListItem type="time" className="mb-2">
-      {formattedTime} {formattedTimeAMPM}
-     </ListItem>
-     <ListItem type="location">
-      <Paragraph>
-       {venueTitle}
-       <br />
-       {street}
-       <br />
-       {city}, {state.toUpperCase()} {zipCode}
-      </Paragraph>
-     </ListItem>
+     <List>
+      <ListItem type="date">{formattedDate}</ListItem>
+      <ListItem type="time">{formattedTime}</ListItem>
+      <ListItem type="location">
+       <Paragraph>
+        {venueTitle}
+        <br />
+        {street}
+        <br />
+        {city}, {state.toUpperCase()} {zipCode}
+       </Paragraph>
+      </ListItem>
+     </List>
     </Card.Body>
    </Fragment>
   );
@@ -133,12 +110,10 @@ const Concert = ({ data, teaser = false }) => {
   <Fragment>
    <SEO
     title={`${concertTitle} - Live Concert by Syracuse University Brass Ensemble`}
-    url={`https://subrass.syr.edu/${uri}`}
+    url={`https://subrass.syr.edu/concerts/${slug}`}
     description={
      excerpt ||
-     `Come see the Syracuse University Brass Ensemble play at the ${venueTitle} in ${city}, ${state.toUpperCase()}, on ${moment(
-      date
-     ).format("dddd, MMMM D, YYYY, h:mm a")}.`
+     `Join the Syracuse University Brass Ensemble live at ${venueTitle} in ${city}, ${state.toUpperCase()} on ${formattedDate}. Enjoy an evening of inspiring brass music!`
     }
    />
    <Head>
@@ -154,28 +129,25 @@ const Concert = ({ data, teaser = false }) => {
     </Link>
    </Heading>
    {featuredImage ? (
-    <div style={{ marginBottom: "1rem" }}>
-     <Image
-      src={featuredImage.node.sourceUrl}
-      alt={featuredImage.node.altText}
-      width={featuredImage.node.mediaDetails.width}
-      height={featuredImage.node.mediaDetails.height}
-      layout="responsive"
-     />
-    </div>
+    <Image
+     src={featuredImage.node.sourceUrl}
+     alt={featuredImage.node.altText || `${concertTitle} at ${venueTitle}`}
+     width={featuredImage.node.mediaDetails.width || 1200}
+     height={featuredImage.node.mediaDetails.height || 630}
+     layout="responsive"
+     priority
+    />
    ) : venueImage ? (
-    <div style={{ marginBottom: "1rem" }}>
-     <Image
-      src={venueImage.node.sourceUrl}
-      alt={venueImage.node.altText}
-      width={venueImage.node.mediaDetails.width}
-      height={venueImage.node.mediaDetails.height}
-      layout="responsive"
-     />
-    </div>
+    <Image
+     src={venueImage.node.sourceUrl}
+     alt={venueImage.node.altText || `Venue: ${venueTitle}`}
+     width={venueImage.node.mediaDetails.width || 1200}
+     height={venueImage.node.mediaDetails.height || 630}
+     layout="responsive"
+     priority
+    />
    ) : null}
-
-   <Heading level="1" marginBottom="2">
+   <Heading level="1" marginBottom="2" marginTop={1}>
     {concertTitle}
    </Heading>
    <Paragraph marginBottom="4" diminish>
@@ -186,7 +158,7 @@ const Concert = ({ data, teaser = false }) => {
      {formattedDate}
     </ListItem>
     <ListItem type="time" className="mb-2">
-     {formattedTime} {formattedTimeAMPM}
+     {formattedTime}
     </ListItem>
     <ListItem type="location">
      <Paragraph>
