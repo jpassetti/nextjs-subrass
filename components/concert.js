@@ -43,9 +43,11 @@ const Concert = ({ data, teaser = false }) => {
     description:
      excerpt ||
      `See the Syracuse University Brass Ensemble live at ${venueTitle} in ${city}, ${state.toUpperCase()} on ${formattedDate}.`,
-    startDate: moment(date).utcOffset(-4).format("YYYY-MM-DDTHH:mm:ssZ"),
+    startDate: moment(date)
+     .tz("America/New_York")
+     .format("YYYY-MM-DDTHH:mm:ssZ"),
     endDate: moment(date)
-     .utcOffset(-4)
+     .tz("America/New_York")
      .add(2, "h")
      .format("YYYY-MM-DDTHH:mm:ssZ"),
     eventStatus: "https://schema.org/EventScheduled",
