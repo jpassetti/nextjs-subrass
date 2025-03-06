@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 
 import Card from "./card";
 import Head from "next/head";
