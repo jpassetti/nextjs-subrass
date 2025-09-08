@@ -83,7 +83,7 @@ const Concerts = ({ concertsData }) => {
      classical to contemporary. Check out our upcoming concerts and enjoy an
      evening of inspiring music.
     </Paragraph>
-    <ConcertInteractive concerts={filterOldConcerts} label="2024-25" />
+    <ConcertInteractive concerts={filterOldConcerts} label="2025-26" />
    </Section>
   </Layout>
  );
