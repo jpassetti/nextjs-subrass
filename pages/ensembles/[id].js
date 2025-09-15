@@ -38,49 +38,79 @@ export async function getStaticProps({ params }) {
  };
 }
 export default function Ensemble({ ensembleData }) {
- const { title, ensembleInformation, slug } = ensembleData;
+ const { title, ensembleInformation, slug } = ensembleData || {};
+
+ // Defensive fallbacks to avoid crashes if data is missing/empty
+ const conductors = Array.isArray(ensembleInformation?.conductor)
+    ? ensembleInformation.conductor
+    : [];
+ const instruments = Array.isArray(ensembleInformation?.instruments)
+    ? ensembleInformation.instruments
+    : [];
  function addProductJsonLd() {
   const members = [];
 
-  ensembleInformation.conductor.forEach((part) => {
-   const { prefix, firstName, middleInitial, lastName, suffix } =
-    part.personInformation;
+    // Add conductors (if any)
+    conductors.forEach((part) => {
+     const {
+        prefix,
+        firstName,
+        middleInitial,
+        lastName,
+        suffix,
+     } = part?.personInformation || {};
 
-   let nameParts = [];
-   if (prefix) nameParts.push(prefix);
-   nameParts.push(firstName);
-   if (middleInitial) nameParts.push(`${middleInitial}.`);
-   nameParts.push(lastName);
-   if (suffix) nameParts.push(`, ${suffix}`);
+     // Skip if we don't have minimum name info
+     if (!firstName && !lastName) return;
 
-   const fullName = nameParts.join(" ");
+     let nameParts = [];
+     if (prefix) nameParts.push(prefix);
+     if (firstName) nameParts.push(firstName);
+     if (middleInitial) nameParts.push(`${middleInitial}.`);
+     if (lastName) nameParts.push(lastName);
+     if (suffix) nameParts.push(`, ${suffix}`);
 
-   members.push({
-    "@type": "Person",
-    name: fullName,
-   });
-  });
+     const fullName = nameParts.join(" ").trim();
 
-  ensembleInformation.instruments.forEach((part) => {
-   part.musicians.forEach((musician) => {
-    const { prefix, firstName, middleInitial, lastName, suffix } =
-     musician.personInformation;
-
-    let nameParts = [];
-    if (prefix) nameParts.push(prefix);
-    nameParts.push(firstName);
-    if (middleInitial) nameParts.push(`${middleInitial}.`);
-    nameParts.push(lastName);
-    if (suffix) nameParts.push(`, ${suffix}`);
-
-    const fullName = nameParts.join(" ");
-
-    members.push({
-     "@type": "Person",
-     name: fullName,
+     if (fullName) {
+        members.push({
+         "@type": "Person",
+         name: fullName,
+        });
+     }
     });
-   });
-  });
+
+    // Add musicians by instrument (if any)
+    instruments.forEach((part) => {
+     const musicians = Array.isArray(part?.musicians) ? part.musicians : [];
+     musicians.forEach((musician) => {
+        const {
+         prefix,
+         firstName,
+         middleInitial,
+         lastName,
+         suffix,
+        } = musician?.personInformation || {};
+
+        if (!firstName && !lastName) return;
+
+        let nameParts = [];
+        if (prefix) nameParts.push(prefix);
+        if (firstName) nameParts.push(firstName);
+        if (middleInitial) nameParts.push(`${middleInitial}.`);
+        if (lastName) nameParts.push(lastName);
+        if (suffix) nameParts.push(`, ${suffix}`);
+
+        const fullName = nameParts.join(" ").trim();
+
+        if (fullName) {
+         members.push({
+            "@type": "Person",
+            name: fullName,
+         });
+        }
+     });
+    });
 
   const schema = {
    "@context": "https://schema.org",
@@ -114,6 +144,7 @@ export default function Ensemble({ ensembleData }) {
     {title} Ensemble
    </Heading>
 
+  {conductors.filter((c) => c?.personInformation).length > 0 && (
    <Section>
     <Heading
      level="2"
@@ -125,42 +156,52 @@ export default function Ensemble({ ensembleData }) {
      Conductors
     </Heading>
     <Grid>
-     {ensembleInformation.conductor.map((part, index) => {
-      return (
-       <Grid.Item key={`conductor-${index}`}>
-        <Musician data={part} teaser />
-       </Grid.Item>
-      );
-     })}
+     {conductors
+      .filter((part) => part?.personInformation)
+      .map((part, index) => {
+       return (
+        <Grid.Item key={`conductor-${index}`}>
+         <Musician data={part} teaser />
+        </Grid.Item>
+       );
+      })}
     </Grid>
    </Section>
+  )}
 
-   {ensembleInformation.instruments.map((part, index) => {
-    const { instrument, musicians } = part;
-    return (
-     <Section key={`instrument-${index}`}>
-      <Heading
-       level="2"
-       marginTop="6"
-       marginBottom="2"
-       borderTop="1"
-       textTransform="uppercase"
-      >
-       {instrument.name}
-       {instrument.name !== "Percussion" ? `s` : ""}
-      </Heading>
-      <Grid>
-       {musicians.map((musician, index) => {
-        return (
-         <Grid.Item key={`musician-${index}`}>
-          <Musician data={musician} teaser />
-         </Grid.Item>
-        );
-       })}
-      </Grid>
-     </Section>
+  {instruments.length > 0 &&
+   instruments.map((part, index) => {
+     const instrumentObj = part?.instrument || {};
+     const instrumentName = instrumentObj?.name || "";
+    const musicians = (Array.isArray(part?.musicians) ? part.musicians : []).filter(
+     (m) => m?.personInformation
     );
-   })}
+     return (
+      <Section key={`instrument-${index}`}>
+        {instrumentName && (
+         <Heading
+          level="2"
+          marginTop="6"
+          marginBottom="2"
+          borderTop="1"
+          textTransform="uppercase"
+         >
+          {instrumentName}
+          {instrumentName !== "Percussion" ? `s` : ""}
+         </Heading>
+        )}
+        <Grid>
+         {musicians.map((musician, index) => {
+          return (
+            <Grid.Item key={`musician-${index}`}>
+             <Musician data={musician} teaser />
+            </Grid.Item>
+          );
+         })}
+        </Grid>
+      </Section>
+     );
+    })}
   </Layout>
  );
 }
