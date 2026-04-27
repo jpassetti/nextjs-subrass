@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { notFound } from "next/navigation";
 
 import Col from "../../components/col";
 import Heading from "../../components/heading";
 import Layout from "../../components/layout";
 import MainContent from "../../components/maincontent";
+import Paragraph from "../../components/paragraph";
 import Row from "../../components/row";
 import Section from "../../components/section";
 import { getPageBySlug } from "../../lib/api";
@@ -23,11 +23,11 @@ export const revalidate = 86400;
 export default async function AboutPage() {
  const pageData = await getPageBySlug("about");
 
- if (!pageData) {
-  notFound();
- }
-
- const { title, content, featuredImage } = pageData;
+ const { title, content, featuredImage } = pageData || {
+  title: "About",
+  content: "",
+  featuredImage: null,
+ };
  const featuredNode = featuredImage?.node;
 
  return (
@@ -50,7 +50,13 @@ export default async function AboutPage() {
         />
        </div>
       ) : null}
-      {content ? <MainContent content={content} /> : null}
+      {content ? (
+       <MainContent content={content} />
+      ) : (
+       <Paragraph type="intro">
+        About page content is temporarily unavailable. Please check back soon.
+       </Paragraph>
+      )}
      </Col>
     </Row>
    </Section>
