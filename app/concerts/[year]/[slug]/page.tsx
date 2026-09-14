@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import Concert from "../../../../components/concert";
 import Layout from "../../../../components/layout";
@@ -25,7 +26,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }): Promise<Metadata> {
  const resolvedParams = await params;
  const concertSlug = resolvedParams?.slug;
 
@@ -37,6 +38,12 @@ export async function generateMetadata({ params }) {
 
  const concertData = await getConcertBySlug(concertSlug);
  const concertTitle = concertData?.title || "Concert";
+ const canonicalUrl = concertData?.uri
+  ? `https://subrass.syr.edu${concertData.uri}`
+  : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`;
+ const socialImage =
+  concertData?.featuredImage?.node?.sourceUrl ||
+  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg";
  const description =
   stripHtml(concertData?.excerpt) ||
   `Join the Syracuse University Brass Ensemble for ${concertTitle}.`;
@@ -45,9 +52,25 @@ export async function generateMetadata({ params }) {
   title: `${concertTitle} - Live Concert by Syracuse University Brass Ensemble`,
   description,
   alternates: {
-   canonical: concertData?.uri
-    ? `https://subrass.syr.edu${concertData.uri}`
-    : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`,
+   canonical: canonicalUrl,
+  },
+  openGraph: {
+   type: "article",
+   url: canonicalUrl,
+   title: `${concertTitle} - Live Concert by Syracuse University Brass Ensemble`,
+   description,
+   images: [
+    {
+     url: socialImage,
+     alt: concertTitle,
+    },
+   ],
+  },
+  twitter: {
+   card: "summary_large_image",
+   title: `${concertTitle} - Live Concert by Syracuse University Brass Ensemble`,
+   description,
+   images: [socialImage],
   },
  };
 }
@@ -66,8 +89,41 @@ export default async function SingleConcertPage({ params }) {
   notFound();
  }
 
+ const concertTitle = concertData?.title || "Concert";
+ const concertCanonicalUrl = concertData?.uri
+  ? `https://subrass.syr.edu${concertData.uri}`
+  : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`;
+ const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+   {
+    "@type": "ListItem",
+    position: 1,
+    name: "Home",
+    item: "https://subrass.syr.edu/",
+   },
+   {
+    "@type": "ListItem",
+    position: 2,
+    name: "Concerts",
+    item: "https://subrass.syr.edu/concerts",
+   },
+   {
+    "@type": "ListItem",
+    position: 3,
+    name: concertTitle,
+    item: concertCanonicalUrl,
+   },
+  ],
+ };
+
  return (
   <Layout>
+   <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+   />
    <Section>
     <Concert data={concertData} />
    </Section>

@@ -1,13 +1,43 @@
 import "../styles/global.scss";
 
+import type { Metadata } from "next";
 import Script from "next/script";
 import Analytics from "./analytics";
 import Providers from "./providers";
 import * as gtag from "../lib/gtag";
 
-export const metadata = {
- title: "Syracuse University Brass Ensemble",
+export const metadata: Metadata = {
+ title: {
+  default: "Syracuse University Brass Ensemble",
+  template: "%s | Syracuse University Brass Ensemble",
+ },
  description: "Syracuse University Brass Ensemble official website.",
+ metadataBase: new URL("https://subrass.syr.edu"),
+ alternates: {
+  canonical: "/",
+ },
+ openGraph: {
+  type: "website",
+  locale: "en_US",
+  url: "https://subrass.syr.edu",
+  siteName: "Syracuse University Brass Ensemble",
+  title: "Syracuse University Brass Ensemble",
+  description: "Syracuse University Brass Ensemble official website.",
+  images: [
+   {
+    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
+    width: 1200,
+    height: 630,
+    alt: "Syracuse University Brass Ensemble",
+   },
+  ],
+ },
+ twitter: {
+  card: "summary_large_image",
+  title: "Syracuse University Brass Ensemble",
+  description: "Syracuse University Brass Ensemble official website.",
+  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+ },
 };
 
 export default function RootLayout({ children }) {

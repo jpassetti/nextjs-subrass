@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import Grid from "../../../components/grid";
 import Heading from "../../../components/heading";
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
 }
 
 function getEnsembleJsonLd(data) {
- const { title, ensembleInformation } = data;
+ const { title, slug, ensembleInformation } = data;
  const conductors = Array.isArray(ensembleInformation?.conductor)
   ? ensembleInformation.conductor
   : [];
@@ -27,7 +28,7 @@ function getEnsembleJsonLd(data) {
   ? ensembleInformation.instruments
   : [];
 
- const members: Array<{ "@type": "Person"; name: string }> = [];
+ const memberMap = new Map<string, { "@type": "Person"; name: string; url: string }>();
 
  conductors.forEach((part) => {
   const { prefix, firstName, middleInitial, lastName, suffix } =
@@ -44,9 +45,13 @@ function getEnsembleJsonLd(data) {
 
   const fullName = nameParts.join(" ").trim();
   if (fullName) {
-   members.push({
+    const personSlug = part?.slug;
+    memberMap.set(fullName, {
     "@type": "Person",
     name: fullName,
+     url: personSlug
+      ? `https://subrass.syr.edu/about/musicians/${personSlug}`
+      : "https://subrass.syr.edu/about",
    });
   }
  });
@@ -69,27 +74,37 @@ function getEnsembleJsonLd(data) {
 
    const fullName = nameParts.join(" ").trim();
    if (fullName) {
-    members.push({
+   const personSlug = musician?.slug;
+   memberMap.set(fullName, {
      "@type": "Person",
      name: fullName,
+    url: personSlug
+    ? `https://subrass.syr.edu/about/musicians/${personSlug}`
+    : "https://subrass.syr.edu/about",
     });
    }
   });
  });
 
+ const members = Array.from(memberMap.values());
+ const canonicalUrl = `https://subrass.syr.edu/ensembles/${slug}`;
+
  return {
   "@context": "https://schema.org",
   "@type": "MusicGroup",
-  name: `${title} Ensemble`,
+  "@id": canonicalUrl,
+  url: canonicalUrl,
+  name: title,
   description:
    "The Syracuse University Brass Ensemble (SUBE) is a group of 35 professional-level brass and percussion musicians.",
-  image: "images/group-photo-2019-crop-m_orig.jpg",
+  image:
+  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
   member: members,
   genre: "Brass",
  };
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }): Promise<Metadata> {
  const resolvedParams = await params;
  const ensembleId = resolvedParams?.id;
 
@@ -105,11 +120,34 @@ export async function generateMetadata({ params }) {
  const ensembleData = await getEnsembleBySlug(ensembleId);
  const title = ensembleData?.title || "Syracuse University Brass Ensemble";
  const slug = ensembleData?.slug || ensembleId;
+ const canonicalUrl = `https://subrass.syr.edu/ensembles/${slug}`;
+ const description = `${title} members and instrumentation for the Syracuse University Brass Ensemble.`;
 
  return {
   title: `${title} Members & Instruments - Syracuse University Brass Ensemble`,
+  description,
   alternates: {
-   canonical: `https://subrass.syr.edu/ensembles/${slug}`,
+   canonical: canonicalUrl,
+  },
+  openGraph: {
+   type: "website",
+   url: canonicalUrl,
+   title: `${title} Members & Instruments - Syracuse University Brass Ensemble`,
+   description,
+   images: [
+    {
+     url: "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
+     width: 1200,
+     height: 630,
+     alt: title,
+    },
+   ],
+  },
+  twitter: {
+   card: "summary_large_image",
+   title: `${title} Members & Instruments - Syracuse University Brass Ensemble`,
+   description,
+   images: ["https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
   },
  };
 }
@@ -135,12 +173,41 @@ export default async function EnsemblePage({ params }) {
  const instruments = Array.isArray(ensembleInformation?.instruments)
   ? ensembleInformation.instruments
   : [];
+ const ensembleCanonicalUrl = `https://subrass.syr.edu/ensembles/${ensembleData?.slug || ensembleId}`;
+ const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+   {
+    "@type": "ListItem",
+    position: 1,
+    name: "Home",
+    item: "https://subrass.syr.edu/",
+   },
+   {
+    "@type": "ListItem",
+    position: 2,
+    name: "Ensembles",
+    item: "https://subrass.syr.edu/ensembles",
+   },
+   {
+    "@type": "ListItem",
+    position: 3,
+    name: `${title} Ensemble`,
+    item: ensembleCanonicalUrl,
+   },
+  ],
+ };
 
  return (
   <Layout>
    <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(getEnsembleJsonLd(ensembleData)) }}
+   />
+   <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
   <Heading level={1} marginTop="8" marginBottom="4">
     {title} Ensemble

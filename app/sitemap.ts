@@ -1,4 +1,6 @@
 import { getAllConcertSlugs, getAllEnsembleSlugs, getAllMusicians } from "../lib/api";
+import { getAllConcerts } from "../lib/api";
+import { getVenuePagePath } from "../lib/utilities";
 
 const BASE_URL = "https://subrass.syr.edu";
 
@@ -11,13 +13,14 @@ function toSitemapEntry(path, lastModified, changeFrequency = "monthly") {
 }
 
 export default async function sitemap() {
- const [musicians, concerts, ensembles] = await Promise.all([
+ const [musicians, concerts, ensembles, concertDetails] = await Promise.all([
   getAllMusicians(),
   getAllConcertSlugs(),
   getAllEnsembleSlugs(),
+    getAllConcerts(),
  ]);
 
- const staticEntries = ["", "/about", "/concerts", "/contact"].map((path) =>
+ const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact"].map((path) =>
   toSitemapEntry(path, undefined, "weekly")
  );
 
@@ -49,5 +52,40 @@ export default async function sitemap() {
   })
   .filter(Boolean);
 
- return [...staticEntries, ...musicianEntries, ...concertEntries, ...ensembleEntries];
+ const venueMap: Record<string, { path: string; lastModified?: string }> = {};
+
+ concertDetails.forEach((concert: any) => {
+  const venueTitle = concert?.node?.concertInformation?.venue?.title;
+  if (!venueTitle) {
+  return;
+  }
+
+  const path = getVenuePagePath(venueTitle);
+  if (!venueMap[path]) {
+  venueMap[path] = {
+   path,
+   lastModified: concert?.node?.modifiedGmt,
+  };
+  return;
+  }
+
+  if (concert?.node?.modifiedGmt) {
+  venueMap[path].lastModified =
+   venueMap[path].lastModified && venueMap[path].lastModified > concert.node.modifiedGmt
+    ? venueMap[path].lastModified
+    : concert.node.modifiedGmt;
+  }
+ });
+
+ const venueEntries = Object.values(venueMap).map((venue) =>
+  toSitemapEntry(venue.path, venue.lastModified, "monthly")
+ );
+
+ return [
+  ...staticEntries,
+  ...musicianEntries,
+  ...concertEntries,
+  ...ensembleEntries,
+  ...venueEntries,
+ ];
 }

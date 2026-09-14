@@ -1,13 +1,39 @@
 import ConcertInteractive from "../components/concertInteractive";
+import type { Metadata } from "next";
 import Heading from "../components/heading";
 import Layout from "../components/layout";
 import Showcase from "../components/showcase";
 import { getAllConcerts } from "../lib/api";
 
-export const metadata = {
+export const metadata: Metadata = {
  title: "Syracuse University Brass Ensemble - Live Brass Music & Performances",
  description:
   "Experience the Syracuse University Brass Ensemble live! See upcoming concerts and enjoy powerful brass music by professional musicians from SU, SUNY Upstate, and beyond.",
+ alternates: {
+  canonical: "/",
+ },
+ openGraph: {
+  type: "website",
+  url: "https://subrass.syr.edu",
+  title: "Syracuse University Brass Ensemble - Live Brass Music & Performances",
+  description:
+   "Experience the Syracuse University Brass Ensemble live! See upcoming concerts and enjoy powerful brass music by professional musicians from SU, SUNY Upstate, and beyond.",
+  images: [
+   {
+    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
+    width: 1200,
+    height: 630,
+    alt: "Syracuse University Brass Ensemble",
+   },
+  ],
+ },
+ twitter: {
+  card: "summary_large_image",
+  title: "Syracuse University Brass Ensemble - Live Brass Music & Performances",
+  description:
+   "Experience the Syracuse University Brass Ensemble live! See upcoming concerts and enjoy powerful brass music by professional musicians from SU, SUNY Upstate, and beyond.",
+  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+ },
 };
 
 export default async function HomePage() {

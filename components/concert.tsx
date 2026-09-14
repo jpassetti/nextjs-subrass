@@ -12,6 +12,7 @@ import ListItem from "./listitem";
 import {
  getAPStyleFormattedDate,
  getAPStyleFormattedTime,
+ getVenuePagePath,
 } from "../lib/utilities";
 
 import styles from "./concert.module.scss";
@@ -32,10 +33,12 @@ const Concert = ({ data, teaser = false }) => {
   venueInformation,
   featuredImage: venueImage,
  } = venue;
- const { street, city, state, zipCode } = venueInformation;
+ const { street, city, state, zipCode, coordinates } = venueInformation;
 
  const formattedDate = getAPStyleFormattedDate(date, moment);
  const formattedTime = getAPStyleFormattedTime(date, moment);
+ const venuePath = getVenuePagePath(venueTitle);
+ const venueUrl = `https://subrass.syr.edu${venuePath}`;
 
  function addProductJsonLd() {
   return {
@@ -57,7 +60,17 @@ const Concert = ({ data, teaser = false }) => {
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
      "@type": "Place",
+      "@id": venueUrl,
+      url: venueUrl,
      name: venueTitle,
+      geo:
+      coordinates?.latitude && coordinates?.longitude
+       ? {
+         "@type": "GeoCoordinates",
+         latitude: coordinates.latitude,
+         longitude: coordinates.longitude,
+        }
+       : undefined,
      address: {
       "@type": "PostalAddress",
       streetAddress: street,
@@ -71,9 +84,17 @@ const Concert = ({ data, teaser = false }) => {
      featuredImage?.node.sourceUrl ||
      venueImage?.node.sourceUrl ||
      "https://subrass.syr.edu/images/social/default-concert.jpg",
+    url: uri ? `https://subrass.syr.edu${uri}` : undefined,
     isAccessibleForFree: true,
+    offers: {
+     "@type": "Offer",
+     url: uri ? `https://subrass.syr.edu${uri}` : "https://subrass.syr.edu/concerts",
+     price: "0",
+     priceCurrency: "USD",
+     availability: "https://schema.org/InStock",
+    },
     performer: {
-     "@type": "PerformingGroup",
+     "@type": "MusicGroup",
      name: "Syracuse University Brass Ensemble",
     },
     organizer: {
@@ -101,7 +122,7 @@ const Concert = ({ data, teaser = false }) => {
       <ListItem type="time">{formattedTime}</ListItem>
       <ListItem type="location">
        <Paragraph>
-        {venueTitle}
+        <Link href={venuePath}>{venueTitle}</Link>
         <br />
         {street}
         <br />

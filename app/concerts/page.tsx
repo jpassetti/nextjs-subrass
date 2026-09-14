@@ -1,14 +1,40 @@
 import ConcertInteractive from "../../components/concertInteractive";
+import type { Metadata } from "next";
 import Heading from "../../components/heading";
 import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
 import { getAllConcerts } from "../../lib/api";
 
-export const metadata = {
+export const metadata: Metadata = {
  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
  description:
   "Experience the power of live brass music! See the Syracuse University Brass Ensemble perform in concerts across New York and beyond.",
+ alternates: {
+  canonical: "/concerts",
+ },
+ openGraph: {
+  type: "website",
+  url: "https://subrass.syr.edu/concerts",
+  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
+  description:
+   "Experience the power of live brass music! See the Syracuse University Brass Ensemble perform in concerts across New York and beyond.",
+  images: [
+   {
+    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
+    width: 1200,
+    height: 630,
+    alt: "Syracuse University Brass Ensemble",
+   },
+  ],
+ },
+ twitter: {
+  card: "summary_large_image",
+  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
+  description:
+   "Experience the power of live brass music! See the Syracuse University Brass Ensemble perform in concerts across New York and beyond.",
+  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+ },
 };
 
 function getCurrentAcademicYear() {
@@ -70,6 +96,37 @@ export default async function ConcertsPage() {
  const nextConcertDate =
   currentYearUpcomingConcerts[0]?.node.concertInformation.date || "";
 
+ const upcomingEventList = currentYearUpcomingConcerts.slice(0, 20).map(({ node }, index) => {
+  const concertDate = node?.concertInformation?.date;
+  const venue = node?.concertInformation?.venue;
+  const venueAddress = venue?.venueInformation;
+
+  return {
+   "@type": "ListItem",
+   position: index + 1,
+   item: {
+    "@type": "MusicEvent",
+    name: node?.title,
+    startDate: concertDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    url: node?.uri ? `https://subrass.syr.edu${node.uri}` : undefined,
+    location: {
+     "@type": "Place",
+     name: venue?.title,
+     address: {
+      "@type": "PostalAddress",
+      streetAddress: venueAddress?.street,
+      addressLocality: venueAddress?.city,
+      addressRegion: venueAddress?.state?.toUpperCase?.() || venueAddress?.state,
+      postalCode: venueAddress?.zipCode,
+      addressCountry: "US",
+     },
+    },
+   },
+  };
+ });
+
  return (
   <Layout>
    <script
@@ -77,37 +134,19 @@ export default async function ConcertsPage() {
     dangerouslySetInnerHTML={{
      __html: JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "Event",
-      name: "Syracuse University Brass Ensemble - Live Performance",
-      startDate: nextConcertDate,
-      location: {
-       "@type": "Place",
-       name: "Hendricks Chapel",
-       address: {
-        "@type": "PostalAddress",
-        streetAddress: "100 College Pl",
-        addressLocality: "Syracuse",
-        addressRegion: "NY",
-        postalCode: "13244",
-        addressCountry: "US",
-       },
-      },
-      image: [
-       "https://subrass.syr.edu/photos/1x1/photo.jpg",
-       "https://subrass.syr.edu/photos/4x3/photo.jpg",
-       "https://subrass.syr.edu/photos/16x9/photo.jpg",
-      ],
-      description:
-       "Experience the Syracuse University Brass Ensemble live! See our upcoming concert dates and locations.",
-      performer: {
-       "@type": "MusicGroup",
-       name: "Syracuse University Brass Ensemble",
-      },
-      organizer: {
-       "@type": "Organization",
-       name: "Syracuse University Brass Ensemble",
-       url: "https://subrass.syr.edu",
-      },
+    "@type": "ItemList",
+    name: "Syracuse University Brass Ensemble Upcoming Concerts",
+    description:
+     "Experience the Syracuse University Brass Ensemble live. Explore upcoming concert dates, venues, and details.",
+    url: "https://subrass.syr.edu/concerts",
+    numberOfItems: upcomingEventList.length,
+    itemListElement: upcomingEventList,
+    performer: {
+     "@type": "MusicGroup",
+     name: "Syracuse University Brass Ensemble",
+     url: "https://subrass.syr.edu",
+    },
+    startDate: nextConcertDate || undefined,
      }),
     }}
    />

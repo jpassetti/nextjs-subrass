@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-set +e
+set -u -o pipefail
 
-status=0
+exit_code=0
 
 check_dependency_updates() {
   echo "=== Dependency updates (npm outdated) ==="
 
   # Always show the full npm outdated table for visibility.
-  npm outdated
+  npm outdated || true
 
   # Use JSON output to distinguish actionable in-range updates from major-only updates.
   local outdated_json
-  outdated_json="$(npm outdated --json 2>/dev/null)"
+  outdated_json="$(npm outdated --json 2>/dev/null || true)"
 
   local analysis
   analysis="$(printf '%s' "${outdated_json}" | node -e '
@@ -59,10 +59,10 @@ process.stdin.on("end", () => {
   actionable_count="$(printf '%s\n' "${analysis}" | sed -n 's/^ACTIONABLE=\([0-9][0-9]*\)$/\1/p' | head -n 1)"
 
   if [ -z "${actionable_count}" ]; then
-    status=1
+    exit_code=1
     echo "Result: FAIL (could not analyze npm outdated output)"
   elif [ "${actionable_count}" -gt 0 ]; then
-    status=1
+    exit_code=1
     echo "Result: FAIL (${actionable_count} actionable dependency update(s))"
   else
     echo "Result: PASS"
@@ -80,7 +80,7 @@ run_check() {
   local code=$?
 
   if [ "$code" -ne 0 ]; then
-    status=1
+    exit_code=1
     echo "Result: FAIL (${code})"
   else
     echo "Result: PASS"
@@ -89,12 +89,15 @@ run_check() {
   echo
 }
 
-check_dependency_updates
-run_check "Security audit (npm audit)" npm audit --audit-level=low
 run_check "Lint" npm run lint
 run_check "Type check" npm run typecheck
+run_check "Tests" npm run test
+run_check "Build" npm run build
+run_check "SEO assertions" npm run seo:check
+run_check "Security audit (npm audit)" npm audit --audit-level=low
+check_dependency_updates
 
-if [ "$status" -ne 0 ]; then
+if [ "$exit_code" -ne 0 ]; then
   echo "Health check completed with issues."
   exit 1
 fi

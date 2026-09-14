@@ -36,17 +36,37 @@ const Musician = ({ data, teaser = false }) => {
  };
 
  function addProductJsonLd() {
+  const instrumentNames = instruments?.edges?.map((item) => item?.node?.name).filter(Boolean) || [];
+  const alumniOf =
+   education
+    ?.map((item) => item?.university)
+    .filter(Boolean)
+    .map((university) => ({
+     "@type": "CollegeOrUniversity",
+     name: university,
+    })) || [];
+
   const schema = {
    "@context": "https://schema.org",
    "@type": "Person",
+   "@id": `https://subrass.syr.edu/about/musicians/${slug}`,
+   url: `https://subrass.syr.edu/about/musicians/${slug}`,
    name: buildFullName(),
    description: "A member of the Syracuse University Brass Ensemble",
-   image: featuredImage ? featuredImage.node.sourceUrl : "",
+   image:
+    featuredImage?.node?.sourceUrl ||
+    "https://subrass.syr.edu/photos/1x1/photo.jpg",
    jobTitle:
     slug === "james-t-spencer"
      ? "Music Director"
      : instruments.edges[0].node.name,
-   affiliation: "Syracuse University Brass Ensemble",
+   affiliation: {
+    "@type": "MusicGroup",
+    name: "Syracuse University Brass Ensemble",
+    url: "https://subrass.syr.edu",
+   },
+   knowsAbout: instrumentNames,
+   alumniOf,
   };
 
   return {
