@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "../../../../../lib/admin-auth";
+import { buildMasterClassRegistrationWhere, getMasterClassRegistrationOrder, parseMasterClassAdminFilters } from "../../../../../lib/master-class-admin.mjs";
 import { masterClassRegistrationsToCsv } from "../../../../../lib/master-class-export.mjs";
 import { getDatabase } from "../../../../../lib/neon";
 
-export async function GET() {
+export async function GET(request: Request) {
  if (!(await isAdminAuthenticated())) return new NextResponse("Unauthorized", { status: 401 });
 
+ const filters = parseMasterClassAdminFilters(new URL(request.url).searchParams);
+ const where = buildMasterClassRegistrationWhere(filters);
+ const orderBy = getMasterClassRegistrationOrder(filters);
  const sql = getDatabase();
- const rows = await sql`select * from master_class_registrations order by created_at desc`;
+ const rows = await sql.query(`select * from master_class_registrations ${where.clause} order by ${orderBy}`, where.values);
  const csv = masterClassRegistrationsToCsv(rows);
 
  return new NextResponse(csv, {

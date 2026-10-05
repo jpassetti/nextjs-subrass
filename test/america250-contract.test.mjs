@@ -20,8 +20,6 @@ test("concert landing page preserves essential event facts and navigation target
  const page = source("app/concerts/america250/page.tsx");
  for (const expected of [
   "Friday, Nov. 13, 2026",
-  "Student masterclass 4–5 p.m.",
-  "Concert 6:30–8 p.m.",
   "Free and open to the public",
   'href="#details"',
   'href="#masterclass"',
@@ -32,10 +30,47 @@ test("concert landing page preserves essential event facts and navigation target
   'id="program"',
   'id="parking"',
  ]) assert.match(page, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+ assert.match(page, /Student masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
+ assert.match(page, /Concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
+});
+
+test("full-width layout offsets row gutters to prevent mobile horizontal scrolling", () => {
+ const containerStyles = source("components/container.module.scss");
+ assert.match(containerStyles, /&\.full\s*\{[\s\S]*padding-left: \.5rem;[\s\S]*padding-right: \.5rem;/);
+});
+
+test("concert page provides complete event SEO and social metadata", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ assert.match(page, /title = "America 250 Concert"/);
+ assert.match(page, /keywords:\s*\[/);
+ assert.match(page, /robots:\s*\{/);
+ assert.match(page, /siteName: "Syracuse University Brass Ensemble"/);
+ assert.match(page, /"@type": "MusicEvent"/);
+ assert.match(page, /"@type": "BreadcrumbList"/);
+ assert.match(page, /streetAddress: "121 Crouse Drive"/);
+ assert.match(page, /mainEntityOfPage: CANONICAL_URL/);
+});
+
+test("concert sections use accessible contextual Font Awesome icons", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ for (const icon of ["faLandmark", "faGraduationCap", "faBookOpen", "faCircleInfo"]) {
+  assert.match(page, new RegExp(`icon=\\{${icon}\\} aria-hidden="true"`));
+ }
+ assert.match(page, /className=\{styles\.sectionHeadingIcon\}/);
+});
+
+test("concert page displays an accessible visual breadcrumb trail", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ assert.match(page, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
+ assert.match(page, /icon=\{faHouse\} aria-hidden="true"/);
+ assert.match(page, /<Link href="\/concerts">Concerts<\/Link>/);
+ assert.match(page, /<span aria-current="page">America 250<\/span>/);
 });
 
 test("concert program retains both ensembles, numbered sections, and official Army link", () => {
  const page = source("app/concerts/america250/page.tsx");
+ assert.match(page, /src="\/images\/group-photo-2022\.jpg"/);
+ assert.match(page, /src="\/america250\/10th-mountain-division-band\.jpeg"/);
  assert.match(page, /programNumber[^>]*>1</);
  assert.match(page, /programNumber[^>]*>2</);
  assert.match(page, /programNumber[^>]*>3</);
@@ -43,6 +78,17 @@ test("concert program retains both ensembles, numbered sections, and official Ar
  assert.match(page, /10th Mountain Division Band/);
  assert.match(page, /Joint finale/);
  assert.match(page, /https:\/\/home\.army\.mil\/drum\/units-tenants\/10th-mountain-division-band/);
+});
+
+test("visitor information separates admission, parking, and accommodations", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ for (const heading of ["Admission", "Parking", "Accommodations"]) {
+  assert.match(page, new RegExp(`<h3>${heading}<\\/h3>`));
+ }
+ assert.match(page, /Irving Garage/);
+ assert.match(page, /Stadium Pl/);
+ assert.match(page, /google\.com\/maps\/search/);
+ assert.match(page, /target="_blank" rel="noopener noreferrer"/);
 });
 
 test("master class routes enforce high-school-only messaging and route separation", () => {
@@ -124,4 +170,18 @@ test("registration persists before sending a non-fatal email notification", () =
  assert.ok(insertPosition > -1 && notificationPosition > insertPosition);
  assert.match(route, /try \{\s*await sendMasterClassNotification[\s\S]*catch \(notificationError\)/);
  assert.match(route, /returning id/);
+});
+
+test("admin provides authenticated create, update, archive, and restore operations", () => {
+ const createRoute = source("app/api/master-class/admin/registrations/route.ts");
+ const recordRoute = source("app/api/master-class/admin/registrations/[id]/route.ts");
+ const adminPage = source("app/master-class/admin/page.tsx");
+ assert.match(createRoute, /isAdminAuthenticated/);
+ assert.match(createRoute, /insert into master_class_registrations/);
+ assert.match(recordRoute, /isAdminAuthenticated/);
+ assert.match(recordRoute, /update master_class_registrations set first_name/);
+ assert.match(recordRoute, /deleted_at = now\(\)/);
+ assert.match(recordRoute, /deleted_at = null/);
+ assert.match(adminPage, /Add registration/);
+ assert.match(adminPage, /View and edit/);
 });

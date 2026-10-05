@@ -16,8 +16,11 @@
     "health": "bash ./scripts/health-check.sh"
   },
   "dependencies": {
-    "@neon/config": "^1.8.3",
-    "@neon/env": "^1.5.0",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
+    "@neon/config": "^1.8.4",
+    "@neon/env": "^1.5.1",
     "@neondatabase/serverless": "^1.2.0",
     "classnames": "^2.5.1",
     "framer-motion": "^13.3.0",

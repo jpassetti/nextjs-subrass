@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpen, faCircleInfo, faGraduationCap, faHouse, faLandmark } from "@fortawesome/free-solid-svg-icons";
 
 import Layout from "../../../components/layout";
 import Section from "../../../components/section";
@@ -20,15 +22,39 @@ const SHOWCASE_IMAGE = "/america250/america250--left.jpg";
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
- const title = EVENT_TITLE;
- const description = "A free America 250 concert featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band, plus a student masterclass for high school musicians.";
+ const title = "America 250 Concert";
+ const socialTitle = "America 250 Concert at Hendricks Chapel";
+ const description = "Join the Syracuse University Brass Ensemble and 10th Mountain Division Band for a free America 250 concert Nov. 13, 2026, at Hendricks Chapel.";
 
  return {
   title,
   description,
+  keywords: [
+   "America 250 concert",
+   "Syracuse University Brass Ensemble",
+   "10th Mountain Division Band",
+   "Hendricks Chapel concert",
+   "Syracuse concerts",
+   "free concert Syracuse",
+   "America 250 Syracuse",
+  ],
+  category: "Music",
   alternates: { canonical: CANONICAL_URL },
-  openGraph: { type: "website", url: CANONICAL_URL, title, description, images: [{ url: FEATURED_IMAGE, width: 2000, height: 1294, alt: title }] },
-  twitter: { card: "summary_large_image", title, description, images: [FEATURED_IMAGE] },
+  robots: {
+   index: true,
+   follow: true,
+   googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  openGraph: {
+   type: "website",
+   locale: "en_US",
+   siteName: "Syracuse University Brass Ensemble",
+   url: CANONICAL_URL,
+   title: socialTitle,
+   description,
+   images: [{ url: FEATURED_IMAGE, width: 2000, height: 1294, alt: `${EVENT_TITLE} concert artwork` }],
+  },
+  twitter: { card: "summary_large_image", title: socialTitle, description, images: [FEATURED_IMAGE] },
  };
 }
 
@@ -44,41 +70,69 @@ export default async function America250Page() {
  const eventSchema = {
   "@context": "https://schema.org",
   "@type": "MusicEvent",
+  "@id": `${CANONICAL_URL}#event`,
   name: EVENT_TITLE,
   url: CANONICAL_URL,
+  mainEntityOfPage: CANONICAL_URL,
   description: "A free joint concert by the Syracuse University Brass Ensemble and the 10th Mountain Division Band commemorating America’s 250th anniversary.",
   startDate: CONCERT_START,
   endDate: CONCERT_END,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  image: `https://subrass.syr.edu${FEATURED_IMAGE}`,
+  image: [`https://subrass.syr.edu${FEATURED_IMAGE}`],
+  inLanguage: "en-US",
+  keywords: "America 250, brass ensemble, military band, Syracuse, free concert",
+  audience: { "@type": "Audience", audienceType: "General public" },
   location: {
    "@type": "Place",
+   "@id": "https://subrass.syr.edu/concerts/venues/hendricks-chapel",
    name: venue.title,
+   sameAs: "https://chapel.syracuse.edu/",
    address: {
     "@type": "PostalAddress",
-    streetAddress: venueInformation.street,
-    addressLocality: venueInformation.city,
-    addressRegion: venueInformation.state.toUpperCase(),
-    postalCode: String(venueInformation.zipCode),
+    streetAddress: "121 Crouse Drive",
+    addressLocality: "Syracuse",
+    addressRegion: "NY",
+    postalCode: "13244",
     addressCountry: "US",
    },
   },
   performer: [
    { "@type": "MusicGroup", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
-   { "@type": "MusicGroup", name: "10th Mountain Division Band" },
+   { "@type": "MusicGroup", name: "10th Mountain Division Band", url: "https://home.army.mil/drum/units-tenants/10th-mountain-division-band" },
   ],
   organizer: { "@type": "Organization", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
   isAccessibleForFree: true,
   offers: { "@type": "Offer", url: CANONICAL_URL, price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
  };
 
+ const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+   { "@type": "ListItem", position: 1, name: "Home", item: "https://subrass.syr.edu/" },
+   { "@type": "ListItem", position: 2, name: "Concerts", item: "https://subrass.syr.edu/concerts" },
+   { "@type": "ListItem", position: 3, name: "America 250", item: CANONICAL_URL },
+  ],
+ };
+
  return (
   <Layout>
    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
+   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
    <Section>
     <main className={styles.page}>
-     <Link className={styles.backLink} href="/concerts">&larr; All concerts</Link>
+     <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+      <ol>
+       <li>
+        <Link className={styles.breadcrumbHome} href="/" aria-label="Home">
+         <FontAwesomeIcon icon={faHouse} aria-hidden="true" />
+        </Link>
+       </li>
+       <li><Link href="/concerts">Concerts</Link></li>
+       <li><span aria-current="page">America 250</span></li>
+      </ol>
+     </nav>
 
      <div className={styles.hero}>
       <div className={styles.heroArtwork}>
@@ -96,7 +150,7 @@ export default async function America250Page() {
        <p className={styles.eyebrow}>Friday, Nov. 13, 2026 · Hendricks Chapel</p>
        <h1 className={styles.title}>A Celebration of Service, Education, and Musical Excellence</h1>
        <p className={styles.lede}>Featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
-       <p className={styles.heroMeta}>Student masterclass 4–5 p.m.<br />Concert 6:30–8 p.m.<br />Free and open to the public.</p>
+       <p className={styles.heroMeta}>Student masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Free and open to the public.</p>
       </div>
      </div>
 
@@ -119,25 +173,21 @@ export default async function America250Page() {
 
      <section className={styles.section}>
       <p className={styles.sectionLead}>Free and open to the public</p>
-      <h2>Two ensembles. One landmark celebration.</h2>
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faLandmark} aria-hidden="true" />Two ensembles. One landmark celebration.</h2>
       <p>On Friday, Nov. 13, Hendricks Chapel will welcome the Syracuse University Brass Ensemble and the 10th Mountain Division Band for a distinguished musical collaboration commemorating America’s 250th anniversary.</p>
       <p>The program brings together accomplished civilian and military musicians in a shared celebration of service, education, community, and artistic excellence. Each ensemble will present its own performance before joining forces for a powerful finale honoring the nation’s history and those who serve.</p>
       <p>Presented in one of Syracuse University’s most iconic spaces, this special event places music at the heart of the semiquincentennial—connecting generations, institutions, and communities through the enduring traditions of the American concert band.</p>
       <div className={styles.quoteGrid}>
        <blockquote>
-        <p>“[Placeholder: A quote about the significance of America’s 250th anniversary, the partnership with the 10th Mountain Division Band, and music’s ability to bring communities together.]”</p>
+        <p>“America’s 250th anniversary invites us to reflect not only on the history we have inherited, but also on the communities we continue to build together. By bringing the Syracuse University Brass Ensemble and the 10th Mountain Division Band together in Hendricks Chapel, this concert honors service, education, and music’s enduring power to unite us.”</p>
         <footer><strong>Dr. James T. Spencer</strong><br />Syracuse University Brass Ensemble</footer>
-       </blockquote>
-       <blockquote>
-        <p>“[Placeholder: A quote about military music, service, community engagement, and the opportunity to encourage the next generation of musicians.]”</p>
-        <footer><strong>MSG Smicker</strong><br />10th Mountain Division Band</footer>
        </blockquote>
       </div>
      </section>
 
      <section className={`${styles.section} ${styles.masterclass}`} id="masterclass">
-      <p className={styles.sectionLabel}>Student masterclass · 4–5 p.m.</p>
-      <h2>Explore a life in music</h2>
+      <p className={styles.sectionLabel}>Student masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faGraduationCap} aria-hidden="true" />Explore a life in music</h2>
       <p>High school musicians are invited to join members of the 10th Mountain Division Band for a conversation about music careers, audition preparation, performance confidence, effective practice methods, and life as a professional military musician.</p>
       <p>Band members will share their musical journeys, offer practical guidance, demonstrate techniques, and answer questions about performance, education, military service, and other music-related career opportunities.</p>
       <Link className={styles.button} href="/concerts/america250/master-class">High school students: learn more and RSVP</Link>
@@ -145,24 +195,30 @@ export default async function America250Page() {
 
      <section className={styles.programSection} id="program">
       <p className={styles.sectionLabel}>Concert · 6:30 p.m.</p>
-      <h2>Concert program</h2>
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faBookOpen} aria-hidden="true" />Concert program</h2>
       <div className={styles.programGrid}>
        <article>
-        <div className={styles.programNumber} aria-hidden="true">1</div>
-        <div>
-         <h3>Syracuse University Brass Ensemble</h3>
-         <p>SUBE brings together professional-level brass and percussion musicians from Syracuse University, SUNY Upstate Medical University, and communities across Central New York. The ensemble pairs ambitious repertoire with a longstanding commitment to public performance, education, and regional collaboration.</p>
+        <Image className={styles.programImage} src="/images/group-photo-2022.jpg" alt="Members of the Syracuse University Brass Ensemble" width={2200} height={870} sizes="(min-width: 700px) 36vw, 100vw" />
+        <div className={styles.programCardBody}>
+         <div className={styles.programNumber} aria-hidden="true">1</div>
+         <div>
+          <h3>Syracuse University Brass Ensemble</h3>
+          <p>SUBE brings together professional-level brass and percussion musicians from Syracuse University, SUNY Upstate Medical University, and communities across Central New York. The ensemble pairs ambitious repertoire with a longstanding commitment to public performance, education, and regional collaboration.</p>
+         </div>
         </div>
        </article>
        <article>
-        <div className={styles.programNumber} aria-hidden="true">2</div>
-        <div>
-         <h3>10th Mountain Division Band</h3>
-         <p>Based at Fort Drum, the 10th Mountain Division Band is an ensemble of Soldier-musicians serving the 10th Mountain Division and surrounding communities. Through ceremonial, concert, and educational performances, the band stewards military tradition, builds community, and represents the professionalism of the U.S. Army.</p>
-         <a className={styles.cardLink} href="https://home.army.mil/drum/units-tenants/10th-mountain-division-band" target="_blank" rel="noopener noreferrer">
-          <span className={styles.cardLinkText}>Visit the 10th Mountain Division Band website</span>
-          <span className={styles.cardLinkArrow} aria-hidden="true">&rarr;</span>
-         </a>
+        <Image className={styles.programImage} src="/america250/10th-mountain-division-band.jpeg" alt="Members of the 10th Mountain Division Band performing" width={1732} height={1154} sizes="(min-width: 700px) 36vw, 100vw" />
+        <div className={styles.programCardBody}>
+         <div className={styles.programNumber} aria-hidden="true">2</div>
+         <div>
+          <h3>10th Mountain Division Band</h3>
+          <p>Based at Fort Drum, the 10th Mountain Division Band is an ensemble of Soldier-musicians serving the 10th Mountain Division and surrounding communities. Through ceremonial, concert, and educational performances, the band stewards military tradition, builds community, and represents the professionalism of the U.S. Army.</p>
+          <a className={styles.cardLink} href="https://home.army.mil/drum/units-tenants/10th-mountain-division-band" target="_blank" rel="noopener noreferrer">
+           <span className={styles.cardLinkText}>Visit the 10th Mountain Division Band website</span>
+           <span className={styles.cardLinkArrow} aria-hidden="true">&rarr;</span>
+          </a>
+         </div>
         </div>
        </article>
       </div>
@@ -176,11 +232,27 @@ export default async function America250Page() {
       </div>
      </section>
 
-     <section className={styles.section} id="parking">
-      <h2>Admission, parking, and accommodations</h2>
-      <p><strong>The concert is free and open to the public.</strong> No concert registration is required. Registration is requested only for high school musicians attending the student masterclass.</p>
-      <p>Public parking is available at the Irving Avenue Garage. Please allow additional time for parking and walking to Hendricks Chapel.</p>
-      <p>Questions or accommodation requests? Please contact <a href="mailto:subrass@syr.edu">subrass@syr.edu</a>.</p>
+     <section className={`${styles.section} ${styles.accessSection}`} id="parking">
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faCircleInfo} aria-hidden="true" />Admission, parking, and accommodations</h2>
+      <div className={styles.accessGrid}>
+       <article className={styles.accessCard}>
+        <h3>Admission</h3>
+        <p><strong>The concert is free and open to the public.</strong> No concert registration is required. Registration is requested only for high school musicians attending the student masterclass.</p>
+       </article>
+       <article className={styles.accessCard}>
+        <h3>Parking</h3>
+        <p>Public parking is available at Irving Garage. Please allow additional time for parking and walking to Hendricks Chapel.</p>
+        <a className={styles.mapLink} href="https://www.google.com/maps/search/?api=1&amp;query=Irving+Garage%2C+Stadium+Place%2C+Syracuse%2C+NY+13210" target="_blank" rel="noopener noreferrer">
+         <strong>Irving Garage</strong>
+         <span>Stadium Pl<br />Syracuse, NY 13210</span>
+         <span className={styles.mapLinkCta}>Open in maps <span aria-hidden="true">&rarr;</span></span>
+        </a>
+       </article>
+       <article className={styles.accessCard}>
+        <h3>Accommodations</h3>
+        <p>For accessibility accommodations or questions about attending the event, please contact <a href="mailto:subrass@syr.edu">subrass@syr.edu</a>.</p>
+       </article>
+      </div>
      </section>
     </main>
    </Section>

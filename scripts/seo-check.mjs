@@ -22,6 +22,16 @@ const checks = [
   ],
  },
  {
+  file: "app/concerts/america250/page.tsx",
+  tests: [
+   { name: "America 250 page includes MusicEvent JSON-LD", regex: /"@type":\s*"MusicEvent"/ },
+   { name: "America 250 page includes BreadcrumbList JSON-LD", regex: /"@type":\s*"BreadcrumbList"/ },
+   { name: "America 250 page has canonical metadata", regex: /alternates:\s*\{ canonical: CANONICAL_URL \}/ },
+   { name: "America 250 page has indexable robots metadata", regex: /googleBot:\s*\{ index: true, follow: true/ },
+   { name: "America 250 page has social metadata", regex: /siteName:\s*"Syracuse University Brass Ensemble"/ },
+  ],
+ },
+ {
   file: "app/concerts/[year]/[slug]/page.tsx",
   tests: [
    {

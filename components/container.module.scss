@@ -34,7 +34,9 @@
 	}
 	&.full {
 		width: 100%;
-		padding-left: 0;
-		padding-right: 0;
+		// Match the row's negative half-rem gutters so it cannot extend
+		// beyond the viewport on narrow screens.
+		padding-left: .5rem;
+		padding-right: .5rem;
 	}
 }

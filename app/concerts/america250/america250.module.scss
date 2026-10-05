@@ -5,19 +5,75 @@
  color: variables.$color__blue;
  font-family: variables.$font__sherman_sans;
  max-width: 72rem;
+
+ :global(#details),
+ :global(#masterclass),
+ :global(#program),
+ :global(#parking) {
+  scroll-margin-top: 2rem;
+ }
 }
 
-:global(#details),
-:global(#masterclass),
-:global(#program),
-:global(#parking) {
- scroll-margin-top: 2rem;
-}
+.noWrap { white-space: nowrap; }
 
-.backLink {
- display: inline-block;
- font-weight: 700;
+.breadcrumbs {
  margin: 2rem 0 1rem;
+
+ ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .9rem;
+  gap: .4rem;
+ }
+
+ li {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+ }
+
+ li + li::before {
+  color: variables.$color__gray__light;
+  content: "/";
+  margin-right: .4rem;
+ }
+
+ a {
+  color: variables.$color__blue;
+  font-weight: 700;
+  text-decoration-color: variables.$color__orange;
+  text-decoration-thickness: .1rem;
+  text-underline-offset: .2rem;
+ }
+
+ a:hover,
+ a:focus-visible { text-decoration-color: variables.$color__blue; }
+
+ span[aria-current='page'] {
+  color: variables.$color__blue;
+  font-weight: 700;
+ }
+}
+
+.breadcrumbHome {
+ align-items: center;
+ background: variables.$color__orange_10;
+ border-radius: 50%;
+ display: inline-flex;
+ height: 2rem;
+ justify-content: center;
+ text-decoration: none !important;
+ transition: background-color .2s ease, color .2s ease;
+ width: 2rem;
+
+ svg { width: .85rem; }
+
+ &:hover,
+ &:focus-visible {
+  background: variables.$color__orange;
+  color: variables.$color__blue;
+ }
 }
 
 .hero {
@@ -124,20 +180,77 @@
  text-transform: uppercase;
 }
 
-.quoteGrid {
+.sectionHeading {
+ align-items: flex-start;
+ display: flex;
+ gap: .7rem;
+}
+
+.sectionHeadingIcon {
+ color: variables.$color__orange__medium;
+ flex: 0 0 auto;
+ margin-top: .14em;
+ width: .9em;
+}
+
+.accessSection { max-width: none; }
+
+.accessGrid {
  display: grid;
  gap: 1rem;
- margin-top: 1.5rem;
 
- @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.accessCard {
+ background: white;
+ border: 1px solid variables.$color__gray__light;
+ border-top: .35rem solid variables.$color__orange;
+ padding: 1.5rem;
+
+ h3 {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: .75rem;
+ }
+
+ p { font-size: 1rem; }
+}
+
+.mapLink {
+ background: variables.$color__orange_10;
+ color: variables.$color__blue;
+ display: grid;
+ gap: .35rem;
+ margin-top: 1.25rem;
+ padding: 1rem;
+ text-decoration: none;
+ transition: background-color .2s ease;
+
+ strong { text-decoration: underline; text-decoration-thickness: .1rem; text-underline-offset: .2rem; }
+ > span:not(.mapLinkCta) { line-height: 1.45; }
+
+ &:hover,
+ &:focus-visible { background: #fde1d0; }
+}
+
+.mapLinkCta {
+ color: variables.$color__orange__medium;
+ font-size: .9rem;
+ font-weight: 700;
+ margin-top: .25rem;
+}
+
+.quoteGrid {
+ margin-top: 1.5rem;
+ max-width: 48rem;
 
  blockquote {
   border-left: .35rem solid variables.$color__orange;
   margin: 0;
   padding: 1.5rem;
  }
-
- blockquote:nth-child(2) { background: variables.$color__orange_10; }
 
  blockquote > p {
   font-family: variables.$font__sherman_serif;
@@ -181,13 +294,25 @@
 
  article {
   border: 1px solid variables.$color__gray__light;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  padding: 1.5rem;
+  overflow: hidden;
  }
  h3 { font-family: variables.$font__sherman_serif; font-size: 1.35rem; font-weight: 400; margin-bottom: .75rem; }
  p { font-size: 1.05rem; line-height: 1.55; }
+}
+
+.programImage {
+ aspect-ratio: 16 / 7;
+ display: block;
+ height: auto;
+ object-fit: cover;
+ width: 100%;
+}
+
+.programCardBody {
+ display: grid;
+ gap: 1rem;
+ grid-template-columns: 3rem minmax(0, 1fr);
+ padding: 1.5rem;
 }
 
 .programNumber {
@@ -196,9 +321,9 @@
  background: variables.$color__blue;
  color: white;
  display: flex;
- font-family: variables.$font__sherman_serif;
+ font-family: variables.$font__sherman_sans;
  font-size: 1.5rem;
- font-weight: 400;
+ font-weight: 700;
  height: 3rem;
  justify-content: center;
  line-height: 1;
