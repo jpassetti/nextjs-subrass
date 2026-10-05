@@ -116,3 +116,12 @@ test("health check blocks production vulnerabilities while reporting development
  assert.match(health, /npm audit --omit=dev --audit-level=low/);
  assert.match(health, /run_warning_check "Development dependency advisory report"/);
 });
+
+test("registration persists before sending a non-fatal email notification", () => {
+ const route = source("app/api/master-class/register/route.ts");
+ const insertPosition = route.indexOf("insert into master_class_registrations");
+ const notificationPosition = route.indexOf("await sendMasterClassNotification");
+ assert.ok(insertPosition > -1 && notificationPosition > insertPosition);
+ assert.match(route, /try \{\s*await sendMasterClassNotification[\s\S]*catch \(notificationError\)/);
+ assert.match(route, /returning id/);
+});

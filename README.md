@@ -10,6 +10,12 @@ Master class information is available at `/concerts/america250/master-class`, th
    - `DATABASE_URL`: Neon pooled connection string
    - `MASTER_CLASS_ADMIN_PASSWORD`: password for the registration list
    - `MASTER_CLASS_ADMIN_SESSION_SECRET`: a long random value used to sign administrator sessions
+   - `RESEND_API_KEY`: sending-only Resend API key for the verified `subrass.org` domain
+   - `RSVP_FROM_EMAIL`: sender identity, recommended as `SU Brass Ensemble <rsvp@subrass.org>`
+   - `RSVP_REPLY_TO`: monitored inbox for replies, recommended as `subrass@syr.edu`
+   - `RSVP_NOTIFICATION_TO`: administrator inbox receiving new-registration alerts
+
+Registration notifications contain no student contact information or notes. A notification failure is logged but does not cause an otherwise successful database registration to fail.
 
 ## Quality and Health
 
