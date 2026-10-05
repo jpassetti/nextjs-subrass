@@ -18,6 +18,16 @@ module.exports = {
 	async redirects() {
 		return [
 		{
+			source: '/master-class',
+			destination: '/concerts/america250/master-class',
+			permanent: true,
+		},
+		{
+			source: '/concerts/2026-27/celebrate-americas-250th-anniversary-concert',
+			destination: '/concerts/america250',
+			permanent: true,
+		},
+		{
 			source: '/index.html',
 			destination: '/',
 			permanent: true,

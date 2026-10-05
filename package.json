@@ -16,12 +16,15 @@
     "health": "bash ./scripts/health-check.sh"
   },
   "dependencies": {
+    "@neon/config": "^1.8.3",
+    "@neon/env": "^1.5.0",
+    "@neondatabase/serverless": "^1.2.0",
     "classnames": "^2.5.1",
     "framer-motion": "^13.3.0",
     "html-react-parser": "^6.1.7",
-    "moment": "^2.30.1",
+    "moment": "^2.31.0",
     "moment-timezone": "^0.6.3",
-    "next": "^16.3.5",
+    "next": "^16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sass": "^1.104.1",

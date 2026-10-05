@@ -1,0 +1,138 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.venueDetails {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+ max-width: 72rem;
+}
+
+.showcase {
+ background: variables.$color__blue;
+ margin: 2rem 0 2.5rem;
+ max-height: 34rem;
+ overflow: hidden;
+}
+
+.showcaseImage {
+ display: block;
+ height: auto;
+ max-height: 34rem;
+ object-fit: cover;
+ object-position: center;
+ width: 100%;
+}
+
+.introduction {
+ border-bottom: 1px solid variables.$color__gray__light;
+ margin: 2.5rem 0 2rem;
+ max-width: 52rem;
+ padding-bottom: 2.5rem;
+
+ > p:not(.eyebrow, .lede) {
+  font-size: 1.1rem;
+  line-height: 1.65;
+ }
+}
+
+.eyebrow {
+ color: variables.$color__orange__medium;
+ font-size: .9rem;
+ font-weight: 700;
+ letter-spacing: .06em;
+ margin-bottom: .75rem;
+ text-transform: uppercase;
+}
+
+.lede {
+ font-family: variables.$font__sherman_serif;
+ font-size: clamp(1.55rem, 3vw, 2.25rem);
+ font-weight: 400;
+ line-height: 1.3;
+ margin-bottom: 1.25rem;
+}
+
+.facts {
+ display: grid;
+ gap: 1rem;
+ margin-bottom: 3rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(3, 1fr); }
+
+ div {
+  background: variables.$color__orange_10;
+  border-top: .35rem solid variables.$color__orange;
+  padding: 1.25rem;
+ }
+
+ span {
+  display: block;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  margin-bottom: .4rem;
+  text-transform: uppercase;
+ }
+
+ strong {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.35;
+ }
+
+ a { color: inherit; }
+}
+
+.visitSection {
+ margin: 3rem 0;
+
+ > h2 {
+  font-family: variables.$font__sherman_serif;
+  font-weight: 400;
+ }
+}
+
+.visitGrid {
+ display: grid;
+ gap: 1rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+
+ article {
+  border: 1px solid variables.$color__gray__light;
+  padding: 1.5rem;
+ }
+
+ h3 {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-bottom: .75rem;
+ }
+
+ p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+ }
+
+ a { font-weight: 700; }
+}
+
+.accessNote {
+ background: variables.$color__blue;
+ color: white;
+ margin-top: 1rem;
+ padding: 1.5rem;
+
+ h3 {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: .5rem;
+ }
+
+ p { font-size: 1.05rem; line-height: 1.6; }
+ a { color: white; font-weight: 700; }
+}

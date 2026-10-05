@@ -1,5 +1,16 @@
 This project is the Syracuse University Brass Ensemble site built on Next.js.
 
+## Master Class Registration
+
+Master class information is available at `/concerts/america250/master-class`, the registration form is at `/concerts/america250/master-class/rsvp`, and the protected registration list remains at `/master-class/admin`.
+
+1. Run `database/master-class-registrations.sql` in the Neon SQL Editor.
+2. Add these environment variables locally and in the deployment environment:
+
+   - `DATABASE_URL`: Neon pooled connection string
+   - `MASTER_CLASS_ADMIN_PASSWORD`: password for the registration list
+   - `MASTER_CLASS_ADMIN_SESSION_SECRET`: a long random value used to sign administrator sessions
+
 ## Quality and Health
 
 - Run full project checks: `npm run health`

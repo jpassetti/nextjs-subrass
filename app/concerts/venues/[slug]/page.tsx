@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -7,7 +8,16 @@ import Layout from "../../../../components/layout";
 import Paragraph from "../../../../components/paragraph";
 import Section from "../../../../components/section";
 import { getAllConcerts } from "../../../../lib/api";
-import { getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
+import { getConcertDate, getConcertPagePath, getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
+import styles from "./venue.module.scss";
+
+const HENDRICKS_CHAPEL_SLUG = "hendricks-chapel";
+const HENDRICKS_CHAPEL_ADDRESS = {
+ street: "121 Crouse Drive",
+ city: "Syracuse",
+ state: "NY",
+ zipCode: "13244",
+};
 
 export const revalidate = 86400;
 
@@ -84,7 +94,10 @@ export async function generateMetadata({ params }): Promise<Metadata> {
  const venueTitle = venueData.venue.title || "Concert Venue";
  const canonicalPath = getVenuePagePath(venueTitle);
  const canonicalUrl = `https://subrass.syr.edu${canonicalPath}`;
- const description = `Concert history and upcoming performances at ${venueTitle} by the Syracuse University Brass Ensemble.`;
+ const description =
+  venueSlug === HENDRICKS_CHAPEL_SLUG
+   ? "Plan your visit to Hendricks Chapel, the historic spiritual heart of Syracuse University and a landmark concert venue for the Syracuse University Brass Ensemble."
+   : `Concert history and upcoming performances at ${venueTitle} by the Syracuse University Brass Ensemble.`;
  const socialImage =
   venueData.venue?.featuredImage?.node?.sourceUrl ||
   "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg";
@@ -134,6 +147,9 @@ export default async function VenuePage({ params }) {
  const venue = venueData.venue;
  const venueTitle = venue.title || "Concert Venue";
  const venueInfo = venue.venueInformation || {};
+ const isHendricksChapel = venueSlug === HENDRICKS_CHAPEL_SLUG;
+ const displayAddress = isHendricksChapel ? HENDRICKS_CHAPEL_ADDRESS : venueInfo;
+ const featuredImage = venue.featuredImage?.node;
  const canonicalPath = getVenuePagePath(venueTitle);
  const canonicalUrl = `https://subrass.syr.edu${canonicalPath}`;
 
@@ -152,10 +168,10 @@ export default async function VenuePage({ params }) {
   name: venueTitle,
   address: {
    "@type": "PostalAddress",
-   streetAddress: venueInfo.street,
-   addressLocality: venueInfo.city,
-   addressRegion: venueInfo.state?.toUpperCase?.() || venueInfo.state,
-   postalCode: venueInfo.zipCode,
+   streetAddress: displayAddress.street,
+   addressLocality: displayAddress.city,
+   addressRegion: displayAddress.state?.toUpperCase?.() || displayAddress.state,
+   postalCode: displayAddress.zipCode,
    addressCountry: "US",
   },
   geo:
@@ -166,11 +182,20 @@ export default async function VenuePage({ params }) {
        longitude: venueInfo.coordinates.longitude,
       }
     : undefined,
+  ...(isHendricksChapel
+   ? {
+      description: "The historic spiritual heart of Syracuse University and a welcoming home for music, reflection, learning, and community.",
+      maximumAttendeeCapacity: 1000,
+      telephone: "+1-315-443-2901",
+      email: "chapel@syr.edu",
+      sameAs: "https://chapel.syracuse.edu/",
+     }
+   : {}),
   event: venueData.concerts.slice(0, 20).map((concert) => ({
    "@type": "MusicEvent",
    name: concert?.node?.title,
-   startDate: concert?.node?.concertInformation?.date,
-   url: concert?.node?.uri ? `https://subrass.syr.edu${concert.node.uri}` : undefined,
+   startDate: concert?.node ? getConcertDate(concert.node) : undefined,
+   url: concert?.node ? `https://subrass.syr.edu${getConcertPagePath(concert.node)}` : undefined,
    performer: {
     "@type": "MusicGroup",
     name: "Syracuse University Brass Ensemble",
@@ -219,10 +244,64 @@ export default async function VenuePage({ params }) {
      {venueTitle}
     </Heading>
     <Paragraph diminish>
-     {venueInfo.street}
+     {displayAddress.street}
      <br />
-     {venueInfo.city}, {venueInfo.state?.toUpperCase?.() || venueInfo.state} {venueInfo.zipCode}
+     {displayAddress.city}, {displayAddress.state?.toUpperCase?.() || displayAddress.state} {displayAddress.zipCode}
     </Paragraph>
+
+    {isHendricksChapel ? (
+     <div className={styles.venueDetails}>
+      {featuredImage?.sourceUrl ? (
+       <figure className={styles.showcase}>
+        <Image
+         src={featuredImage.sourceUrl}
+         alt={featuredImage.altText || "Hendricks Chapel at Syracuse University"}
+         width={featuredImage.mediaDetails?.width || 1600}
+         height={featuredImage.mediaDetails?.height || 900}
+         sizes="(min-width: 1200px) 72rem, 100vw"
+         className={styles.showcaseImage}
+         priority
+        />
+       </figure>
+      ) : null}
+      <div className={styles.introduction}>
+       <p className={styles.eyebrow}>The spiritual heart of Syracuse University</p>
+       <p className={styles.lede}>
+        Hendricks Chapel is a historic, welcoming home for music, reflection, learning, and community at the center of the Syracuse University campus.
+       </p>
+       <p>
+        Opened in 1930, the chapel was established as a home for all faiths and a place for all people. Its landmark Main Chapel brings audiences together for concerts, ceremonies, lectures, and observances throughout the year, offering an inspiring setting for the Syracuse University Brass Ensemble and its guests.
+       </p>
+      </div>
+
+      <div className={styles.facts} aria-label="Hendricks Chapel at a glance">
+       <div><span>Main Chapel</span><strong>1,000-seat capacity</strong></div>
+       <div><span>Visitor contact</span><strong><a href="tel:+13154432901">315-443-2901</a></strong></div>
+       <div><span>Email</span><strong><a href="mailto:chapel@syr.edu">chapel@syr.edu</a></strong></div>
+      </div>
+
+      <section className={styles.visitSection}>
+       <Heading level={2} marginTop="0" marginBottom="2">Plan Your Visit</Heading>
+       <div className={styles.visitGrid}>
+        <article>
+         <h3>Getting Here and Parking</h3>
+         <p>Hendricks Chapel faces the Quad at 121 Crouse Drive. Visitor pay parking may be available at the Irving Avenue and University Avenue garages. Campus visitor parking is cashless and availability may vary for major events, so allow extra time before a performance.</p>
+         <a href="https://parking.syr.edu/visitors-to-campus/daily-campus-visitor/" target="_blank" rel="noopener noreferrer">Review visitor parking information</a>
+        </article>
+        <article>
+         <h3>Accessibility</h3>
+         <p>The accessible entrance is beneath the main stairs on the Quad-facing side nearest the Quad parking lot. An elevator serves the ground, lower, and main levels, but not the balcony. Wheelchair and limited-mobility seating are available.</p>
+         <a href="https://chapel.syracuse.edu/reservations/accessibility/" target="_blank" rel="noopener noreferrer">View complete accessibility details</a>
+        </article>
+       </div>
+       <div className={styles.accessNote}>
+        <h3>Requesting accommodations</h3>
+        <p>For accessible parking arrangements, wheelchair availability, CART, ASL interpretation, or other accommodations, contact Hendricks Chapel in advance at <a href="tel:+13154432901">315-443-2901</a> or <a href="mailto:chapel@syr.edu">chapel@syr.edu</a>.</p>
+       </div>
+      </section>
+
+     </div>
+    ) : null}
 
     <Heading level={2} marginTop="6" marginBottom="2">
      Upcoming Concerts
@@ -230,7 +309,7 @@ export default async function VenuePage({ params }) {
     {upcoming.length ? (
      upcoming.map((concert) => (
        <Paragraph key={concert.node.uri || concert.node.title} marginBottom="2">
-        <Link href={concert.node.uri}>{concert.node.title}</Link>
+        <Link href={getConcertPagePath(concert.node)}>{concert.node.title}</Link>
       </Paragraph>
      ))
     ) : (
@@ -246,7 +325,7 @@ export default async function VenuePage({ params }) {
       .reverse()
       .map((concert) => (
         <Paragraph key={concert.node.uri || concert.node.title} marginBottom="2">
-         <Link href={concert.node.uri}>{concert.node.title}</Link>
+         <Link href={getConcertPagePath(concert.node)}>{concert.node.title}</Link>
        </Paragraph>
       ))
     ) : (

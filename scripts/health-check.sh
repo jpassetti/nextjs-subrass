@@ -89,12 +89,30 @@ run_check() {
   echo
 }
 
+run_warning_check() {
+  local name="$1"
+  shift
+
+  echo "=== ${name} ==="
+  "$@"
+  local code=$?
+
+  if [ "$code" -ne 0 ]; then
+    echo "Result: WARN (${code}; development-only advisories do not block deployment health)"
+  else
+    echo "Result: PASS"
+  fi
+
+  echo
+}
+
 run_check "Lint" npm run lint
 run_check "Type check" npm run typecheck
 run_check "Tests" npm run test
 run_check "Build" npm run build
 run_check "SEO assertions" npm run seo:check
-run_check "Security audit (npm audit)" npm audit --audit-level=low
+run_check "Production dependency security audit (npm audit)" npm audit --omit=dev --audit-level=low
+run_warning_check "Development dependency advisory report" npm audit --include=dev --audit-level=low
 check_dependency_updates
 
 if [ "$exit_code" -ne 0 ]; then

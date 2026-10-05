@@ -1,0 +1,123 @@
+@use '../../styles/variables';
+
+.content {
+ max-width: 52rem;
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+}
+
+.form {
+ display: grid;
+ gap: 1.75rem;
+ margin-top: 2rem;
+ max-width: 46rem;
+}
+
+.formGroup {
+ border: 1px solid variables.$color__gray__light;
+ display: grid;
+ gap: 1.25rem;
+ margin: 0;
+ padding: 1.5rem;
+}
+
+.formGroup legend {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_serif;
+ font-size: 1.5rem;
+ font-weight: 400;
+ padding: 0 .5rem;
+}
+
+.groupDescription {
+ font-size: .95rem;
+ line-height: 1.5;
+ margin: -.25rem 0 0;
+}
+
+.grid {
+ display: grid;
+ gap: 1.25rem;
+ grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.field {
+ display: grid;
+ gap: .4rem;
+}
+
+.field label, .legend {
+ font-weight: 700;
+}
+
+.field input, .field select, .field textarea, .login input {
+ background: white;
+ border: 1px solid variables.$color__gray__light;
+ border-radius: .2rem;
+ color: variables.$color__blue;
+ font: inherit;
+ padding: .8rem;
+ width: 100%;
+}
+
+.field textarea { min-height: 8rem; resize: vertical; }
+
+.checkbox {
+ align-items: flex-start;
+ display: flex;
+ gap: .65rem;
+ line-height: 1.4;
+}
+
+.checkbox input { margin-top: .25rem; }
+
+.button, .linkButton {
+ background: variables.$color__blue;
+ border: 0;
+ border-radius: .2rem;
+ color: white;
+ cursor: pointer;
+ display: inline-block;
+ font: inherit;
+ font-weight: 700;
+ padding: .8rem 1.2rem;
+ text-decoration: none;
+ width: fit-content;
+}
+
+.button:disabled { cursor: wait; opacity: .65; }
+.linkButton { background: variables.$color__orange__medium; }
+
+.notice, .error {
+ border-left: .4rem solid variables.$color__orange;
+ line-height: 1.5;
+ margin: 1.5rem 0;
+ padding: 1rem;
+}
+
+.error { background: #fff4f4; color: #8b0000; }
+.notice { background: variables.$color__orange_10; }
+
+.honeypot { left: -10000px; position: absolute; }
+.small { font-size: .95rem; line-height: 1.45; }
+
+.adminHeader {
+ align-items: center;
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+ justify-content: space-between;
+ margin-bottom: 1.5rem;
+}
+
+.adminActions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.adminActions form { margin: 0; }
+
+.tableWrap { overflow-x: auto; }
+.table { border-collapse: collapse; font-size: .9rem; width: 100%; }
+.table th, .table td { border-bottom: 1px solid variables.$color__gray__light; padding: .7rem; text-align: left; vertical-align: top; }
+.table th { background: variables.$color__orange_10; white-space: nowrap; }
+.table td { min-width: 8rem; }
+.table td:first-child { min-width: 10rem; }
+
+.login { display: grid; gap: 1rem; max-width: 25rem; }

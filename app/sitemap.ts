@@ -1,6 +1,6 @@
 import { getAllConcertSlugs, getAllEnsembleSlugs, getAllMusicians } from "../lib/api";
 import { getAllConcerts } from "../lib/api";
-import { getVenuePagePath } from "../lib/utilities";
+import { getConcertPagePath, getVenuePagePath } from "../lib/utilities";
 
 const BASE_URL = "https://subrass.syr.edu";
 
@@ -20,7 +20,7 @@ export default async function sitemap() {
     getAllConcerts(),
  ]);
 
- const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact"].map((path) =>
+ const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact", "/concerts/america250", "/concerts/america250/master-class", "/concerts/america250/master-class/rsvp"].map((path) =>
   toSitemapEntry(path, undefined, "weekly")
  );
 
@@ -40,7 +40,7 @@ export default async function sitemap() {
   .map((concert) => {
    const uri = concert?.node?.uri;
    if (!uri) return null;
-   return toSitemapEntry(uri, concert?.node?.modifiedGmt, "monthly");
+   return toSitemapEntry(getConcertPagePath(concert.node), concert?.node?.modifiedGmt, "monthly");
   })
   .filter(Boolean);
 

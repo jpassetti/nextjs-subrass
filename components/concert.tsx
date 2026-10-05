@@ -12,6 +12,8 @@ import ListItem from "./listitem";
 import {
  getAPStyleFormattedDate,
  getAPStyleFormattedTime,
+ getConcertDate,
+ getConcertPagePath,
  getVenuePagePath,
 } from "../lib/utilities";
 
@@ -35,8 +37,10 @@ const Concert = ({ data, teaser = false }) => {
  } = venue;
  const { street, city, state, zipCode, coordinates } = venueInformation;
 
- const formattedDate = getAPStyleFormattedDate(date, moment);
- const formattedTime = getAPStyleFormattedTime(date, moment);
+ const displayDate = getConcertDate(data);
+ const formattedDate = getAPStyleFormattedDate(displayDate, moment);
+ const formattedTime = getAPStyleFormattedTime(displayDate, moment);
+ const concertPath = getConcertPagePath(data);
  const venuePath = getVenuePagePath(venueTitle);
  const venueUrl = `https://subrass.syr.edu${venuePath}`;
 
@@ -49,10 +53,10 @@ const Concert = ({ data, teaser = false }) => {
     description:
      excerpt ||
      `See the Syracuse University Brass Ensemble live at ${venueTitle} in ${city}, ${state.toUpperCase()} on ${formattedDate}.`,
-    startDate: moment(date)
+    startDate: moment(displayDate)
      .tz("America/New_York")
      .format("YYYY-MM-DDTHH:mm:ssZ"),
-    endDate: moment(date)
+    endDate: moment(displayDate)
      .tz("America/New_York")
      .add(2, "h")
      .format("YYYY-MM-DDTHH:mm:ssZ"),
@@ -84,11 +88,11 @@ const Concert = ({ data, teaser = false }) => {
      featuredImage?.node.sourceUrl ||
      venueImage?.node.sourceUrl ||
      "https://subrass.syr.edu/images/social/default-concert.jpg",
-    url: uri ? `https://subrass.syr.edu${uri}` : undefined,
+    url: `https://subrass.syr.edu${concertPath}`,
     isAccessibleForFree: true,
     offers: {
      "@type": "Offer",
-     url: uri ? `https://subrass.syr.edu${uri}` : "https://subrass.syr.edu/concerts",
+     url: `https://subrass.syr.edu${concertPath}`,
      price: "0",
      priceCurrency: "USD",
      availability: "https://schema.org/InStock",
@@ -112,7 +116,7 @@ const Concert = ({ data, teaser = false }) => {
     <Card.CoverImage image={featuredImage || venueImage || null} />
     <Card.Body>
      <Heading level="3" marginBottom="1">
-        <Link href={uri}>{concertTitle}</Link>
+        <Link href={concertPath}>{concertTitle}</Link>
      </Heading>
      <Paragraph marginBottom="4" diminish>
       {city}, {state.toUpperCase()}

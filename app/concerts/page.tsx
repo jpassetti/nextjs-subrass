@@ -5,6 +5,7 @@ import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
 import { getAllConcerts } from "../../lib/api";
+import { getConcertDate, getConcertPagePath } from "../../lib/utilities";
 
 export const metadata: Metadata = {
  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
@@ -93,11 +94,11 @@ export default async function ConcertsPage() {
  const hasAnyPastConcerts =
   currentYearPastConcerts.length > 0 || previousAcademicYears.length > 0;
 
- const nextConcertDate =
-  currentYearUpcomingConcerts[0]?.node.concertInformation.date || "";
+ const nextConcertDate = currentYearUpcomingConcerts[0]?.node
+  ? getConcertDate(currentYearUpcomingConcerts[0].node)
+  : "";
 
  const upcomingEventList = currentYearUpcomingConcerts.slice(0, 20).map(({ node }, index) => {
-  const concertDate = node?.concertInformation?.date;
   const venue = node?.concertInformation?.venue;
   const venueAddress = venue?.venueInformation;
 
@@ -107,10 +108,10 @@ export default async function ConcertsPage() {
    item: {
     "@type": "MusicEvent",
     name: node?.title,
-    startDate: concertDate,
+   startDate: getConcertDate(node),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    url: node?.uri ? `https://subrass.syr.edu${node.uri}` : undefined,
+    url: `https://subrass.syr.edu${getConcertPagePath(node)}`,
     location: {
      "@type": "Place",
      name: venue?.title,

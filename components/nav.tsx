@@ -33,6 +33,10 @@ const navLinks = [
   title: "Contact",
   path: "/contact",
  },
+ {
+  title: "America 250",
+  path: "/concerts/america250",
+ },
 ];
 
 const Nav = () => {

@@ -1,0 +1,105 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.page {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+ max-width: 72rem;
+}
+
+.backLink {
+ display: inline-block;
+ font-weight: 700;
+ margin: 2rem 0 1rem;
+}
+
+.hero {
+ background: variables.$color__orange_10;
+ border-left: .5rem solid variables.$color__orange;
+ margin-bottom: 2rem;
+ max-width: 58rem;
+ padding: 2rem;
+
+ @include mixins.breakpoint(md) { padding: 3rem; }
+
+ h1 { font-family: variables.$font__sherman_serif; font-weight: 400; }
+}
+
+.eyebrow {
+ color: variables.$color__orange__medium;
+ font-size: .9rem;
+ font-weight: 700;
+ letter-spacing: .06em;
+ margin-bottom: .75rem;
+ text-transform: uppercase;
+}
+
+.lede {
+ font-family: variables.$font__sherman_serif;
+ font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+ line-height: 1.45;
+ margin-bottom: 1.5rem;
+ max-width: 48rem;
+}
+
+.button {
+ background: variables.$color__blue;
+ border-radius: .2rem;
+ color: white;
+ display: inline-block;
+ font-weight: 700;
+ padding: .85rem 1.2rem;
+ text-decoration: none;
+}
+
+.detailsGrid {
+ display: grid;
+ gap: 1rem;
+ margin: 2rem 0 3rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+ @include mixins.breakpoint(lg) { grid-template-columns: repeat(4, 1fr); }
+
+ div { border-top: .35rem solid variables.$color__orange; padding: 1rem 0; }
+ span { display: block; font-size: .8rem; font-weight: 700; letter-spacing: .05em; margin-bottom: .4rem; text-transform: uppercase; }
+ strong { font-family: variables.$font__sherman_serif; font-size: 1.15rem; font-weight: 400; line-height: 1.4; }
+ a { color: inherit; }
+}
+
+.section, .expectSection {
+ margin: 3rem 0;
+ max-width: 52rem;
+
+ h2 { font-family: variables.$font__sherman_serif; font-weight: 400; }
+ p { font-size: 1.08rem; line-height: 1.65; margin-bottom: 1rem; }
+}
+
+.expectSection { max-width: none; }
+
+.topicGrid {
+ display: grid;
+ gap: 1rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(3, 1fr); }
+
+ article { border: 1px solid variables.$color__gray__light; padding: 1.5rem; }
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.3rem; font-weight: 400; margin-bottom: .75rem; }
+ p { font-size: 1rem; line-height: 1.55; margin: 0; }
+}
+
+.rsvpCallout {
+ align-items: center;
+ background: variables.$color__blue;
+ color: white;
+ display: grid;
+ gap: 1.5rem;
+ margin: 3rem 0;
+ padding: 2rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: minmax(0, 1fr) auto; }
+
+ h2 { font-family: variables.$font__sherman_serif; font-weight: 400; }
+ p { font-size: 1.05rem; line-height: 1.6; }
+ .eyebrow { color: variables.$color__orange; }
+ .button { background: variables.$color__orange; color: variables.$color__blue; white-space: nowrap; }
+}

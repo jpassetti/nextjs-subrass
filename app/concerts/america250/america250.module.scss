@@ -1,0 +1,250 @@
+@use '../../../styles/mixins';
+@use '../../../styles/variables';
+
+.page {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+ max-width: 72rem;
+}
+
+:global(#details),
+:global(#masterclass),
+:global(#program),
+:global(#parking) {
+ scroll-margin-top: 2rem;
+}
+
+.backLink {
+ display: inline-block;
+ font-weight: 700;
+ margin: 2rem 0 1rem;
+}
+
+.hero {
+ background: white;
+ border: 1px solid variables.$color__gray__light;
+ display: grid;
+ margin-bottom: 2rem;
+ overflow: hidden;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+}
+
+.heroImage {
+ display: block;
+ height: auto;
+ width: 100%;
+}
+
+.heroArtwork { background: variables.$color__blue; }
+
+.heroContent {
+ align-content: center;
+ display: grid;
+ gap: 1.25rem;
+ padding: 2rem;
+
+ @include mixins.breakpoint(md) { padding: 3rem; }
+}
+
+.eyebrow {
+ color: variables.$color__orange__medium;
+ font-size: .9rem;
+ font-weight: 700;
+ letter-spacing: .06em;
+ line-height: 1.4;
+ text-transform: uppercase;
+}
+
+.title {
+ font-family: variables.$font__sherman_serif;
+ font-size: clamp(2rem, 4vw, 3.4rem);
+ font-weight: 400;
+ line-height: 1.05;
+}
+
+.lede {
+ font-family: variables.$font__sherman_serif;
+ font-size: 1.2rem;
+ line-height: 1.5;
+}
+
+.heroMeta {
+ border-top: .25rem solid variables.$color__orange;
+ font-size: 1rem;
+ font-weight: 700;
+ line-height: 1.55;
+ padding-top: 1rem;
+}
+
+.quickNav {
+ border-bottom: 1px solid variables.$color__gray__light;
+ border-top: 1px solid variables.$color__gray__light;
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem 1.5rem;
+ margin-bottom: 3rem;
+ padding: 1rem 0;
+
+ a { color: variables.$color__blue; font-weight: 700; }
+}
+
+.detailsGrid {
+ display: grid;
+ gap: 1rem;
+ margin: 1.5rem 0 3rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+ @include mixins.breakpoint(lg) { grid-template-columns: repeat(4, 1fr); }
+}
+
+.detailCard {
+ background: variables.$color__orange_10;
+ border-top: .35rem solid variables.$color__orange;
+ padding: 1.25rem;
+
+ h2 { font-size: .9rem; font-weight: 700; letter-spacing: .05em; margin-bottom: .5rem; text-transform: uppercase; }
+ p { font-family: variables.$font__sherman_serif; font-size: 1.2rem; line-height: 1.35; }
+ a { color: inherit; }
+}
+
+.section {
+ margin: 3rem 0;
+ max-width: 48rem;
+
+ h2 { font-family: variables.$font__sherman_serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; }
+ p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem; }
+}
+
+.sectionLead, .sectionLabel {
+ color: variables.$color__orange__medium;
+ font-size: .9rem !important;
+ font-weight: 700;
+ letter-spacing: .06em;
+ text-transform: uppercase;
+}
+
+.quoteGrid {
+ display: grid;
+ gap: 1rem;
+ margin-top: 1.5rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+
+ blockquote {
+  border-left: .35rem solid variables.$color__orange;
+  margin: 0;
+  padding: 1.5rem;
+ }
+
+ blockquote:nth-child(2) { background: variables.$color__orange_10; }
+
+ blockquote > p {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+ }
+
+ footer { font-size: .95rem; line-height: 1.45; }
+}
+
+.masterclass {
+ background: variables.$color__orange_10;
+ border-left: .5rem solid variables.$color__orange;
+ max-width: 56rem;
+ padding: 2rem;
+}
+
+.button {
+ background: variables.$color__blue;
+ border-radius: .2rem;
+ color: white;
+ display: inline-block;
+ font-weight: 700;
+ margin-top: .5rem;
+ padding: .85rem 1.2rem;
+ text-decoration: none;
+}
+
+.programSection {
+ margin: 3rem 0;
+
+ > h2 { font-family: variables.$font__sherman_serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; }
+}
+
+.programGrid {
+ display: grid;
+ gap: 1rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, 1fr); }
+
+ article {
+  border: 1px solid variables.$color__gray__light;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  padding: 1.5rem;
+ }
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.35rem; font-weight: 400; margin-bottom: .75rem; }
+ p { font-size: 1.05rem; line-height: 1.55; }
+}
+
+.programNumber {
+ align-items: center;
+ align-self: start;
+ background: variables.$color__blue;
+ color: white;
+ display: flex;
+ font-family: variables.$font__sherman_serif;
+ font-size: 1.5rem;
+ font-weight: 400;
+ height: 3rem;
+ justify-content: center;
+ line-height: 1;
+ width: 3rem;
+}
+
+.cardLink {
+ align-items: center;
+ border-top: 1px solid variables.$color__gray__light;
+ color: variables.$color__blue;
+ display: inline-flex;
+ font-size: .95rem;
+ font-weight: 700;
+ gap: .5rem;
+ margin-top: 1.25rem;
+ padding-top: 1rem;
+ text-decoration: none;
+
+.cardLinkText {
+ text-decoration: underline;
+ text-decoration-thickness: .1rem;
+ text-underline-offset: .25rem;
+}
+
+.cardLinkArrow {
+  color: variables.$color__orange__medium;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform .2s ease;
+}
+
+ &:hover .cardLinkArrow,
+ &:focus-visible .cardLinkArrow { transform: translateX(.2rem); }
+}
+
+.finale {
+ background: variables.$color__blue;
+ color: white;
+ display: grid;
+ gap: 1rem;
+ grid-template-columns: 3rem minmax(0, 1fr);
+ margin-top: 1rem;
+ padding: 2rem;
+
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.5rem; font-weight: 400; line-height: 1.3; margin-bottom: .75rem; }
+ p { font-size: 1.05rem; line-height: 1.55; }
+ .sectionLabel { color: variables.$color__orange; }
+ .programNumber { background: variables.$color__orange; color: variables.$color__blue; }
+}
