@@ -7,6 +7,25 @@
  font-family: variables.$font__sherman_sans;
 }
 
+.breadcrumbs {
+ margin: 2rem 0 1rem;
+
+ ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .9rem;
+  gap: .4rem;
+ }
+
+ li { align-items: center; display: flex; }
+ li + li::before { color: variables.$color__gray__light; content: "/"; margin-right: .4rem; }
+ a { color: variables.$color__blue; font-weight: 700; text-decoration-color: variables.$color__orange; text-decoration-thickness: .1rem; text-underline-offset: .2rem; }
+ a:hover,
+ a:focus-visible { text-decoration-color: variables.$color__blue; }
+ span[aria-current='page'] { font-weight: 700; }
+}
+
 .form {
  display: grid;
  gap: 1.75rem;

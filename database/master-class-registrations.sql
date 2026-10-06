@@ -8,6 +8,9 @@ create table if not exists master_class_registrations (
  teacher_phone text,
  email text not null,
  phone text,
+ parent_name text,
+ parent_email text,
+ parent_phone text,
  instrument text not null,
  grade_level text,
  notes text,
@@ -18,6 +21,9 @@ create table if not exists master_class_registrations (
 );
 
 alter table master_class_registrations
+ add column if not exists parent_name text,
+ add column if not exists parent_email text,
+ add column if not exists parent_phone text,
  add column if not exists teacher_email text,
  add column if not exists teacher_phone text,
  add column if not exists updated_at timestamptz not null default now(),
@@ -31,9 +37,12 @@ create index if not exists master_class_registrations_email_idx
 
 create extension if not exists pg_trgm;
 
-create index if not exists master_class_registrations_search_idx
+drop index if exists master_class_registrations_search_idx;
+
+create index master_class_registrations_search_idx
  on master_class_registrations using gin (
   (coalesce(first_name, '') || ' ' || coalesce(last_name, '') || ' ' || coalesce(school, '') || ' ' ||
+   coalesce(parent_name, '') || ' ' || coalesce(parent_email, '') || ' ' || coalesce(parent_phone, '') || ' ' ||
    coalesce(teacher_name, '') || ' ' || coalesce(email, '') || ' ' || coalesce(teacher_email, '') || ' ' ||
    coalesce(instrument, '') || ' ' || coalesce(notes, '')) gin_trgm_ops
  );

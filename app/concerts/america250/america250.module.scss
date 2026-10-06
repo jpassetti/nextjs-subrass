@@ -262,6 +262,51 @@
  footer { font-size: .95rem; line-height: 1.45; }
 }
 
+.introGrid {
+ display: grid;
+ gap: 2rem;
+ margin: 3rem 0;
+
+ > .section,
+ > .partners { margin: 0; }
+
+ @include mixins.breakpoint(md) {
+  align-items: start;
+  gap: 3rem;
+  grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
+ }
+}
+
+.partners {
+ border-bottom: 1px solid variables.$color__gray__light;
+ border-top: 1px solid variables.$color__gray__light;
+ padding: 2rem 0;
+
+ h2 {
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+ }
+
+ @include mixins.breakpoint(md) {
+  border-bottom: 0;
+  border-left: 1px solid variables.$color__gray__light;
+  border-top: 0;
+  padding: 0 0 0 2rem;
+ }
+}
+
+.partnerLockup {
+ display: block;
+ height: auto;
+ max-width: 18rem;
+ width: 100%;
+
+ @include mixins.breakpoint(md) { max-width: 14rem; }
+}
+
 .masterclass {
  background: variables.$color__orange_10;
  border-left: .5rem solid variables.$color__orange;

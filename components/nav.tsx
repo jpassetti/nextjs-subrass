@@ -107,7 +107,7 @@ const Members = () => {
  );
 };
 Nav.Members = Members;
-const Mobile = () => {
+const Mobile = ({ onNavigate }) => {
  const pathname = usePathname();
  let mobileNavClasses = cx({
   mobileNav: true,
@@ -119,7 +119,7 @@ const Mobile = () => {
      const { path, title } = navLink;
      return (
       <li key={index}>
-             <Link href={path} className={pathname == path ? styles.active : ""}>
+             <Link href={path} className={pathname == path ? styles.active : ""} onClick={onNavigate}>
                 {title}
              </Link>
       </li>

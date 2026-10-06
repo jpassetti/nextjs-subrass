@@ -16,6 +16,17 @@ export const metadata: Metadata = {
  alternates: {
   canonical: "/",
  },
+ icons: {
+  icon: [
+   { url: "/favicon.ico" },
+   { url: "/images/favicons/favicon-16.png", sizes: "16x16", type: "image/png" },
+   { url: "/images/favicons/favicon-32.png", sizes: "32x32", type: "image/png" },
+   { url: "/images/favicons/favicon-96.png", sizes: "96x96", type: "image/png" },
+   { url: "/images/favicons/favicon-144.png", sizes: "144x144", type: "image/png" },
+   { url: "/images/favicons/favicon-192.png", sizes: "192x192", type: "image/png" },
+  ],
+  apple: [{ url: "/images/favicons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+ },
  openGraph: {
   type: "website",
   locale: "en_US",
@@ -42,7 +53,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }) {
  return (
-  <html lang="en">
+  <html lang="en" data-scroll-behavior="smooth">
    <head>
     <link rel="stylesheet" href="https://use.typekit.net/nnm0mtl.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />

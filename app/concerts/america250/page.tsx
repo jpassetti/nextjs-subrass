@@ -150,7 +150,7 @@ export default async function America250Page() {
        <p className={styles.eyebrow}>Friday, Nov. 13, 2026 · Hendricks Chapel</p>
        <h1 className={styles.title}>A Celebration of Service, Education, and Musical Excellence</h1>
        <p className={styles.lede}>Featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
-       <p className={styles.heroMeta}>Student masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Free and open to the public.</p>
+       <p className={styles.heroMeta}>Free student masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Free concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Open to the public.</p>
       </div>
      </div>
 
@@ -163,18 +163,19 @@ export default async function America250Page() {
 
      <div className={styles.detailsGrid} id="details">
       <div className={styles.detailCard}><h2>Date</h2><p>Friday, Nov. 13, 2026</p></div>
-      <div className={styles.detailCard}><h2>Student masterclass</h2><p>4–5 p.m.</p></div>
-      <div className={styles.detailCard}><h2>Concert</h2><p>6:30–8 p.m.</p></div>
+      <div className={styles.detailCard}><h2>Student masterclass</h2><p>4–5 p.m.<br />Free</p></div>
+      <div className={styles.detailCard}><h2>Concert</h2><p>6:30–8 p.m.<br />Free and open to the public</p></div>
       <div className={styles.detailCard}>
        <h2>Location</h2>
        <p><Link href={venuePath}>{venue.title}</Link><br />{venueInformation.street}<br />{venueInformation.city}, {venueInformation.state.toUpperCase()} {venueInformation.zipCode}</p>
       </div>
      </div>
 
-     <section className={styles.section}>
+     <div className={styles.introGrid}>
+      <section className={styles.section}>
       <p className={styles.sectionLead}>Free and open to the public</p>
       <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faLandmark} aria-hidden="true" />Two ensembles. One landmark celebration.</h2>
-      <p>On Friday, Nov. 13, Hendricks Chapel will welcome the Syracuse University Brass Ensemble and the 10th Mountain Division Band for a distinguished musical collaboration commemorating America’s 250th anniversary.</p>
+      <p>On Friday, Nov. 13, Hendricks Chapel will welcome the Syracuse University Brass Ensemble and the 10th Mountain Division Band for a distinguished musical collaboration commemorating America’s 250th anniversary. The event is presented in partnership with Syracuse University’s <a href="https://veterans.syracuse.edu/" target="_blank" rel="noopener noreferrer">Office of Veteran and Military Affairs (OVMA)</a> and <a href="https://chapel.syracuse.edu/" target="_blank" rel="noopener noreferrer">Hendricks Chapel</a>.</p>
       <p>The program brings together accomplished civilian and military musicians in a shared celebration of service, education, community, and artistic excellence. Each ensemble will present its own performance before joining forces for a powerful finale honoring the nation’s history and those who serve.</p>
       <p>Presented in one of Syracuse University’s most iconic spaces, this special event places music at the heart of the semiquincentennial—connecting generations, institutions, and communities through the enduring traditions of the American concert band.</p>
       <div className={styles.quoteGrid}>
@@ -183,10 +184,23 @@ export default async function America250Page() {
         <footer><strong>Dr. James T. Spencer</strong><br />Syracuse University Brass Ensemble</footer>
        </blockquote>
       </div>
-     </section>
+      </section>
+
+      <section className={styles.partners} aria-labelledby="partners-heading">
+       <h2 id="partners-heading">Presented in partnership with</h2>
+       <Image
+        src="/america250/syracuse-university-ovma-hendricks-chapel.svg"
+        alt="Syracuse University Office of Veteran and Military Affairs and Hendricks Chapel"
+        width={898}
+        height={831}
+        sizes="(min-width: 900px) 14rem, 18rem"
+        className={styles.partnerLockup}
+       />
+      </section>
+     </div>
 
      <section className={`${styles.section} ${styles.masterclass}`} id="masterclass">
-      <p className={styles.sectionLabel}>Student masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
+      <p className={styles.sectionLabel}>Free student masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
       <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faGraduationCap} aria-hidden="true" />Explore a life in music</h2>
       <p>High school musicians are invited to join members of the 10th Mountain Division Band for a conversation about music careers, audition preparation, performance confidence, effective practice methods, and life as a professional military musician.</p>
       <p>Band members will share their musical journeys, offer practical guidance, demonstrate techniques, and answer questions about performance, education, military service, and other music-related career opportunities.</p>
@@ -237,11 +251,11 @@ export default async function America250Page() {
       <div className={styles.accessGrid}>
        <article className={styles.accessCard}>
         <h3>Admission</h3>
-        <p><strong>The concert is free and open to the public.</strong> No concert registration is required. Registration is requested only for high school musicians attending the student masterclass.</p>
+        <p><strong>The concert is free and open to the public.</strong> The student masterclass is also free, but advance registration is requested for participating high school musicians.</p>
        </article>
        <article className={styles.accessCard}>
         <h3>Parking</h3>
-        <p>Public parking is available at Irving Garage. Please allow additional time for parking and walking to Hendricks Chapel.</p>
+        <p><strong>Parking is free.</strong> Public parking is available at Irving Garage. Please allow additional time for parking and walking to Hendricks Chapel.</p>
         <a className={styles.mapLink} href="https://www.google.com/maps/search/?api=1&amp;query=Irving+Garage%2C+Stadium+Place%2C+Syracuse%2C+NY+13210" target="_blank" rel="noopener noreferrer">
          <strong>Irving Garage</strong>
          <span>Stadium Pl<br />Syracuse, NY 13210</span>

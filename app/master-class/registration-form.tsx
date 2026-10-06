@@ -4,13 +4,14 @@ import { FormEvent, useState } from "react";
 import styles from "./master-class.module.scss";
 
 const instruments = [
- "Trumpet", "Cornet", "Flugelhorn", "French horn", "Trombone",
- "Bass trombone", "Euphonium", "Baritone", "Tuba", "Other",
+ "Flute", "Oboe", "Clarinet", "Bass clarinet", "Bassoon", "Saxophone",
+ "Trumpet", "French horn", "Trombone", "Baritone or euphonium", "Tuba", "Percussion",
 ];
 
 export default function RegistrationForm() {
  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
  const [message, setMessage] = useState("");
+ const [instrument, setInstrument] = useState("");
 
  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
   event.preventDefault();
@@ -27,6 +28,7 @@ export default function RegistrationForm() {
 
   if (response.ok) {
    form.reset();
+   setInstrument("");
    setStatus("success");
    setMessage("Thank you. Your master class registration has been received.");
   } else {
@@ -52,7 +54,7 @@ export default function RegistrationForm() {
 
     <div className={styles.grid}>
      <div className={styles.field}>
-      <label htmlFor="school">School *</label>
+      <label htmlFor="school">School name *</label>
       <input id="school" name="school" required maxLength={160} />
      </div>
      <div className={styles.field}>
@@ -64,23 +66,43 @@ export default function RegistrationForm() {
      </div>
     </div>
 
-    <div className={styles.grid}>
-     <div className={styles.field}>
-      <label htmlFor="email">Student email address *</label>
-      <input id="email" name="email" type="email" autoComplete="email" required maxLength={254} />
-     </div>
-     <div className={styles.field}>
-      <label htmlFor="phone">Student phone number</label>
-      <input id="phone" name="phone" type="tel" autoComplete="tel" maxLength={40} />
-     </div>
+    <div className={styles.field}>
+     <label htmlFor="email">Student email address *</label>
+     <input id="email" name="email" type="email" autoComplete="email" required maxLength={254} />
     </div>
 
     <div className={styles.field}>
      <label htmlFor="instrument">Instrument *</label>
-     <select id="instrument" name="instrument" required defaultValue="">
+     <select id="instrument" name="instrument" required value={instrument} onChange={(event) => setInstrument(event.target.value)}>
       <option value="" disabled>Select an instrument</option>
       {instruments.map((instrument) => <option key={instrument}>{instrument}</option>)}
+      <option>Other</option>
      </select>
+    </div>
+    {instrument === "Other" ? (
+     <div className={styles.field}>
+      <label htmlFor="otherInstrument">Enter your instrument *</label>
+      <input id="otherInstrument" name="otherInstrument" required maxLength={80} />
+     </div>
+    ) : null}
+   </fieldset>
+
+   <fieldset className={styles.formGroup}>
+    <legend>Parent or guardian information</legend>
+    <p className={styles.groupDescription}>Please provide contact information for a parent or guardian.</p>
+    <div className={styles.field}>
+     <label htmlFor="parentName">Parent or guardian name *</label>
+     <input id="parentName" name="parentName" autoComplete="name" required maxLength={160} />
+    </div>
+    <div className={styles.grid}>
+     <div className={styles.field}>
+      <label htmlFor="parentEmail">Parent or guardian email address *</label>
+      <input id="parentEmail" name="parentEmail" type="email" autoComplete="email" required maxLength={254} />
+     </div>
+     <div className={styles.field}>
+      <label htmlFor="parentPhone">Parent or guardian phone number *</label>
+      <input id="parentPhone" name="parentPhone" type="tel" autoComplete="tel" required maxLength={40} />
+     </div>
     </div>
    </fieldset>
 

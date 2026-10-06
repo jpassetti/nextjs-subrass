@@ -12,18 +12,29 @@ export default function Providers({ children }) {
  useEffect(() => {
   const body = document.querySelector("body");
   if (!body) return;
+	const originalPosition = body.style.position;
+	const originalOverflow = body.style.overflow;
+	const originalTop = body.style.top;
+	const originalWidth = body.style.width;
 
   if (isModalOpen) {
     scrollPositionRef.current = window.pageYOffset;
    body.style.top = `-${window.pageYOffset}px`;
    body.style.position = "fixed";
    body.style.overflow = "hidden";
-   return;
+   body.style.width = "100%";
+   return () => {
+    body.style.position = originalPosition;
+    body.style.overflow = originalOverflow;
+    body.style.top = originalTop;
+    body.style.width = originalWidth;
+   };
   }
 
-  body.style.position = "";
-  body.style.overflow = "auto";
-  body.style.top = "";
+  body.style.position = originalPosition;
+  body.style.overflow = originalOverflow;
+  body.style.top = originalTop;
+  body.style.width = originalWidth;
   window.scrollTo(0, scrollPositionRef.current);
  }, [isModalOpen]);
 

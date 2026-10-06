@@ -32,6 +32,9 @@
  > p:not(.eyebrow, .lede) {
   font-size: 1.1rem;
   line-height: 1.65;
+  orphans: 3;
+  text-wrap: pretty;
+  widows: 3;
  }
 }
 

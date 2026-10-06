@@ -47,7 +47,7 @@ const Overlay = ({closeHandler}) => {
 		exit="exit"
 	>
 		<ButtonUI icon="close" clickHandler={closeHandler} />
-		<Nav.Mobile />
+		<Nav.Mobile onNavigate={closeHandler} />
 		<Nav.SocialNav />
 		<Nav.Members />
 	</motion.div>

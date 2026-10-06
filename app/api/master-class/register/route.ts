@@ -16,9 +16,9 @@ export async function POST(request: Request) {
   const sql = getDatabase();
   const insertedRows = await sql`
    insert into master_class_registrations
-    (first_name, last_name, school, teacher_name, teacher_email, teacher_phone, email, phone, instrument, grade_level, notes, consent_to_contact)
+    (first_name, last_name, school, parent_name, parent_email, parent_phone, teacher_name, teacher_email, teacher_phone, email, phone, instrument, grade_level, notes, consent_to_contact)
    values
-    (${registration.firstName}, ${registration.lastName}, ${registration.school}, ${registration.teacherName},
+    (${registration.firstName}, ${registration.lastName}, ${registration.school}, ${registration.parentName}, ${registration.parentEmail}, ${registration.parentPhone}, ${registration.teacherName},
      ${registration.teacherEmail}, ${registration.teacherPhone || null}, ${registration.email}, ${registration.phone || null}, ${registration.instrument}, ${registration.gradeLevel || null},
      ${registration.notes || null}, ${registration.consentToContact})
    returning id

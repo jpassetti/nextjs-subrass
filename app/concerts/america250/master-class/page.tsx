@@ -19,7 +19,14 @@ export default function America250MasterClassPage() {
   <Layout>
    <Section>
     <main className={styles.page}>
-     <Link className={styles.backLink} href="/concerts/america250">&larr; America 250 concert</Link>
+     <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+      <ol>
+       <li><Link href="/">Home</Link></li>
+       <li><Link href="/concerts">Concerts</Link></li>
+       <li><Link href="/concerts/america250">America 250</Link></li>
+       <li><span aria-current="page">Masterclass</span></li>
+      </ol>
+     </nav>
 
      <header className={styles.hero}>
       <p className={styles.eyebrow}>Free high school student master class</p>
@@ -54,7 +61,7 @@ export default function America250MasterClassPage() {
       <div>
        <p className={styles.eyebrow}>Space is intended for high school musicians</p>
        <Heading level={2} color="white" marginTop="0" marginBottom="2">Reserve Your Place</Heading>
-       <p>The master class is free, but students in grades 9–12 should RSVP in advance. The evening America 250 concert is free and open to everyone; no concert registration is required.</p>
+       <p>The master class is free, but students in grades 9–12 should RSVP in advance. The evening America 250 concert is free and open to the public; no concert registration is required. Parking is free.</p>
       </div>
       <Link className={styles.button} href="/concerts/america250/master-class/rsvp">Complete the student RSVP</Link>
      </section>

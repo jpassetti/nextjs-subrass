@@ -19,10 +19,18 @@ export default function MasterClassRsvpPage() {
   <Layout>
    <Section>
     <div className={styles.content}>
-     <p className={styles.small}><Link href="/concerts/america250/master-class">&larr; Master class details</Link></p>
+     <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+      <ol>
+       <li><Link href="/">Home</Link></li>
+       <li><Link href="/concerts">Concerts</Link></li>
+       <li><Link href="/concerts/america250">America 250</Link></li>
+       <li><Link href="/concerts/america250/master-class">Masterclass</Link></li>
+       <li><span aria-current="page">RSVP</span></li>
+      </ol>
+     </nav>
      <Heading level={1} marginTop="4" marginBottom="4">High School Master Class RSVP</Heading>
      <Paragraph type="intro" marginBottom="4">
-      This master class and RSVP are exclusively for students currently enrolled in grades 9–12. Complete the form below to reserve your place.
+      This free master class and RSVP are exclusively for students currently enrolled in grades 9–12. Complete the form below to reserve your place. The evening concert is free and open to the public, and parking is free.
      </Paragraph>
      <p className={styles.small}>Fields marked with an asterisk (*) are required.</p>
      <RegistrationForm />

@@ -16,6 +16,26 @@ test("America 250 public routes and artwork exist", () => {
  ]) assert.equal(existsSync(path.join(root, file)), true, `${file} should exist`);
 });
 
+test("site metadata publishes the official Syracuse University favicon set", () => {
+ const layout = source("app/layout.tsx");
+ for (const favicon of ["favicon.ico", "favicon-16.png", "favicon-32.png", "favicon-96.png", "favicon-144.png", "favicon-192.png", "apple-touch-icon.png"]) {
+  assert.match(layout, new RegExp(favicon.replace(".", "\\.")));
+ }
+});
+
+test("concert page recognizes event partners", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ const styles = source("app/concerts/america250/america250.module.scss");
+ assert.match(page, /Presented in partnership with/);
+ assert.match(page, /presented in partnership with Syracuse University’s/);
+ assert.match(page, /href="https:\/\/veterans\.syracuse\.edu\/"/);
+ assert.match(page, /href="https:\/\/chapel\.syracuse\.edu\/"/);
+ assert.match(page, /syracuse-university-ovma-hendricks-chapel\.svg/);
+ assert.match(page, /Office of Veteran and Military Affairs and Hendricks Chapel/);
+ assert.match(page, /className=\{styles\.introGrid\}/);
+ assert.match(styles, /grid-template-columns:\s*minmax\(0, 2fr\) minmax\(14rem, 1fr\)/);
+});
+
 test("concert landing page preserves essential event facts and navigation targets", () => {
  const page = source("app/concerts/america250/page.tsx");
  for (const expected of [
@@ -30,13 +50,26 @@ test("concert landing page preserves essential event facts and navigation target
   'id="program"',
   'id="parking"',
  ]) assert.match(page, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
- assert.match(page, /Student masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
- assert.match(page, /Concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
+ assert.match(page, /Free student masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
+ assert.match(page, /Free concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
+ assert.match(page, /The concert is free and open to the public/);
+ assert.match(page, /student masterclass is also free/);
+ assert.match(page, /Parking is free/);
 });
 
 test("full-width layout offsets row gutters to prevent mobile horizontal scrolling", () => {
  const containerStyles = source("components/container.module.scss");
  assert.match(containerStyles, /&\.full\s*\{[\s\S]*padding-left: \.5rem;[\s\S]*padding-right: \.5rem;/);
+});
+
+test("mobile navigation restores the page layout after route changes", () => {
+ const overlay = source("components/overlay.tsx");
+ const nav = source("components/nav.tsx");
+ const providers = source("app/providers.tsx");
+ assert.match(overlay, /<Nav\.Mobile onNavigate=\{closeHandler\}/);
+ assert.match(nav, /onClick=\{onNavigate\}/);
+ assert.match(providers, /body\.style\.width = "100%"/);
+ assert.match(providers, /body\.style\.width = originalWidth/);
 });
 
 test("concert page provides complete event SEO and social metadata", () => {
@@ -89,6 +122,7 @@ test("visitor information separates admission, parking, and accommodations", () 
  assert.match(page, /Stadium Pl/);
  assert.match(page, /google\.com\/maps\/search/);
  assert.match(page, /target="_blank" rel="noopener noreferrer"/);
+ assert.match(page, /Parking is free/);
 });
 
 test("master class routes enforce high-school-only messaging and route separation", () => {
@@ -96,23 +130,48 @@ test("master class routes enforce high-school-only messaging and route separatio
  const rsvp = source("app/concerts/america250/master-class/rsvp/page.tsx");
  assert.match(landing, /Students in grades 9–12/);
  assert.match(landing, /\/concerts\/america250\/master-class\/rsvp/);
+ assert.match(landing, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
+ assert.match(landing, /<span aria-current="page">Masterclass<\/span>/);
  assert.match(rsvp, /exclusively for students currently enrolled in grades 9–12/);
  assert.match(rsvp, /RegistrationForm/);
+ assert.match(rsvp, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
+ assert.match(rsvp, /<Link href="\/concerts\/america250\/master-class">Masterclass<\/Link>/);
+ assert.match(rsvp, /<span aria-current="page">RSVP<\/span>/);
+ assert.match(landing, /master class is free/);
+ assert.match(landing, /concert is free and open to the public/);
+ assert.match(landing, /Parking is free/);
+ assert.match(rsvp, /free master class/);
+ assert.match(rsvp, /concert is free and open to the public/);
+ assert.match(rsvp, /parking is free/);
 });
 
-test("RSVP form requires student, school, grade, instrument, and instructor details", () => {
+test("RSVP form requires student, parent, school, grade, instrument, and instructor details", () => {
  const form = source("app/master-class/registration-form.tsx");
- for (const name of ["firstName", "lastName", "school", "gradeLevel", "email", "instrument", "teacherName", "teacherEmail"]) {
+ for (const name of ["firstName", "lastName", "school", "gradeLevel", "email", "instrument", "parentName", "parentEmail", "parentPhone", "teacherName", "teacherEmail"]) {
   assert.match(form, new RegExp(`name="${name}"[^>]*required|required[^>]*name="${name}"`), `${name} should be required`);
  }
+ for (const instrument of ["Flute", "Clarinet", "Saxophone", "Trumpet", "French horn", "Trombone", "Tuba", "Percussion"]) {
+  assert.match(form, new RegExp(`"${instrument}"`));
+ }
+ assert.match(form, /Instrument \*/);
+ assert.match(form, /<option>Other<\/option>/);
+ assert.match(form, /instrument === "Other"/);
+ assert.match(form, /name="otherInstrument" required/);
+ assert.doesNotMatch(form, /Voice/);
+ assert.doesNotMatch(form, /Piano|keyboard/i);
+ assert.doesNotMatch(form, /Violin|Viola|Cello|Double bass|Guitar/);
+ assert.match(form, /School name \*/);
  assert.match(form, />Student information</);
+ assert.match(form, />Parent or guardian information</);
  assert.match(form, />Music instructor</);
+ assert.doesNotMatch(form, /name="phone"/);
+ assert.match(form, /name="parentPhone"[^>]*required|required[^>]*name="parentPhone"/);
  assert.doesNotMatch(form, /Grade [6-8]/);
  assert.doesNotMatch(form, />College</);
  assert.doesNotMatch(form, />Adult</);
 });
 
-test("database and admin tools retain instructor contact fields", () => {
+test("database and admin tools retain parent and instructor contact fields", () => {
  const schema = source("database/master-class-registrations.sql");
  const admin = source("app/master-class/admin/page.tsx");
  const route = source("app/api/master-class/register/route.ts");
@@ -120,6 +179,11 @@ test("database and admin tools retain instructor contact fields", () => {
   assert.match(schema, new RegExp(column));
   assert.match(route, new RegExp(column));
  }
+ for (const column of ["parent_name", "parent_email", "parent_phone"]) {
+  assert.match(schema, new RegExp(column));
+  assert.match(route, new RegExp(column));
+ }
+ assert.match(admin, /row\.parent_email/);
  assert.match(admin, /row\.teacher_email/);
  assert.match(admin, /row\.teacher_phone/);
 });
@@ -137,17 +201,26 @@ test("navigation, redirects, and sitemap point to canonical America 250 routes",
 
 test("Hendricks Chapel venue preserves showcase and practical visitor information", () => {
  const venue = source("app/concerts/venues/[slug]/page.tsx");
+ const venueStyles = source("app/concerts/venues/[slug]/venue.module.scss");
  assert.match(venue, /Hendricks Chapel at Syracuse University/);
+ assert.match(venue, /Visitor parking may be available at Irving Garage and University Avenue Garage/);
+ assert.match(venue, /Parking is free/);
+ assert.doesNotMatch(venue, /pay parking|cashless/i);
  assert.match(venue, /Review visitor parking information/);
  assert.match(venue, /View complete accessibility details/);
  assert.match(venue, /315-443-2901/);
  assert.doesNotMatch(venue, /Explore the history of Hendricks Chapel/);
+ assert.match(venueStyles, /text-wrap:\s*pretty/);
+ assert.match(venueStyles, /orphans:\s*3/);
+ assert.match(venueStyles, /widows:\s*3/);
 });
 
 test("smooth section navigation respects reduced-motion preferences", () => {
  const globalStyles = source("styles/global.scss");
  const pageStyles = source("app/concerts/america250/america250.module.scss");
+ const layout = source("app/layout.tsx");
  assert.match(globalStyles, /scroll-behavior:\s*smooth/);
+ assert.match(layout, /<html lang="en" data-scroll-behavior="smooth">/);
  assert.match(globalStyles, /prefers-reduced-motion:\s*reduce[\s\S]*scroll-behavior:\s*auto/);
  for (const id of ["details", "masterclass", "program", "parking"]) assert.match(pageStyles, new RegExp(`#${id}`));
 });

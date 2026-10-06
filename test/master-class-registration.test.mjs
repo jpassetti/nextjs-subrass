@@ -15,6 +15,9 @@ const validPayload = {
  teacherPhone: "315-555-0200",
  email: "student@example.edu",
  phone: "315-555-0100",
+ parentName: "Taylor Student",
+ parentEmail: "parent@example.edu",
+ parentPhone: "315-555-0110",
  instrument: "Trumpet",
  gradeLevel: "10",
  notes: "Vegetarian",
@@ -27,19 +30,33 @@ test("normalizes registration input before persistence", () => {
   ...validPayload,
   firstName: "  Jordan  ",
   email: "  STUDENT@EXAMPLE.EDU ",
-  teacherEmail: " DIRECTOR@EXAMPLE.EDU ",
+ teacherEmail: " DIRECTOR@EXAMPLE.EDU ",
+  parentEmail: " PARENT@EXAMPLE.EDU ",
   notes: "x".repeat(2100),
  });
 
  assert.equal(registration.firstName, "Jordan");
  assert.equal(registration.email, "student@example.edu");
  assert.equal(registration.teacherEmail, "director@example.edu");
+ assert.equal(registration.parentEmail, "parent@example.edu");
  assert.equal(registration.notes.length, 2000);
  assert.equal(registration.consentToContact, true);
 });
 
 test("accepts a complete high school student registration", () => {
  assert.equal(isValidMasterClassRegistration(normalizeMasterClassRegistration(validPayload)), true);
+});
+
+test("stores a manually entered instrument when Other is selected", () => {
+ const registration = normalizeMasterClassRegistration({ ...validPayload, instrument: "Other", otherInstrument: "Alto horn" });
+ assert.equal(registration.instrument, "Alto horn");
+ assert.equal(isValidMasterClassRegistration(registration), true);
+});
+
+test("rejects Other when no instrument is entered", () => {
+ const registration = normalizeMasterClassRegistration({ ...validPayload, instrument: "Other", otherInstrument: "" });
+ assert.equal(registration.instrument, "");
+ assert.equal(isValidMasterClassRegistration(registration), false);
 });
 
 for (const gradeLevel of ["6", "8", "College", "Adult", "13", ""]) {
@@ -49,7 +66,7 @@ for (const gradeLevel of ["6", "8", "College", "Adult", "13", ""]) {
  });
 }
 
-for (const field of ["firstName", "lastName", "school", "teacherName", "instrument"]) {
+for (const field of ["firstName", "lastName", "school", "parentName", "parentPhone", "teacherName", "instrument"]) {
  test(`rejects a missing required field: ${field}`, () => {
   const registration = normalizeMasterClassRegistration({ ...validPayload, [field]: "" });
   assert.equal(isValidMasterClassRegistration(registration), false);
@@ -59,6 +76,10 @@ for (const field of ["firstName", "lastName", "school", "teacherName", "instrume
 test("requires valid student and instructor email addresses", () => {
  assert.equal(isValidMasterClassRegistration(normalizeMasterClassRegistration({ ...validPayload, email: "invalid" })), false);
  assert.equal(isValidMasterClassRegistration(normalizeMasterClassRegistration({ ...validPayload, teacherEmail: "invalid" })), false);
+});
+
+test("requires a valid parent or guardian email address", () => {
+ assert.equal(isValidMasterClassRegistration(normalizeMasterClassRegistration({ ...validPayload, parentEmail: "invalid" })), false);
 });
 
 test("requires contact consent", () => {

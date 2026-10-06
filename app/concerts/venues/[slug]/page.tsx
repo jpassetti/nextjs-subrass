@@ -285,7 +285,7 @@ export default async function VenuePage({ params }) {
        <div className={styles.visitGrid}>
         <article>
          <h3>Getting Here and Parking</h3>
-         <p>Hendricks Chapel faces the Quad at 121 Crouse Drive. Visitor pay parking may be available at the Irving Avenue and University Avenue garages. Campus visitor parking is cashless and availability may vary for major events, so allow extra time before a performance.</p>
+         <p>Hendricks Chapel faces the Quad at 121 Crouse Drive. Parking is free. Visitor parking may be available at Irving Garage and University Avenue Garage. Availability may vary for major events, so allow extra time before a performance.</p>
          <a href="https://parking.syr.edu/visitors-to-campus/daily-campus-visitor/" target="_blank" rel="noopener noreferrer">Review visitor parking information</a>
         </article>
         <article>
