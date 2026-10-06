@@ -89,10 +89,19 @@
 .heroImage {
  display: block;
  height: auto;
+ object-fit: cover;
  width: 100%;
+
+ @include mixins.breakpoint(sm) { height: 100%; }
 }
 
-.heroArtwork { background: variables.$color__blue; }
+.heroArtwork {
+ align-items: center;
+ background: variables.$color__blue;
+ display: flex;
+ justify-content: center;
+ min-width: 0;
+}
 
 .heroContent {
  align-content: center;
