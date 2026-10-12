@@ -33,6 +33,8 @@ test("America 250 promotions page publishes downloadable and shareable assets", 
  ]) assert.match(promotions, new RegExp(asset.replaceAll(".", "\\.")));
  assert.match(promotions, /length: 7/);
  assert.match(promotions, /\$\{number\}-ig-america250\.jpg/);
+ assert.match(promotions, /INSTAGRAM_ASSET_VERSION = "20261012-3"/);
+ assert.match(source("next.config.js"), /search: '\?v=20261012-3'/);
  assert.match(promotions, /america250-promotions-kit\.zip/);
  assert.match(promotions, /america250-instagram-carousel\.zip/);
  assert.match(shareActions, /navigator\.share/);

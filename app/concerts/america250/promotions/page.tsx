@@ -11,6 +11,7 @@ import styles from "./promotions.module.scss";
 
 const CANONICAL_URL = "https://subrass.syr.edu/concerts/america250/promotions";
 const KIT_ROOT = "/america250/kit";
+const INSTAGRAM_ASSET_VERSION = "20261012-3";
 
 const instagramSlides = Array.from({ length: 7 }, (_, index) => {
  const number = String(index + 1).padStart(2, "0");
@@ -150,7 +151,7 @@ export default function PromotionsPage() {
       <div className={styles.instagramGrid}>
        {instagramSlides.map((slide) => (
         <article className={styles.instagramCard} key={slide.number}>
-         <Image src={slide.src} alt={`America 250 Instagram carousel slide ${slide.number} of 7`} width={792} height={792} sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 100vw" />
+         <Image src={`${slide.src}?v=${INSTAGRAM_ASSET_VERSION}`} alt={`America 250 Instagram carousel slide ${slide.number} of 7`} width={792} height={792} sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 100vw" />
          <div className={styles.cardFooter}><h3>Slide {slide.number}</h3><a className={styles.downloadLink} href={slide.src} download>Download</a></div>
         </article>
        ))}

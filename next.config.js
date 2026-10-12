@@ -4,6 +4,16 @@ module.exports = {
 	// Increase timeout so transient API slowness does not fail the full build.
 	staticPageGenerationTimeout: 180,
 	images: {
+		localPatterns: [
+			{
+				pathname: '/**',
+				search: '',
+			},
+			{
+				pathname: '/america250/kit/social-media/instagram/**',
+				search: '?v=20261012-3',
+			},
+		],
 		remotePatterns: [
 			{
 				protocol: 'http',
