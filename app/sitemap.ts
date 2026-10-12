@@ -20,7 +20,7 @@ export default async function sitemap() {
     getAllConcerts(),
  ]);
 
- const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact", "/concerts/america250", "/concerts/america250/master-class", "/concerts/america250/master-class/rsvp"].map((path) =>
+ const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact", "/concerts/america250", "/concerts/america250/promotions", "/concerts/america250/master-class", "/concerts/america250/master-class/rsvp"].map((path) =>
   toSitemapEntry(path, undefined, "weekly")
  );
 

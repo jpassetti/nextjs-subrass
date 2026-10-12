@@ -9,11 +9,36 @@ const source = (file) => readFileSync(path.join(root, file), "utf8");
 test("America 250 public routes and artwork exist", () => {
  for (const file of [
   "app/concerts/america250/page.tsx",
+  "app/concerts/america250/promotions/page.tsx",
   "app/concerts/america250/master-class/page.tsx",
   "app/concerts/america250/master-class/rsvp/page.tsx",
   "public/america250/america250--left.jpg",
   "public/america250/america250--featured-image.jpg",
  ]) assert.equal(existsSync(path.join(root, file)), true, `${file} should exist`);
+});
+
+test("America 250 promotions page publishes downloadable and shareable assets", () => {
+ const landing = source("app/concerts/america250/page.tsx");
+ const promotions = source("app/concerts/america250/promotions/page.tsx");
+ const shareActions = source("app/concerts/america250/promotions/share-actions.tsx");
+ assert.match(landing, /href="\/concerts\/america250\/promotions">Promotions/);
+ for (const asset of [
+  "america250-facebook-1224x792px.jpg",
+  "america250--8x11.pdf",
+  "america250--11x17.pdf",
+  "america250--8x11--preview.jpg",
+  "america250--11x17--preview.jpg",
+  "america250-press-release.docx",
+  "america250-fb-1200x630px.jpg",
+ ]) assert.match(promotions, new RegExp(asset.replaceAll(".", "\\.")));
+ assert.match(promotions, /length: 7/);
+ assert.match(promotions, /\$\{number\}-ig-america250\.jpg/);
+ assert.match(promotions, /america250-promotions-kit\.zip/);
+ assert.match(promotions, /america250-instagram-carousel\.zip/);
+ assert.match(shareActions, /navigator\.share/);
+ assert.match(shareActions, /navigator\.clipboard\.writeText/);
+ assert.match(shareActions, /facebook\.com\/sharer/);
+ assert.match(shareActions, /linkedin\.com\/sharing/);
 });
 
 test("site metadata publishes the official Syracuse University favicon set", () => {

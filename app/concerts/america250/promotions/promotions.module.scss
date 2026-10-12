@@ -1,0 +1,197 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.page {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+ max-width: 72rem;
+}
+
+.breadcrumbs {
+ margin: 2rem 0 1rem;
+
+ ol { align-items: center; display: flex; flex-wrap: wrap; font-size: .9rem; gap: .4rem; }
+ li { align-items: center; display: flex; min-width: 0; }
+ li + li::before { color: variables.$color__gray__light; content: "/"; margin-right: .4rem; }
+ a { color: variables.$color__blue; font-weight: 700; text-decoration-color: variables.$color__orange; text-decoration-thickness: .1rem; text-underline-offset: .2rem; }
+ span[aria-current='page'] { font-weight: 700; }
+}
+
+.breadcrumbHome {
+ align-items: center;
+ background: variables.$color__orange_10;
+ border-radius: 50%;
+ display: inline-flex;
+ height: 2rem;
+ justify-content: center;
+ text-decoration: none !important;
+ width: 2rem;
+ svg { width: .85rem; }
+}
+
+.header {
+ background: variables.$color__blue;
+ color: white;
+ margin-bottom: 2rem;
+ padding: clamp(2rem, 5vw, 4rem);
+
+ h1 { font-family: variables.$font__sherman_serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 400; line-height: 1; margin-bottom: 1rem; }
+ > p:not(.eyebrow) { font-size: 1.15rem; line-height: 1.6; max-width: 48rem; }
+}
+
+.eyebrow, .sectionLabel {
+ color: variables.$color__orange;
+ font-size: .85rem;
+ font-weight: 700;
+ letter-spacing: .08em;
+ margin-bottom: .7rem;
+ text-transform: uppercase;
+}
+
+.headerActions, .shareActions {
+ align-items: center;
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+ margin-top: 1.5rem;
+}
+
+.primaryButton, .secondaryButton, .downloadLink {
+ align-items: center;
+ border: 2px solid variables.$color__orange;
+ cursor: pointer;
+ display: inline-flex;
+ font: inherit;
+ font-weight: 700;
+ justify-content: center;
+ line-height: 1.25;
+ min-height: 2.9rem;
+ padding: .7rem 1rem;
+ text-decoration: none;
+ transition: background-color .2s ease, color .2s ease;
+}
+
+.primaryButton { background: variables.$color__orange; color: variables.$color__blue; }
+.secondaryButton { background: white; color: variables.$color__blue; }
+.primaryButton:hover, .primaryButton:focus-visible, .secondaryButton:hover, .secondaryButton:focus-visible { background: variables.$color__orange_10; color: variables.$color__blue; }
+
+.sharePanel {
+ background: variables.$color__orange_10;
+ display: grid;
+ gap: 1rem 2rem;
+ margin-bottom: 4rem;
+ padding: clamp(1.5rem, 4vw, 2.5rem);
+
+ h2 { font-family: variables.$font__sherman_serif; font-size: 2rem; font-weight: 400; margin-bottom: .5rem; }
+ p { line-height: 1.55; }
+ @include mixins.breakpoint(md) { grid-template-columns: minmax(15rem, .75fr) minmax(0, 1.25fr); }
+}
+
+.shareActions { margin-top: 0; }
+.shareStatus { font-size: .9rem; min-height: 1.4em; margin-top: .65rem; }
+
+.assetSection { margin: 4rem 0; }
+.sectionIntro { max-width: 46rem; }
+.sectionIntro h2 { font-family: variables.$font__sherman_serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 400; margin-bottom: .65rem; }
+.sectionIntro > p:last-child { font-size: 1.05rem; line-height: 1.6; }
+
+.featuredCard {
+ border: 1px solid variables.$color__gray__light;
+ margin-top: 1.5rem;
+ max-width: 52rem;
+ img { display: block; height: auto; width: 100%; }
+}
+
+.cardFooter {
+ align-items: center;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1rem;
+ justify-content: space-between;
+ padding: 1rem;
+ h3 { font-size: 1.05rem; }
+ p { font-size: .9rem; margin-top: .2rem; }
+}
+
+.downloadLink { background: variables.$color__orange; color: variables.$color__blue; min-height: 2.5rem; padding: .5rem .8rem; }
+.downloadLink:hover, .downloadLink:focus-visible { background: variables.$color__orange_10; }
+
+.printGrid {
+ display: grid;
+ gap: 1rem;
+ margin-top: 1.5rem;
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.pressReleaseCard {
+ align-items: center;
+ border: 1px solid variables.$color__gray__light;
+ border-top: .35rem solid variables.$color__orange;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1.5rem;
+ justify-content: space-between;
+ margin-top: 1.5rem;
+ max-width: 52rem;
+ padding: 1.5rem;
+
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.4rem; font-weight: 400; margin: .5rem 0 .2rem; }
+}
+
+.fileCard {
+ border: 1px solid variables.$color__gray__light;
+ border-top: .35rem solid variables.$color__orange;
+ display: grid;
+ overflow: hidden;
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.4rem; font-weight: 400; margin: .5rem 0 .2rem; }
+}
+
+.printPreview {
+ aspect-ratio: 8.5 / 11;
+ background: variables.$color__orange_10;
+ display: block;
+ height: auto;
+ object-fit: contain;
+ padding: 1rem;
+ width: 100%;
+}
+
+.fileCardBody {
+ align-items: center;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1rem;
+ justify-content: space-between;
+ padding: 1.25rem;
+}
+
+.fileType { background: variables.$color__blue; color: white; display: inline-block; font-size: .75rem; font-weight: 700; padding: .3rem .45rem; }
+
+.instagramHeading {
+ align-items: end;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1.5rem;
+ justify-content: space-between;
+}
+
+.instagramGrid {
+ display: grid;
+ gap: 1rem;
+ margin-top: 1.5rem;
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ @include mixins.breakpoint(lg) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.instagramCard {
+ border: 1px solid variables.$color__gray__light;
+ img { display: block; height: auto; width: 100%; }
+ .cardFooter { padding: .75rem; }
+}
+
+@media (max-width: 34rem) {
+ .primaryButton, .secondaryButton { width: 100%; }
+ .pressReleaseCard .downloadLink { width: 100%; }
+ .cardFooter { align-items: stretch; }
+ .cardFooter .downloadLink { width: 100%; }
+}

@@ -159,6 +159,7 @@ export default async function America250Page() {
       <a href="#masterclass">Student masterclass</a>
       <a href="#program">Concert program</a>
       <a href="#parking">Parking and access</a>
+     <Link href="/concerts/america250/promotions">Promotions</Link>
      </nav>
 
      <div className={styles.detailsGrid} id="details">
