@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faCircleInfo, faGraduationCap, faHouse, faLandmark } from "@fortawesome/free-solid-svg-icons";
 
+import EventTools from "../../../components/event-tools";
 import Layout from "../../../components/layout";
 import Section from "../../../components/section";
 import { getConcertBySlug } from "../../../lib/api";
@@ -151,6 +152,10 @@ export default async function America250Page() {
        <h1 className={styles.title}>A Celebration of Service, Education, and Musical Excellence</h1>
        <p className={styles.lede}>Featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
        <p className={styles.heroMeta}>Free student masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Free concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Open to the public.</p>
+       <div className={styles.heroActions}>
+        <a className={styles.button} href="#masterclass">Student masterclass</a>
+        <a className={styles.button} href="#program">Concert information</a>
+       </div>
       </div>
      </div>
 
@@ -161,6 +166,7 @@ export default async function America250Page() {
       <a href="#parking">Parking and access</a>
      <Link href="/concerts/america250/promotions">Promotions</Link>
      </nav>
+
 
      <div className={styles.detailsGrid} id="details">
       <div className={styles.detailCard}><h2>Date</h2><p>Friday, Nov. 13, 2026</p></div>
@@ -269,6 +275,11 @@ export default async function America250Page() {
        </article>
       </div>
      </section>
+     <EventTools title={EVENT_TITLE} start={CONCERT_START} end={CONCERT_END}
+      location="Hendricks Chapel, 121 Crouse Drive, Syracuse, NY 13244" url={CANONICAL_URL}
+      admission="Free and open to the public. No concert registration is required."
+      parkingText="Free public parking is available at Irving Garage."
+      parkingUrl="https://www.google.com/maps/dir/?api=1&destination=Irving+Garage+Syracuse+NY" />
     </main>
    </Section>
   </Layout>

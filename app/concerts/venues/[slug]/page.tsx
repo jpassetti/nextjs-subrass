@@ -8,7 +8,7 @@ import Layout from "../../../../components/layout";
 import Paragraph from "../../../../components/paragraph";
 import Section from "../../../../components/section";
 import { getAllConcerts } from "../../../../lib/api";
-import { getConcertDate, getConcertPagePath, getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
+import { getConcertPagePath, getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
 import styles from "./venue.module.scss";
 
 const HENDRICKS_CHAPEL_SLUG = "hendricks-chapel";
@@ -191,17 +191,7 @@ export default async function VenuePage({ params }) {
       sameAs: "https://chapel.syracuse.edu/",
      }
    : {}),
-  event: venueData.concerts.slice(0, 20).map((concert) => ({
-   "@type": "MusicEvent",
-   name: concert?.node?.title,
-   startDate: concert?.node ? getConcertDate(concert.node) : undefined,
-   url: concert?.node ? `https://subrass.syr.edu${getConcertPagePath(concert.node)}` : undefined,
-   performer: {
-    "@type": "MusicGroup",
-    name: "Syracuse University Brass Ensemble",
-    url: "https://subrass.syr.edu",
-   },
-  })),
+
  };
 
  const breadcrumbSchema = {

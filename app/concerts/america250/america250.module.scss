@@ -427,3 +427,9 @@
  .sectionLabel { color: variables.$color__orange; }
  .programNumber { background: variables.$color__orange; color: variables.$color__blue; }
 }
+
+.heroActions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+}

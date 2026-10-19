@@ -5,7 +5,7 @@ import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
 import { getAllConcerts } from "../../lib/api";
-import { getConcertDate, getConcertPagePath } from "../../lib/utilities";
+import { getConcertPagePath } from "../../lib/utilities";
 
 export const metadata: Metadata = {
  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
@@ -94,39 +94,13 @@ export default async function ConcertsPage() {
  const hasAnyPastConcerts =
   currentYearPastConcerts.length > 0 || previousAcademicYears.length > 0;
 
- const nextConcertDate = currentYearUpcomingConcerts[0]?.node
-  ? getConcertDate(currentYearUpcomingConcerts[0].node)
-  : "";
-
- const upcomingEventList = currentYearUpcomingConcerts.slice(0, 20).map(({ node }, index) => {
-  const venue = node?.concertInformation?.venue;
-  const venueAddress = venue?.venueInformation;
-
-  return {
-   "@type": "ListItem",
-   position: index + 1,
-   item: {
-    "@type": "MusicEvent",
-    name: node?.title,
-   startDate: getConcertDate(node),
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    url: `https://subrass.syr.edu${getConcertPagePath(node)}`,
-    location: {
-     "@type": "Place",
-     name: venue?.title,
-     address: {
-      "@type": "PostalAddress",
-      streetAddress: venueAddress?.street,
-      addressLocality: venueAddress?.city,
-      addressRegion: venueAddress?.state?.toUpperCase?.() || venueAddress?.state,
-      postalCode: venueAddress?.zipCode,
-      addressCountry: "US",
-     },
-    },
-   },
-  };
- });
+ // Overview pages link to the canonical event pages without declaring partial events.
+ const upcomingEventList = currentYearUpcomingConcerts.slice(0, 20).map(({ node }, index) => ({
+  "@type": "ListItem",
+  position: index + 1,
+  name: node?.title,
+  url: `https://subrass.syr.edu${getConcertPagePath(node)}`,
+ }));
 
  return (
   <Layout>
@@ -142,12 +116,6 @@ export default async function ConcertsPage() {
     url: "https://subrass.syr.edu/concerts",
     numberOfItems: upcomingEventList.length,
     itemListElement: upcomingEventList,
-    performer: {
-     "@type": "MusicGroup",
-     name: "Syracuse University Brass Ensemble",
-     url: "https://subrass.syr.edu",
-    },
-    startDate: nextConcertDate || undefined,
      }),
     }}
    />

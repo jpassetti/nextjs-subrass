@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import moment from "moment-timezone";
 
 import Card from "./card";
+import EventTools from "./event-tools";
 import Heading from "./heading";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,10 +56,6 @@ const Concert = ({ data, teaser = false }) => {
      `See the Syracuse University Brass Ensemble live at ${venueTitle} in ${city}, ${state.toUpperCase()} on ${formattedDate}.`,
     startDate: moment(displayDate)
      .tz("America/New_York")
-     .format("YYYY-MM-DDTHH:mm:ssZ"),
-    endDate: moment(displayDate)
-     .tz("America/New_York")
-     .add(2, "h")
      .format("YYYY-MM-DDTHH:mm:ssZ"),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -191,12 +188,16 @@ const Concert = ({ data, teaser = false }) => {
     </ListItem>
    </List>
 
+
    {content && (
     <div
      className={styles.content}
      dangerouslySetInnerHTML={{ __html: content }}
     />
    )}
+   <EventTools title={concertTitle} start={displayDate}
+    location={`${venueTitle}, ${street}, ${city}, ${state.toUpperCase()} ${zipCode}`}
+    url={`https://subrass.syr.edu${concertPath}`} />
   </Fragment>
  );
 };

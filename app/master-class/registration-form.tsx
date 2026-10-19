@@ -1,5 +1,6 @@
 "use client";
 
+import { event as trackEvent } from "../../lib/gtag";
 import { FormEvent, useState } from "react";
 import styles from "./master-class.module.scss";
 
@@ -30,6 +31,7 @@ export default function RegistrationForm() {
    form.reset();
    setInstrument("");
    setStatus("success");
+   trackEvent({ action: "masterclass_rsvp_success", category: "Event", label: "america250-masterclass", value: undefined });
    setMessage("Thank you. Your master class registration has been received.");
   } else {
    setStatus("error");

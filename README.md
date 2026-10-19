@@ -50,3 +50,14 @@ On pushes and pull requests, CI runs:
 1. `npm ci`
 2. `npm run health`
 3. `npm run seo:check`
+
+
+## Event planning and concert archives
+
+Single concert pages and the America 250 masterclass provide Google Calendar and Apple/Outlook (.ics) actions. Naive CMS dates are interpreted in America/New_York; downloads use UTC timestamps for daylight-saving correctness. Unknown end times are omitted from ICS and represented as a zero-length event in the Google Calendar template rather than assuming a concert duration. Visitors can adjust the end time when saving.
+
+Upcoming events show attendance/accessibility details and directions; America 250 also includes confirmed Irving Garage parking information. Past events retain their original page and CMS content and hide calendar buttons. Unknown-duration concerts become archives after the local event day; confirmed-duration events become archives after their end time. Pages update according to their existing revalidation schedule.
+
+To publish approved archive materials, add entries to `lib/event-resources.json`, keyed by the canonical concert pathname. Each entry is an array of `{ "label": "Concert program (PDF)", "url": "/path/to/program.pdf" }` objects. Programs, photo collections, and recordings appear only when links are supplied, and only for past events. Use HTTPS or site-relative URLs; confirm rights and availability before adding materials.
+
+Analytics events: `calendar_google`, `calendar_download`, `event_directions`, `event_parking`, and `masterclass_rsvp_success`. Event actions send only a canonical public event URL; RSVP completion sends a fixed event label after a successful server response. No form values, student details, or contact information are sent by these events. Missing or blocked analytics does not prevent the actions. Mark `masterclass_rsvp_success` as a key event in GA4 if desired.

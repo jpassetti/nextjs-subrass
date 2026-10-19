@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import EventTools from "../../../../components/event-tools";
 import Heading from "../../../../components/heading";
 import Layout from "../../../../components/layout";
 import Section from "../../../../components/section";
@@ -12,6 +13,8 @@ const TITLE = "High School Master Class | America 250";
 const DESCRIPTION = "Free master class for musicians in grades 9–12 with the 10th Mountain Division Band, Nov. 13, 2026, 4–5 p.m. EST at Hendricks Chapel. RSVP requested.";
 const SHARE_IMAGE = "/america250/kit/social-media/facebook/america250-fb-1200x630px.jpg";
 const RSVP_URL = `${CANONICAL_URL}/rsvp`;
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
  title: TITLE,
@@ -88,6 +91,7 @@ export default function America250MasterClassPage() {
       <Link className={styles.button} href="/concerts/america250/master-class/rsvp">RSVP for the master class</Link>
      </header>
 
+
      <div className={styles.detailsGrid}>
       <div><span>Date</span><strong>Friday, Nov. 13, 2026</strong></div>
       <div><span>Time</span><strong>4–5 p.m.</strong></div>
@@ -118,6 +122,12 @@ export default function America250MasterClassPage() {
       </div>
       <Link className={styles.button} href="/concerts/america250/master-class/rsvp">Complete the student RSVP</Link>
      </section>
+     <EventTools title="America 250: Explore a Life in Music — High School Master Class"
+      start={eventSchema.startDate} end={eventSchema.endDate}
+      location="Hendricks Chapel, 121 Crouse Drive, Syracuse, NY 13244" url={CANONICAL_URL}
+      admission="Free for students in grades 9–12. Advance RSVP requested." rsvpUrl={RSVP_URL}
+      parkingText="Free public parking is available at Irving Garage."
+      parkingUrl="https://www.google.com/maps/dir/?api=1&destination=Irving+Garage+Syracuse+NY" />
     </main>
    </Section>
   </Layout>
