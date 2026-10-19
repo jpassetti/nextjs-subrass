@@ -8,15 +8,68 @@ import styles from "./master-class.module.scss";
 
 const CANONICAL_URL = "https://subrass.syr.edu/concerts/america250/master-class";
 
+const TITLE = "High School Master Class | America 250";
+const DESCRIPTION = "Free master class for musicians in grades 9–12 with the 10th Mountain Division Band, Nov. 13, 2026, 4–5 p.m. EST at Hendricks Chapel. RSVP requested.";
+const SHARE_IMAGE = "/america250/kit/social-media/facebook/america250-fb-1200x630px.jpg";
+const RSVP_URL = `${CANONICAL_URL}/rsvp`;
+
 export const metadata: Metadata = {
- title: "High School Master Class | America 250",
- description: "High school musicians are invited to a free master class with members of the 10th Mountain Division Band at Hendricks Chapel.",
+ title: TITLE,
+ description: DESCRIPTION,
  alternates: { canonical: CANONICAL_URL },
+ robots: {
+  index: true, follow: true,
+  googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+ },
+ openGraph: {
+  type: "website", locale: "en_US", siteName: "Syracuse University Brass Ensemble",
+  url: CANONICAL_URL, title: TITLE, description: DESCRIPTION,
+  images: [{ url: SHARE_IMAGE, width: 1200, height: 630, alt: "America 250 concert and student master class at Hendricks Chapel" }],
+ },
+ twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [SHARE_IMAGE] },
+};
+
+const eventSchema = {
+ "@context": "https://schema.org",
+ "@type": "EducationEvent",
+ "@id": `${CANONICAL_URL}#event`,
+ name: "America 250: Explore a Life in Music — High School Master Class",
+ url: CANONICAL_URL,
+ mainEntityOfPage: CANONICAL_URL,
+ description: DESCRIPTION,
+ startDate: "2026-11-13T16:00:00-05:00",
+ endDate: "2026-11-13T17:00:00-05:00",
+ eventStatus: "https://schema.org/EventScheduled",
+ eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+ image: [`https://subrass.syr.edu${SHARE_IMAGE}`],
+ inLanguage: "en-US",
+ audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "High school musicians in grades 9–12" },
+ location: {
+  "@type": "Place", "@id": "https://subrass.syr.edu/concerts/venues/hendricks-chapel",
+  name: "Hendricks Chapel", sameAs: "https://chapel.syracuse.edu/",
+  address: { "@type": "PostalAddress", streetAddress: "121 Crouse Drive", addressLocality: "Syracuse", addressRegion: "NY", postalCode: "13244", addressCountry: "US" },
+ },
+ performer: { "@type": "MusicGroup", name: "10th Mountain Division Band", url: "https://home.army.mil/drum/units-tenants/10th-mountain-division-band" },
+ organizer: { "@type": "Organization", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
+ isAccessibleForFree: true,
+ offers: { "@type": "Offer", url: RSVP_URL, price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
+};
+
+const breadcrumbSchema = {
+ "@context": "https://schema.org", "@type": "BreadcrumbList",
+ itemListElement: [
+  { "@type": "ListItem", position: 1, name: "Home", item: "https://subrass.syr.edu/" },
+  { "@type": "ListItem", position: 2, name: "Concerts", item: "https://subrass.syr.edu/concerts" },
+  { "@type": "ListItem", position: 3, name: "America 250", item: "https://subrass.syr.edu/concerts/america250" },
+  { "@type": "ListItem", position: 4, name: "Masterclass", item: CANONICAL_URL },
+ ],
 };
 
 export default function America250MasterClassPage() {
  return (
   <Layout>
+   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema).replace(/</g, "\\u003c") }} />
+   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, "\\u003c") }} />
    <Section>
     <main className={styles.page}>
      <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
