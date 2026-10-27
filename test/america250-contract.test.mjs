@@ -160,7 +160,7 @@ test("master class routes enforce high-school-only messaging and route separatio
  assert.match(landing, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(landing, /<span aria-current="page">Masterclass<\/span>/);
  assert.match(rsvp, /exclusively for students currently enrolled in grades 9–12/);
- assert.match(rsvp, /RegistrationForm/);
+ assert.match(rsvp, /RegistrationOptions/);
  assert.match(rsvp, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(rsvp, /<Link href="\/concerts\/america250\/master-class">Masterclass<\/Link>/);
  assert.match(rsvp, /<span aria-current="page">RSVP<\/span>/);
@@ -196,6 +196,26 @@ test("RSVP form requires student, parent, school, grade, instrument, and instruc
  assert.doesNotMatch(form, /Grade [6-8]/);
  assert.doesNotMatch(form, />College</);
  assert.doesNotMatch(form, />Adult</);
+});
+
+test("RSVP page offers a multi-student music educator registration flow", () => {
+ const page = source("app/concerts/america250/master-class/rsvp/page.tsx");
+ const options = source("app/master-class/registration-options.tsx");
+ const educatorForm = source("app/master-class/educator-registration-form.tsx");
+ const route = source("app/api/master-class/register-educator/route.ts");
+ const schema = source("database/master-class-registrations.sql");
+ assert.match(page, /RegistrationOptions/);
+ assert.match(page, /music educators may register multiple students/);
+ assert.match(options, /Individual registration/);
+ assert.match(options, /Music educator registration/);
+ assert.match(educatorForm, /Add another student/);
+ assert.match(educatorForm, /Student email address/);
+ assert.match(educatorForm, /primary contact for this group/);
+ assert.match(route, /sql\.transaction/);
+ assert.match(route, /registration_group_id/);
+ assert.match(schema, /registration_source text not null default 'individual'/);
+ assert.match(schema, /registration_group_id text/);
+ assert.match(schema, /alter column email drop not null/);
 });
 
 test("database and admin tools retain parent and instructor contact fields", () => {

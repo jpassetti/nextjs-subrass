@@ -5,7 +5,7 @@ import Heading from "../../../../../components/heading";
 import Layout from "../../../../../components/layout";
 import Paragraph from "../../../../../components/paragraph";
 import Section from "../../../../../components/section";
-import RegistrationForm from "../../../../master-class/registration-form";
+import RegistrationOptions from "../../../../master-class/registration-options";
 import styles from "../../../../master-class/master-class.module.scss";
 
 export const metadata: Metadata = {
@@ -30,10 +30,10 @@ export default function MasterClassRsvpPage() {
      </nav>
      <Heading level={1} marginTop="4" marginBottom="4">High School Master Class RSVP</Heading>
      <Paragraph type="intro" marginBottom="4">
-      This free master class and RSVP are exclusively for students currently enrolled in grades 9–12. Complete the form below to reserve your place. The evening concert is free and open to the public, and parking is free.
+      This free master class and RSVP are exclusively for students currently enrolled in grades 9–12. Students and parents may register one student, or music educators may register multiple students in one submission. The evening concert is free and open to the public, and parking is free.
      </Paragraph>
      <p className={styles.small}>Fields marked with an asterisk (*) are required.</p>
-     <RegistrationForm />
+     <RegistrationOptions />
     </div>
    </Section>
   </Layout>

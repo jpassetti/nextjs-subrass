@@ -15,6 +15,8 @@ create table if not exists master_class_registrations (
  grade_level text,
  notes text,
  consent_to_contact boolean not null default false,
+ registration_source text not null default 'individual',
+ registration_group_id text,
  created_at timestamptz not null default now(),
  updated_at timestamptz not null default now(),
  deleted_at timestamptz
@@ -28,6 +30,13 @@ alter table master_class_registrations
  add column if not exists teacher_phone text,
  add column if not exists updated_at timestamptz not null default now(),
  add column if not exists deleted_at timestamptz;
+
+alter table master_class_registrations
+ alter column email drop not null;
+
+alter table master_class_registrations
+ add column if not exists registration_source text not null default 'individual',
+ add column if not exists registration_group_id text;
 
 create index if not exists master_class_registrations_created_at_idx
  on master_class_registrations (created_at desc);
@@ -64,3 +73,9 @@ create index if not exists master_class_registrations_grade_idx
 
 create index if not exists master_class_registrations_deleted_at_idx
  on master_class_registrations (deleted_at);
+
+create index if not exists master_class_registrations_group_idx
+ on master_class_registrations (registration_group_id);
+
+create index if not exists master_class_registrations_source_idx
+ on master_class_registrations (registration_source);

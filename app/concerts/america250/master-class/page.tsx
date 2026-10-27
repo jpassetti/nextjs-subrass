@@ -118,9 +118,9 @@ export default function America250MasterClassPage() {
       <div>
        <p className={styles.eyebrow}>Space is intended for high school musicians</p>
        <Heading level={2} color="white" marginTop="0" marginBottom="2">Reserve Your Place</Heading>
-       <p>The master class is free, but students in grades 9–12 should RSVP in advance. The evening America 250 concert is free and open to the public; no concert registration is required. Parking is free.</p>
+       <p>The master class is free, but students in grades 9–12 should RSVP in advance. Students and parents may register individually, and music educators may register multiple students at once. The evening America 250 concert is free and open to the public; no concert registration is required. Parking is free.</p>
       </div>
-      <Link className={styles.button} href="/concerts/america250/master-class/rsvp">Complete the student RSVP</Link>
+      <Link className={styles.button} href="/concerts/america250/master-class/rsvp">Choose a registration option</Link>
      </section>
      <EventTools title="America 250: Explore a Life in Music — High School Master Class"
       start={eventSchema.startDate} end={eventSchema.endDate}

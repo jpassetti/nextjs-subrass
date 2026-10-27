@@ -18,6 +18,8 @@ function field(record: RegistrationRecord | null, key: string) {
 }
 
 export default function RegistrationEditor({ action, record = null, submitLabel }: RegistrationEditorProps) {
+ const registrationSource = field(record, "registration_source") === "educator" ? "educator" : "individual";
+ const isEducatorRegistration = registrationSource === "educator";
  const savedInstrument = field(record, "instrument");
  const savedInstrumentIsStandard = instruments.includes(savedInstrument);
  const [instrument, setInstrument] = useState(savedInstrumentIsStandard ? savedInstrument : savedInstrument ? "Other" : "");
@@ -26,6 +28,7 @@ export default function RegistrationEditor({ action, record = null, submitLabel 
  return (
   <form className={styles.adminEditor} action={action} method="post">
    <input type="hidden" name="phone" value={field(record, "phone")} />
+   <input type="hidden" name="registrationSource" value={registrationSource} />
    <fieldset className={styles.formGroup}>
     <legend>Student information</legend>
     <div className={styles.grid}>
@@ -36,17 +39,18 @@ export default function RegistrationEditor({ action, record = null, submitLabel 
      <div className={styles.field}><label htmlFor="school">School name *</label><input id="school" name="school" defaultValue={field(record, "school")} required maxLength={160} /></div>
      <div className={styles.field}><label htmlFor="gradeLevel">Grade *</label><select id="gradeLevel" name="gradeLevel" defaultValue={field(record, "grade_level")} required><option value="" disabled>Select a grade</option>{[9, 10, 11, 12].map((grade) => <option key={grade} value={grade}>Grade {grade}</option>)}</select></div>
     </div>
-    <div className={styles.field}><label htmlFor="email">Student email *</label><input id="email" name="email" type="email" defaultValue={field(record, "email")} required maxLength={254} /></div>
+    <div className={styles.field}><label htmlFor="email">Student email {isEducatorRegistration ? <span className={styles.optional}>(optional)</span> : "*"}</label><input id="email" name="email" type="email" defaultValue={field(record, "email")} required={!isEducatorRegistration} maxLength={254} /></div>
     <div className={styles.field}><label htmlFor="instrument">Instrument *</label><select id="instrument" name="instrument" value={instrument} onChange={(event) => setInstrument(event.target.value)} required><option value="" disabled>Select an instrument</option>{instruments.map((instrumentName) => <option key={instrumentName}>{instrumentName}</option>)}<option>Other</option></select></div>
     {instrument === "Other" ? <div className={styles.field}><label htmlFor="otherInstrument">Enter the instrument *</label><input id="otherInstrument" name="otherInstrument" value={otherInstrument} onChange={(event) => setOtherInstrument(event.target.value)} required maxLength={80} /></div> : null}
    </fieldset>
 
    <fieldset className={styles.formGroup}>
     <legend>Parent or guardian information</legend>
-    <div className={styles.field}><label htmlFor="parentName">Parent or guardian name *</label><input id="parentName" name="parentName" defaultValue={field(record, "parent_name")} required maxLength={160} /></div>
+    {isEducatorRegistration ? <p className={styles.groupDescription}>Parent or guardian information was not required because a music educator submitted this registration.</p> : null}
+    <div className={styles.field}><label htmlFor="parentName">Parent or guardian name {isEducatorRegistration ? <span className={styles.optional}>(optional)</span> : "*"}</label><input id="parentName" name="parentName" defaultValue={field(record, "parent_name")} required={!isEducatorRegistration} maxLength={160} /></div>
     <div className={styles.grid}>
-     <div className={styles.field}><label htmlFor="parentEmail">Parent or guardian email *</label><input id="parentEmail" name="parentEmail" type="email" defaultValue={field(record, "parent_email")} required maxLength={254} /></div>
-     <div className={styles.field}><label htmlFor="parentPhone">Parent or guardian phone *</label><input id="parentPhone" name="parentPhone" type="tel" defaultValue={field(record, "parent_phone")} required maxLength={40} /></div>
+     <div className={styles.field}><label htmlFor="parentEmail">Parent or guardian email {isEducatorRegistration ? <span className={styles.optional}>(optional)</span> : "*"}</label><input id="parentEmail" name="parentEmail" type="email" defaultValue={field(record, "parent_email")} required={!isEducatorRegistration} maxLength={254} /></div>
+     <div className={styles.field}><label htmlFor="parentPhone">Parent or guardian phone {isEducatorRegistration ? <span className={styles.optional}>(optional)</span> : "*"}</label><input id="parentPhone" name="parentPhone" type="tel" defaultValue={field(record, "parent_phone")} required={!isEducatorRegistration} maxLength={40} /></div>
     </div>
    </fieldset>
 

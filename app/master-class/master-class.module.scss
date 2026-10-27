@@ -121,6 +121,70 @@
 .honeypot { left: -10000px; position: absolute; }
 .small { font-size: .95rem; line-height: 1.45; }
 
+.registrationType {
+ display: grid;
+ gap: 1rem;
+ margin: 2rem 0;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.registrationTypeButton, .registrationTypeActive {
+ background: white;
+ border: 2px solid variables.$color__gray__light;
+ border-radius: .25rem;
+ color: variables.$color__blue;
+ cursor: pointer;
+ display: grid;
+ font: inherit;
+ gap: .35rem;
+ padding: 1.25rem;
+ text-align: left;
+
+ strong { font-size: 1.05rem; }
+ span { font-size: .9rem; line-height: 1.4; }
+}
+
+.registrationTypeActive {
+ background: variables.$color__orange_10;
+ border-color: variables.$color__orange;
+ box-shadow: inset 0 -.25rem 0 variables.$color__orange;
+}
+
+.studentList { display: grid; gap: 1.25rem; }
+
+.studentEntry {
+ background: #f7f8fa;
+ border: 1px solid variables.$color__gray__light;
+ display: grid;
+ gap: 1.1rem;
+ padding: 1.25rem;
+}
+
+.studentEntryHeader {
+ align-items: center;
+ display: flex;
+ justify-content: space-between;
+
+ h3 { font-family: variables.$font__sherman_serif; font-size: 1.3rem; font-weight: 400; }
+}
+
+.addButton, .removeButton {
+ background: white;
+ border: 1px solid variables.$color__blue;
+ border-radius: .2rem;
+ color: variables.$color__blue;
+ cursor: pointer;
+ font: inherit;
+ font-weight: 700;
+ padding: .65rem .9rem;
+ width: fit-content;
+}
+
+.removeButton { border-color: #8b0000; color: #8b0000; font-size: .85rem; padding: .45rem .7rem; }
+.addButton:disabled { cursor: not-allowed; opacity: .5; }
+.optional { font-size: .85rem; font-weight: 400; }
+
 .adminContent {
  color: variables.$color__blue;
  font-family: variables.$font__sherman_sans;

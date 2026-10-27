@@ -3,7 +3,9 @@ import test from "node:test";
 
 import {
  isValidMasterClassRegistration,
+ isValidEducatorMasterClassRegistration,
  normalizeMasterClassRegistration,
+ normalizeEducatorMasterClassRegistration,
 } from "../lib/master-class-registration.mjs";
 
 const validPayload = {
@@ -90,4 +92,47 @@ test("requires contact consent", () => {
 test("captures the anti-spam honeypot", () => {
  const registration = normalizeMasterClassRegistration({ ...validPayload, website: "https://spam.example" });
  assert.equal(registration.website, "https://spam.example");
+});
+
+const validEducatorPayload = {
+ educatorName: "Corey Riley",
+ educatorEmail: "corey@example.edu",
+ educatorPhone: "315-555-0123",
+ school: "Central High School",
+ notes: "Traveling together",
+ consentToContact: "yes",
+ website: "",
+ students: [
+  { firstName: "Avery", lastName: "Student", email: "", instrument: "Clarinet", gradeLevel: "9" },
+  { firstName: "Jordan", lastName: "Musician", email: "jordan@example.edu", instrument: "Other", otherInstrument: "Alto horn", gradeLevel: "12" },
+ ],
+};
+
+test("accepts an educator registration containing multiple students", () => {
+ const registration = normalizeEducatorMasterClassRegistration(validEducatorPayload);
+ assert.equal(isValidEducatorMasterClassRegistration(registration), true);
+ assert.equal(registration.students.length, 2);
+ assert.equal(registration.students[1].instrument, "Alto horn");
+});
+
+test("allows an educator to omit student email addresses", () => {
+ const registration = normalizeEducatorMasterClassRegistration(validEducatorPayload);
+ assert.equal(registration.students[0].email, "");
+ assert.equal(isValidEducatorMasterClassRegistration(registration), true);
+});
+
+test("rejects an educator registration with no students", () => {
+ const registration = normalizeEducatorMasterClassRegistration({ ...validEducatorPayload, students: [] });
+ assert.equal(isValidEducatorMasterClassRegistration(registration), false);
+});
+
+test("rejects invalid students within an educator registration", () => {
+ for (const students of [
+  [{ firstName: "", lastName: "Student", instrument: "Trumpet", gradeLevel: "10" }],
+  [{ firstName: "Avery", lastName: "Student", instrument: "", gradeLevel: "10" }],
+  [{ firstName: "Avery", lastName: "Student", instrument: "Trumpet", gradeLevel: "8" }],
+  [{ firstName: "Avery", lastName: "Student", email: "invalid", instrument: "Trumpet", gradeLevel: "10" }],
+ ]) {
+  assert.equal(isValidEducatorMasterClassRegistration(normalizeEducatorMasterClassRegistration({ ...validEducatorPayload, students })), false);
+ }
 });

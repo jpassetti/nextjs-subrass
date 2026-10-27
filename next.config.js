@@ -1,5 +1,8 @@
 // next.config.js
 module.exports = {
+	experimental: {
+		agentUpgrade: 'security',
+	},
 	// Some musician pages rely on slow upstream API responses during SSG.
 	// Increase timeout so transient API slowness does not fail the full build.
 	staticPageGenerationTimeout: 180,
