@@ -2,9 +2,17 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { toIsoLastModified } from "../lib/sitemap-date.mjs";
 
 const root = process.cwd();
 const source = (file) => readFileSync(path.join(root, file), "utf8");
+
+test("sitemap normalizes CMS timestamps to valid ISO 8601 dates", () => {
+ assert.equal(toIsoLastModified("2026-10-12T20:52:13"), "2026-10-12T20:52:13.000Z");
+ assert.equal(toIsoLastModified("2026-10-12T20:52:13Z"), "2026-10-12T20:52:13.000Z");
+ assert.equal(toIsoLastModified("not-a-date"), undefined);
+ assert.equal(toIsoLastModified(undefined), undefined);
+});
 
 test("America 250 public routes and artwork exist", () => {
  for (const file of [
@@ -308,7 +316,12 @@ test("navigation, redirects, and sitemap point to canonical America 250 routes",
  assert.doesNotMatch(nav, /title: "Master Class"/);
  assert.match(config, /source: '\/master-class'[\s\S]*destination: '\/concerts\/america250\/master-class'/);
  assert.match(config, /celebrate-americas-250th-anniversary-concert'[\s\S]*destination: '\/concerts\/america250'/);
- assert.match(sitemap, /"\/concerts\/america250\/master-class\/rsvp"/);
+ assert.doesNotMatch(sitemap, /"\/concerts\/america250\/master-class\/rsvp"/);
+ assert.doesNotMatch(sitemap, /changeFrequency/);
+ assert.match(sitemap, /\["", "\/about"/);
+ assert.match(sitemap, /normalizeSitemapPath/);
+ assert.match(source("app/concerts/america250/master-class/rsvp/page.tsx"), /robots: \{ index: false, follow: true \}/);
+ assert.match(source("lib/utilities.js"), /concert\?\.uri\?\.replace\(\/\\\/\+\$\//);
 });
 
 test("Hendricks Chapel venue preserves showcase and practical visitor information", () => {

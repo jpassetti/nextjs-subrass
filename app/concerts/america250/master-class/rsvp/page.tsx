@@ -12,6 +12,7 @@ export const metadata: Metadata = {
  title: "RSVP | America 250 High School Master Class",
  description: "Students in grades 9–12 can RSVP for the America 250 master class with members of the 10th Mountain Division Band.",
  alternates: { canonical: "https://subrass.syr.edu/concerts/america250/master-class/rsvp" },
+ robots: { index: false, follow: true },
 };
 
 export default function MasterClassRsvpPage() {

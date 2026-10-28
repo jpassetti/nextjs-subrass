@@ -1,14 +1,19 @@
 import { getAllConcertSlugs, getAllEnsembleSlugs, getAllMusicians } from "../lib/api";
 import { getAllConcerts } from "../lib/api";
 import { getConcertPagePath, getVenuePagePath } from "../lib/utilities";
+import { toIsoLastModified } from "../lib/sitemap-date.mjs";
 
 const BASE_URL = "https://subrass.syr.edu";
 
-function toSitemapEntry(path, lastModified, changeFrequency = "monthly") {
+function normalizeSitemapPath(path) {
+ if (!path || path === "/") return "";
+ return `/${String(path).replace(/^\/+|\/+$/g, "")}`;
+}
+
+function toSitemapEntry(path, lastModified) {
  return {
-  url: `${BASE_URL}${path}`,
-  lastModified: lastModified || undefined,
-  changeFrequency,
+  url: `${BASE_URL}${normalizeSitemapPath(path)}`,
+  lastModified: toIsoLastModified(lastModified),
  };
 }
 
@@ -20,8 +25,8 @@ export default async function sitemap() {
     getAllConcerts(),
  ]);
 
- const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact", "/concerts/america250", "/concerts/america250/promotions", "/concerts/america250/master-class", "/concerts/america250/master-class/rsvp"].map((path) =>
-  toSitemapEntry(path, undefined, "weekly")
+ const staticEntries = ["", "/about", "/concerts", "/ensembles", "/contact", "/concerts/america250", "/concerts/america250/promotions", "/concerts/america250/master-class"].map((path) =>
+  toSitemapEntry(path, undefined)
  );
 
  const musicianEntries = musicians
@@ -30,8 +35,7 @@ export default async function sitemap() {
    if (!slug) return null;
    return toSitemapEntry(
     `/about/musicians/${slug}`,
-    musician?.node?.modifiedGmt,
-    "monthly"
+    musician?.node?.modifiedGmt
    );
   })
   .filter(Boolean);
@@ -40,7 +44,7 @@ export default async function sitemap() {
   .map((concert) => {
    const uri = concert?.node?.uri;
    if (!uri) return null;
-   return toSitemapEntry(getConcertPagePath(concert.node), concert?.node?.modifiedGmt, "monthly");
+   return toSitemapEntry(getConcertPagePath(concert.node), concert?.node?.modifiedGmt);
   })
   .filter(Boolean);
 
@@ -48,7 +52,7 @@ export default async function sitemap() {
   .map((ensemble) => {
    const uri = ensemble?.node?.uri;
    if (!uri) return null;
-   return toSitemapEntry(uri, ensemble?.node?.modifiedGmt, "monthly");
+   return toSitemapEntry(uri, ensemble?.node?.modifiedGmt);
   })
   .filter(Boolean);
 
@@ -78,7 +82,7 @@ export default async function sitemap() {
  });
 
  const venueEntries = Object.values(venueMap).map((venue) =>
-  toSitemapEntry(venue.path, venue.lastModified, "monthly")
+  toSitemapEntry(venue.path, venue.lastModified)
  );
 
  const entries = [

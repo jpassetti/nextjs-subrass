@@ -6,7 +6,7 @@ import Layout from "../../../../components/layout";
 import PageTransition from "../../../../components/page-transition";
 import Section from "../../../../components/section";
 import { getAllConcerts, getAllConcertSlugs, getConcertBySlug } from "../../../../lib/api";
-import { getConcertDate } from "../../../../lib/utilities";
+import { getConcertDate, getConcertPagePath } from "../../../../lib/utilities";
 import { ensembleImage16x9 } from "../../../../lib/site-images";
 
 export const revalidate = 86400;
@@ -41,8 +41,8 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
  const concertData = await getConcertBySlug(concertSlug);
  const concertTitle = concertData?.title || "Concert";
- const canonicalUrl = concertData?.uri
-  ? `https://subrass.syr.edu${concertData.uri}`
+ const canonicalUrl = concertData
+  ? `https://subrass.syr.edu${getConcertPagePath(concertData)}`
   : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`;
  const socialImage =
   concertData?.featuredImage?.node?.sourceUrl ||
@@ -102,9 +102,7 @@ export default async function SingleConcertPage({ params }) {
  const nextConcert = concertIndex >= 0 && concertIndex < orderedConcerts.length - 1 ? orderedConcerts[concertIndex + 1] : null;
 
  const concertTitle = concertData?.title || "Concert";
- const concertCanonicalUrl = concertData?.uri
-  ? `https://subrass.syr.edu${concertData.uri}`
-  : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`;
+ const concertCanonicalUrl = `https://subrass.syr.edu${getConcertPagePath(concertData)}`;
  const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
