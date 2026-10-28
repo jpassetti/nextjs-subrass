@@ -10,6 +10,7 @@ import Paragraph from "./paragraph";
 import ProfileImage from "./profileimage";
 import Row from "./row";
 import Span from "./span";
+import { ensembleReference } from "../lib/site-identity";
 
 import {
  isGraduateOfSyracuseUniversity,
@@ -20,7 +21,7 @@ import {
 } from "../lib/utilities";
 
 const Musician = ({ data, teaser = false }) => {
- const { slug, content, instruments, featuredImage, peopleTypes } = data;
+ const { slug, content, instruments, featuredImage, peopleTypes, modifiedGmt } = data;
  const { prefix, firstName, middleInitial, lastName, suffix, education, work } =
   data.personInformation;
 
@@ -46,27 +47,34 @@ const Musician = ({ data, teaser = false }) => {
      name: university,
     })) || [];
 
-  const schema = {
-   "@context": "https://schema.org",
+  const profileUrl = `https://subrass.syr.edu/about/musicians/${slug}`;
+  const person = {
    "@type": "Person",
-   "@id": `https://subrass.syr.edu/about/musicians/${slug}`,
-   url: `https://subrass.syr.edu/about/musicians/${slug}`,
+   "@id": `${profileUrl}#person`,
+   url: profileUrl,
    name: buildFullName(),
    description: "A member of the Syracuse University Brass Ensemble",
-   image:
-    featuredImage?.node?.sourceUrl ||
-    "https://subrass.syr.edu/photos/1x1/photo.jpg",
+   ...(featuredImage?.node?.sourceUrl
+    ? { image: featuredImage.node.sourceUrl }
+    : {}),
    jobTitle:
     slug === "james-t-spencer"
      ? "Music Director"
-     : instruments.edges[0].node.name,
-   affiliation: {
-    "@type": "MusicGroup",
-    name: "Syracuse University Brass Ensemble",
-    url: "https://subrass.syr.edu",
-   },
+     : instrumentNames[0] || "Musician",
+   affiliation: ensembleReference,
    knowsAbout: instrumentNames,
    alumniOf,
+  };
+
+  const schema = {
+   "@context": "https://schema.org",
+   "@type": "ProfilePage",
+   "@id": `${profileUrl}#profile-page`,
+   url: profileUrl,
+   name: `${buildFullName()} | Syracuse University Brass Ensemble`,
+   ...(modifiedGmt ? { dateModified: modifiedGmt } : {}),
+   mainEntity: person,
+   isPartOf: { "@id": "https://subrass.syr.edu/#website" },
   };
 
   return {

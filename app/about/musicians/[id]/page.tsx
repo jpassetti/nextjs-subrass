@@ -2,9 +2,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import Layout from "../../../../components/layout";
+import Breadcrumbs from "../../../../components/breadcrumbs";
 import Musician from "../../../../components/musician";
 import Section from "../../../../components/section";
 import { getAllMusicians, getMusicianBySlug } from "../../../../lib/api";
+import { ensembleImage16x9 } from "../../../../lib/site-images";
 
 export const revalidate = 86400;
 
@@ -67,7 +69,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
  const canonicalUrl = `https://subrass.syr.edu/about/musicians/${musicianData?.slug || musicianId}`;
  const socialImage =
   musicianData?.featuredImage?.node?.sourceUrl ||
-  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg";
+  `https://subrass.syr.edu${ensembleImage16x9}`;
 
  return {
   title: `${musicianName} - Syracuse University Brass Ensemble`,
@@ -150,6 +152,14 @@ export default async function SingleMusicianPage({ params }) {
     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
    <Section>
+    <Breadcrumbs
+     items={[
+      { label: "Home", href: "/" },
+      { label: "About", href: "/about" },
+      { label: "Musicians", href: "/ensembles" },
+      { label: musicianName },
+     ]}
+    />
     <Musician data={musicianData} />
    </Section>
   </Layout>

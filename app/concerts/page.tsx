@@ -1,4 +1,5 @@
 import ConcertInteractive from "../../components/concertInteractive";
+import Breadcrumbs from "../../components/breadcrumbs";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Layout from "../../components/layout";
@@ -7,6 +8,7 @@ import Section from "../../components/section";
 import { getAllConcerts } from "../../lib/api";
 import { getConcertDate, getConcertPagePath } from "../../lib/utilities";
 import styles from "./concerts.module.scss";
+import { ensembleImage16x9 } from "../../lib/site-images";
 
 export const metadata: Metadata = {
  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
@@ -23,9 +25,9 @@ export const metadata: Metadata = {
    "Experience the power of live brass music! See the Syracuse University Brass Ensemble perform in concerts across New York and beyond.",
   images: [
    {
-    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
-    width: 1200,
-    height: 630,
+    url: ensembleImage16x9,
+    width: 1920,
+    height: 1080,
     alt: "Syracuse University Brass Ensemble",
    },
   ],
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
   title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
   description:
    "Experience the power of live brass music! See the Syracuse University Brass Ensemble perform in concerts across New York and beyond.",
-  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+  images: [ensembleImage16x9],
  },
 };
 
@@ -120,6 +122,11 @@ export default async function ConcertsPage() {
    <Section>
     <div className={styles.hero}>
      <div className={styles.heroVisual}>
+      <Breadcrumbs
+       theme="dark"
+       overlay
+       items={[{ label: "Home", href: "/" }, { label: "Concerts" }]}
+      />
       <Image
        src="/horns-and-harmonies-2025/HH_DSC0513.webp"
        alt="The Syracuse University Brass Ensemble performing in Hendricks Chapel"
@@ -131,12 +138,12 @@ export default async function ConcertsPage() {
       <div className={styles.heroShade} aria-hidden="true"></div>
      </div>
      <div className={styles.heroContent}>
-      <h1>Upcoming Concerts - Live Brass Music</h1>
+      <h1>Upcoming Concerts</h1>
       <p>
-       Experience the powerful sound of brass live! The&nbsp;Syracuse University Brass
-       Ensemble performs throughout the year with a diverse repertoire, from
-       classical to contemporary. Check out our upcoming concerts and enjoy an
-       evening of inspiring music.
+       Experience live brass music performed by the Syracuse University Brass
+       Ensemble. Explore upcoming concerts featuring repertoire ranging from
+       classical works to contemporary music, and join us for an inspiring live
+       performance.
       </p>
      </div>
     </div>
@@ -163,15 +170,16 @@ export default async function ConcertsPage() {
 
     {previousAcademicYears.map((yearLabel) => {
      return (
-      <ConcertInteractive
-       key={yearLabel}
-       concerts={[...concertsByAcademicYear[yearLabel]].sort((a, b) => {
-        return new Date(getConcertDate(b.node)).getTime() - new Date(getConcertDate(a.node)).getTime();
-       })}
-       sectionTitle="Past Concerts"
-       label={yearLabel}
-       listOnly
-      />
+      <div className={styles.archiveYear} key={yearLabel}>
+       <ConcertInteractive
+        concerts={[...concertsByAcademicYear[yearLabel]].sort((a, b) => {
+         return new Date(getConcertDate(b.node)).getTime() - new Date(getConcertDate(a.node)).getTime();
+        })}
+        sectionTitle="Past Concerts"
+        label={yearLabel}
+        listOnly
+       />
+      </div>
      );
     })}
    </Section>

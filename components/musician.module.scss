@@ -11,7 +11,9 @@
 .showcase {
 	background-color: variables.$color__blue;
 	padding: 2rem;
-	margin-top: -2rem;
+	// The visible breadcrumb now occupies the top inset on profile pages.
+	// Keep the showcase from pulling upward over that navigation.
+	margin-top: 0;
 	margin-left: -2rem;
 	margin-right: -2rem;
 	color: white;

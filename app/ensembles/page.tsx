@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import EnsembleRoster from "../../components/ensemble-roster";
+import Breadcrumbs from "../../components/breadcrumbs";
 import EnsembleYearNav from "../../components/ensemble-year-nav";
 import Heading from "../../components/heading";
 import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
 import { getAllEnsembleSlugs, getEnsembleBySlug } from "../../lib/api";
+import { ensembleImage16x9 } from "../../lib/site-images";
 
 const CURRENT_ENSEMBLE_SLUG = "2026-27";
 
@@ -26,9 +28,9 @@ export const metadata: Metadata = {
    "Browse Syracuse University Brass Ensemble member rosters by ensemble year.",
   images: [
    {
-    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
-    width: 1200,
-    height: 630,
+    url: ensembleImage16x9,
+    width: 1920,
+    height: 1080,
     alt: "Syracuse University Brass Ensemble",
    },
   ],
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
   title: "Ensembles - Syracuse University Brass Ensemble",
   description:
    "Browse Syracuse University Brass Ensemble member rosters by ensemble year.",
-  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+  images: [ensembleImage16x9],
  },
 };
 
@@ -77,6 +79,7 @@ export default async function EnsemblesPage() {
     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
    <Section>
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Ensembles" }]} />
     <Heading level={1} marginTop="8" marginBottom="4">
      {ensembleData?.title || currentSlug || "Ensembles"} Ensemble
     </Heading>

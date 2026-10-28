@@ -1,9 +1,9 @@
 import ConcertInteractive from "../components/concertInteractive";
 import type { Metadata } from "next";
-import Heading from "../components/heading";
 import Layout from "../components/layout";
 import Showcase from "../components/showcase";
 import { getAllConcerts } from "../lib/api";
+import { ensembleImage16x9 } from "../lib/site-images";
 
 export const metadata: Metadata = {
  title: "Syracuse University Brass Ensemble - Live Brass Music & Performances",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
    "Experience the Syracuse University Brass Ensemble live! See upcoming concerts and enjoy powerful brass music by professional musicians from SU, SUNY Upstate, and beyond.",
   images: [
    {
-    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
-    width: 1200,
-    height: 630,
+    url: ensembleImage16x9,
+    width: 1920,
+    height: 1080,
     alt: "Syracuse University Brass Ensemble",
    },
   ],
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   title: "Syracuse University Brass Ensemble - Live Brass Music & Performances",
   description:
    "Experience the Syracuse University Brass Ensemble live! See upcoming concerts and enjoy powerful brass music by professional musicians from SU, SUNY Upstate, and beyond.",
-  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+  images: [ensembleImage16x9],
  },
 };
 
@@ -48,39 +48,7 @@ export default async function HomePage() {
 
  return (
   <Layout>
-   <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-     __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "MusicGroup",
-      name: "Syracuse University Brass Ensemble",
-      description:
-       "A group of 35 professional-level brass and percussion musicians.",
-      logo: "https://subrass.syr.edu/photos/1x1/photo.jpg",
-      url: "https://subrass.syr.edu",
-      telephone: "+1-315-443-3436",
-      address: {
-       "@type": "PostalAddress",
-       streetAddress:
-        "Room 1-014, Center for Science and Technology, Syracuse University",
-       addressLocality: "Syracuse",
-       addressRegion: "NY",
-       postalCode: "13244",
-       addressCountry: "US",
-      },
-      sameAs: [
-       "https://www.facebook.com/subrass",
-       "https://www.soundcloud.com/thesubrass",
-       "https://www.youtube.com/thesubrass",
-      ],
-     }),
-    }}
-   />
    <Showcase />
-  <Heading level={1} marginBottom="2" marginTop="2">
-    Syracuse University Brass Ensemble - Live Brass Music
-   </Heading>
    <ConcertInteractive concerts={upcomingConcerts} sectionTitle="Upcoming Concerts" label={upcomingAcademicYear} />
   </Layout>
  );

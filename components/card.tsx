@@ -9,11 +9,11 @@ const Body = ({children}) => {
 	return <div className={styles.card__body}>{children}</div>
 }
 Card.Body = Body;
-const CoverImage = ({image}) => {
+const CoverImage = ({image, alt = ""}) => {
 	return image ? <div className={styles.card__image}>
 		<Image 
 			src={image?.node?.sourceUrl || image?.sourceUrl || null}
-			alt={image?.node?.altText || image?.altText || ""}
+			alt={image?.node?.altText || image?.altText || alt}
 			width={image?.node?.mediaDetails?.width || image?.mediaDetails?.width || 1200}
 			height={image?.node?.mediaDetails?.height || image?.mediaDetails?.height || 630}
 			className="responsive-img"

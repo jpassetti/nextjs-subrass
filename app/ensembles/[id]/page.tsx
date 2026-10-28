@@ -2,10 +2,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import EnsembleRoster from "../../../components/ensemble-roster";
+import Breadcrumbs from "../../../components/breadcrumbs";
 import EnsembleYearNav from "../../../components/ensemble-year-nav";
 import Heading from "../../../components/heading";
 import Layout from "../../../components/layout";
 import { getAllEnsembleSlugs, getEnsembleBySlug } from "../../../lib/api";
+import { ensembleImage16x9, ensembleStructuredImages } from "../../../lib/site-images";
 
 const CURRENT_ENSEMBLE_SLUG = "2026-27";
 
@@ -98,8 +100,7 @@ function getEnsembleJsonLd(data) {
   name: title,
   description:
    "The Syracuse University Brass Ensemble (SUBE) is a group of 35 professional-level brass and percussion musicians.",
-  image:
-  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
+  image: ensembleStructuredImages,
   member: members,
   genre: "Brass",
  };
@@ -137,9 +138,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
    description,
    images: [
     {
-     url: "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
-     width: 1200,
-     height: 630,
+     url: `https://subrass.syr.edu${ensembleImage16x9}`,
+     width: 1920,
+     height: 1080,
      alt: title,
     },
    ],
@@ -148,7 +149,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
    card: "summary_large_image",
    title: `${title} Members & Instruments - Syracuse University Brass Ensemble`,
    description,
-   images: ["https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+   images: [`https://subrass.syr.edu${ensembleImage16x9}`],
   },
  };
 }
@@ -208,6 +209,7 @@ export default async function EnsemblePage({ params }) {
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
+  <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Ensembles", href: "/ensembles" }, { label: `${title} Ensemble` }]} />
   <Heading level={1} marginTop="8" marginBottom="4">
     {title} Ensemble
    </Heading>

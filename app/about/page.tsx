@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import Breadcrumbs from "../../components/breadcrumbs";
 import Col from "../../components/col";
 import Layout from "../../components/layout";
 import MainContent from "../../components/maincontent";
@@ -8,6 +9,7 @@ import Row from "../../components/row";
 import Section from "../../components/section";
 import { getPageBySlug } from "../../lib/api";
 import styles from "./about.module.scss";
+import { ensembleImage16x9 } from "../../lib/site-images";
 
 export const metadata = {
  title: "About the Syracuse University Brass Ensemble - History & Musical Excellence",
@@ -15,6 +17,20 @@ export const metadata = {
   "Led by Music & Artistic Director James T. Spencer, this ensemble performs music from all major musical periods and often features new compositions commissioned by nationally known composers.",
  alternates: {
   canonical: "https://subrass.syr.edu/about",
+ },
+ openGraph: {
+  type: "website",
+  url: "https://subrass.syr.edu/about",
+  title: "About the Syracuse University Brass Ensemble",
+  description:
+   "Learn about the Syracuse University Brass Ensemble, its musical leadership, history, repertoire, and commitment to live brass performance.",
+  images: [{ url: ensembleImage16x9, width: 1920, height: 1080, alt: "Members of the Syracuse University Brass Ensemble" }],
+ },
+ twitter: {
+  card: "summary_large_image",
+  title: "About the Syracuse University Brass Ensemble",
+  description: "Learn about the ensemble’s leadership, history, repertoire, and commitment to live brass performance.",
+  images: [ensembleImage16x9],
  },
 };
 
@@ -33,6 +49,11 @@ export default async function AboutPage() {
    <Section>
     <div className={styles.hero}>
      <div className={styles.heroVisual}>
+      <Breadcrumbs
+       theme="dark"
+       overlay
+       items={[{ label: "Home", href: "/" }, { label: "About" }]}
+      />
       <Image
        src="/syracuse-university-brass-ensemble-2025.webp"
        alt="Members of the Syracuse University Brass Ensemble"

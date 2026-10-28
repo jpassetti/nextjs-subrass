@@ -67,13 +67,30 @@
 		position: relative;
 		background-color: variables.$color__blue;
 
-		p { max-width: 62rem; }
+		h1 {
+			font-family: variables.$font__sherman_serif;
+			font-size: clamp(1.5rem, 2.5vw, 2rem);
+			font-weight: 400;
+			line-height: 1.2;
+			margin-bottom: 0;
+			max-width: 42rem;
+			text-wrap: balance;
+		}
+
+		p {
+			margin-top: 0;
+			max-width: 62rem;
+			orphans: 3;
+			text-wrap: pretty;
+			widows: 3;
+		}
 
 		.line {
-			width: 5rem;
-			height: 5px;
+			width: clamp(3.5rem, 8vw, 5rem);
+			height: 3px;
 			background-color: variables.$color__orange;
-			margin-bottom: 2rem;
+			margin: 1.5rem 0;
+			transform-origin: center;
 		}
 		@include mixins.breakpoint(md) {
 			align-items: center;
@@ -82,6 +99,8 @@
 		}
 	}
 }
+
+.noWrap { white-space: nowrap; }
 
 @keyframes showcase-crossfade {
 	0%, 16.667%, 100% { opacity: 1; }

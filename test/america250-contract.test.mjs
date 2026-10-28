@@ -50,6 +50,33 @@ test("site metadata publishes the official Syracuse University favicon set", () 
  }
 });
 
+test("site identity and profile markup use consistent entity references", () => {
+ const identity = source("lib/site-identity.ts");
+ const layout = source("app/layout.tsx");
+ const musician = source("components/musician.tsx");
+ const concert = source("components/concert.tsx");
+ assert.match(identity, /ENSEMBLE_ID = `\$\{SITE_URL\}\/\#ensemble`/);
+ assert.match(layout, /ensembleIdentity/);
+ assert.match(layout, /publisher: \{ "@id": ensembleIdentity\["@id"\] \}/);
+ assert.match(musician, /"@type": "ProfilePage"/);
+ assert.match(musician, /mainEntity: person/);
+ assert.doesNotMatch(musician, /ensembleImage1x1/);
+ assert.match(concert, /performer: ensembleReference/);
+ assert.match(concert, /organizer: ensembleReference/);
+});
+
+test("America 250 publishes representative search images in three aspect ratios", () => {
+ const page = source("app/concerts/america250/page.tsx");
+ for (const image of [
+  "public/america250/seo/america250-concert-16x9.webp",
+  "public/america250/seo/america250-concert-4x3.webp",
+  "public/america250/seo/america250-concert-1x1.webp",
+ ]) {
+  assert.equal(existsSync(path.join(root, image)), true, `${image} should exist`);
+  assert.match(page, new RegExp(path.basename(image).replaceAll(".", "\\.")));
+ }
+});
+
 test("concert page recognizes event partners", () => {
  const page = source("app/concerts/america250/page.tsx");
  const styles = source("app/concerts/america250/america250.module.scss");

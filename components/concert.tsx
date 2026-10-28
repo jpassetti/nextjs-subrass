@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import moment from "moment-timezone";
 
 import Card from "./card";
+import Breadcrumbs from "./breadcrumbs";
 import DetailLabel from "./detail-label";
 import EventTools from "./event-tools";
 import Heading from "./heading";
@@ -20,6 +21,8 @@ import {
 } from "../lib/utilities";
 
 import styles from "./concert.module.scss";
+import { ensembleStructuredImages } from "../lib/site-images";
+import { ensembleReference } from "../lib/site-identity";
 
 const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = null }) => {
  const {
@@ -83,10 +86,11 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
       addressCountry: "US",
      },
     },
-    image:
-     featuredImage?.node.sourceUrl ||
-     venueImage?.node.sourceUrl ||
-     "https://subrass.syr.edu/images/social/default-concert.jpg",
+    image: featuredImage?.node.sourceUrl
+     ? [featuredImage.node.sourceUrl]
+     : venueImage?.node.sourceUrl
+      ? [venueImage.node.sourceUrl]
+      : ensembleStructuredImages,
     url: `https://subrass.syr.edu${concertPath}`,
     isAccessibleForFree: true,
     offers: {
@@ -96,15 +100,8 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
      priceCurrency: "USD",
      availability: "https://schema.org/InStock",
     },
-    performer: {
-     "@type": "MusicGroup",
-     name: "Syracuse University Brass Ensemble",
-    },
-    organizer: {
-     "@type": "Organization",
-     name: "Syracuse University Brass Ensemble",
-     url: "https://subrass.syr.edu",
-    },
+    performer: ensembleReference,
+    organizer: ensembleReference,
    }),
   };
  }
@@ -112,7 +109,10 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
  if (teaser)
   return (
    <Fragment>
-    <Card.CoverImage image={featuredImage || venueImage || null} />
+    <Card.CoverImage
+     image={featuredImage || venueImage || null}
+     alt={`${concertTitle} at ${venueTitle}`}
+    />
     <Card.Body>
      <Heading level="3" marginBottom="1">
         <Link href={concertPath}>{concertTitle}</Link>
@@ -146,6 +146,15 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
    <div className={styles.hero}>
     {heroImage ? (
      <div className={styles.heroVisual}>
+      <Breadcrumbs
+       theme="dark"
+       overlay
+       items={[
+        { label: "Home", href: "/" },
+        { label: "Concerts", href: "/concerts" },
+        { label: concertTitle },
+       ]}
+      />
       <Image
        src={heroImage.sourceUrl}
        alt={heroImage.altText || `${concertTitle} at ${venueTitle}`}
@@ -156,7 +165,16 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
       />
       <div className={styles.heroShade} aria-hidden="true"></div>
      </div>
-    ) : null}
+    ) : (
+     <Breadcrumbs
+      theme="dark"
+      items={[
+       { label: "Home", href: "/" },
+       { label: "Concerts", href: "/concerts" },
+       { label: concertTitle },
+      ]}
+     />
+    )}
     <div className={styles.heroContent}>
      <Link className={styles.backLink} href="/concerts">&larr; Concerts</Link>
      <h1>{concertTitle}</h1>
@@ -181,11 +199,17 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
     </dl>
    </div>
    <div className={`${styles.concertBody} ${!content ? styles.noContent : ""}`}>
-    {content && (
+    {content ? (
      <div
       className={styles.content}
       dangerouslySetInnerHTML={{ __html: content }}
      />
+    ) : (
+     <div className={styles.content}>
+      <Paragraph>
+       Experience {concertTitle}, a live performance by the Syracuse University Brass Ensemble at {venueTitle} in {city}, {state.toUpperCase()}, on {formattedDate}.
+      </Paragraph>
+     </div>
     )}
     <EventTools title={concertTitle} start={displayDate}
      location={`${venueTitle}, ${street}, ${city}, ${state.toUpperCase()} ${zipCode}`}

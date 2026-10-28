@@ -81,11 +81,21 @@ export default async function sitemap() {
   toSitemapEntry(venue.path, venue.lastModified, "monthly")
  );
 
- return [
+ const entries = [
   ...staticEntries,
   ...musicianEntries,
   ...concertEntries,
   ...ensembleEntries,
   ...venueEntries,
  ];
+
+ const entriesByUrl = new Map();
+ entries.forEach((entry) => {
+  const existing = entriesByUrl.get(entry.url);
+  if (!existing || (!existing.lastModified && entry.lastModified)) {
+   entriesByUrl.set(entry.url, entry);
+  }
+ });
+
+ return Array.from(entriesByUrl.values());
 }

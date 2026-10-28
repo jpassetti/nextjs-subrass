@@ -7,6 +7,7 @@ import PageTransition from "../../../../components/page-transition";
 import Section from "../../../../components/section";
 import { getAllConcerts, getAllConcertSlugs, getConcertBySlug } from "../../../../lib/api";
 import { getConcertDate } from "../../../../lib/utilities";
+import { ensembleImage16x9 } from "../../../../lib/site-images";
 
 export const revalidate = 86400;
 
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   : `https://subrass.syr.edu/concerts/${resolvedParams.year}/${concertSlug}`;
  const socialImage =
   concertData?.featuredImage?.node?.sourceUrl ||
-  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg";
+  `https://subrass.syr.edu${ensembleImage16x9}`;
  const description =
   stripHtml(concertData?.excerpt) ||
   `Join the Syracuse University Brass Ensemble for ${concertTitle}.`;

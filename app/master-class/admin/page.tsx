@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import Heading from "../../../components/heading";
+import Breadcrumbs from "../../../components/breadcrumbs";
 import Layout from "../../../components/layout";
 import Section from "../../../components/section";
 import { isAdminAuthenticated } from "../../../lib/admin-auth";
@@ -66,6 +67,7 @@ export default async function MasterClassAdminPage({ searchParams }) {
 
  return (
   <Layout><Section><div className={styles.adminContent}>
+   <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Master Class", href: "/concerts/america250/master-class" }, { label: "Registration Admin" }]} />
    <div className={styles.adminHeader}>
     <div>
      <p className={styles.adminEyebrow}>America 250 · Student master class</p>

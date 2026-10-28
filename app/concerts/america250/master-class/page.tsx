@@ -6,6 +6,7 @@ import Heading from "../../../../components/heading";
 import Layout from "../../../../components/layout";
 import Section from "../../../../components/section";
 import styles from "./master-class.module.scss";
+import { ensembleReference } from "../../../../lib/site-identity";
 
 const CANONICAL_URL = "https://subrass.syr.edu/concerts/america250/master-class";
 
@@ -53,7 +54,7 @@ const eventSchema = {
   address: { "@type": "PostalAddress", streetAddress: "121 Crouse Drive", addressLocality: "Syracuse", addressRegion: "NY", postalCode: "13244", addressCountry: "US" },
  },
  performer: { "@type": "MusicGroup", name: "10th Mountain Division Band", url: "https://home.army.mil/drum/units-tenants/10th-mountain-division-band" },
- organizer: { "@type": "Organization", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
+ organizer: ensembleReference,
  isAccessibleForFree: true,
  offers: { "@type": "Offer", url: RSVP_URL, price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };

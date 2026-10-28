@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Heading from "../../../../../components/heading";
+import Breadcrumbs from "../../../../../components/breadcrumbs";
 import Layout from "../../../../../components/layout";
 import Section from "../../../../../components/section";
 import { isAdminAuthenticated } from "../../../../../lib/admin-auth";
@@ -13,6 +14,7 @@ export default async function NewRegistrationPage({ searchParams }) {
  if (!(await isAdminAuthenticated())) redirect("/master-class/admin/login");
  const params = await searchParams;
  return <Layout><Section><div className={styles.adminEditorPage}>
+  <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Registration Admin", href: "/master-class/admin" }, { label: "Add Registration" }]} />
   <Link className={styles.backLink} href="/master-class/admin">&larr; Registration admin</Link>
   <Heading level={1} marginTop="3" marginBottom="2">Add Registration</Heading>
   <p className={styles.adminSubhead}>Manually add a high school master class registration.</p>

@@ -1,0 +1,53 @@
+@use "../styles/variables";
+
+.breadcrumbs {
+ font-family: variables.$font__sherman_sans;
+ font-size: .82rem;
+ font-weight: 600;
+ letter-spacing: .02em;
+ margin: 0 auto;
+ max-width: 72rem;
+ padding: 1rem 0;
+
+ ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+ }
+
+ li:not(:last-child)::after {
+  color: variables.$color__orange;
+  content: "/";
+  margin-left: .45rem;
+ }
+
+ a { color: variables.$color__blue; }
+ span { color: #555; }
+}
+
+.dark {
+ padding-left: 2rem;
+ padding-right: 2rem;
+
+ a, span { color: white; }
+ a { text-underline-offset: .18rem; }
+ span { opacity: .78; }
+}
+
+.overlay {
+ background: linear-gradient(180deg, rgba(10, 32, 78, .92) 0%, rgba(10, 32, 78, .68) 45%, transparent 100%);
+ inset: 0 0 auto;
+ max-width: none;
+ padding-bottom: 3.25rem;
+ position: absolute;
+ z-index: 3;
+
+ ol {
+  margin: 0 auto;
+  max-width: 72rem;
+ }
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import Heading from "../../../../../components/heading";
+import Breadcrumbs from "../../../../../components/breadcrumbs";
 import Layout from "../../../../../components/layout";
 import Section from "../../../../../components/section";
 import { isAdminAuthenticated } from "../../../../../lib/admin-auth";
@@ -20,6 +21,7 @@ export default async function EditRegistrationPage({ params, searchParams }) {
  if (!record) notFound();
  const query = await searchParams;
  return <Layout><Section><div className={styles.adminEditorPage}>
+  <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Registration Admin", href: "/master-class/admin" }, { label: `Registration #${id}` }]} />
   <Link className={styles.backLink} href="/master-class/admin">&larr; Registration admin</Link>
   <div className={styles.editorHeading}><div><Heading level={1} marginTop="3" marginBottom="1">Edit Registration</Heading><p className={styles.adminSubhead}>Record #{id} · Submitted {new Date(String(record.created_at)).toLocaleString("en-US", { timeZone: "America/New_York" })}</p></div>{record.deleted_at ? <span className={styles.archivedStatus}>Archived</span> : <span className={styles.activeStatus}>Active</span>}</div>
   {query?.saved ? <div className={styles.notice} role="status">Registration updated successfully.</div> : null}

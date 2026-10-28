@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ensembleImage16x9 } from "../../../../lib/site-images";
+import Breadcrumbs from "../../../../components/breadcrumbs";
 import Image from "next/image";
 import Link from "next/link";
 import moment from "moment-timezone";
@@ -103,7 +105,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
    : `Concert history and upcoming performances at ${venueTitle} by the Syracuse University Brass Ensemble.`;
  const socialImage =
   venueData.venue?.featuredImage?.node?.sourceUrl ||
-  "https://subrass.syr.edu/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg";
+  `https://subrass.syr.edu${ensembleImage16x9}`;
 
  return {
   title: `${venueTitle} Concerts - Syracuse University Brass Ensemble`,
@@ -239,6 +241,15 @@ export default async function VenuePage({ params }) {
     <div className={styles.hero}>
      {featuredImage?.sourceUrl ? (
       <div className={styles.heroVisual}>
+       <Breadcrumbs
+        theme="dark"
+        overlay
+        items={[
+         { label: "Home", href: "/" },
+         { label: "Concerts", href: "/concerts" },
+         { label: venueTitle },
+        ]}
+       />
        <Image
         src={featuredImage.sourceUrl}
         alt={featuredImage.altText || venueTitle}
@@ -249,7 +260,16 @@ export default async function VenuePage({ params }) {
        />
        <div className={styles.heroShade} aria-hidden="true"></div>
       </div>
-     ) : null}
+     ) : (
+      <Breadcrumbs
+       theme="dark"
+       items={[
+        { label: "Home", href: "/" },
+        { label: "Concerts", href: "/concerts" },
+        { label: venueTitle },
+       ]}
+      />
+     )}
      <div className={styles.heroContent}>
       <Link className={styles.backLink} href="/concerts">&larr; Concerts</Link>
       <h1>{venueTitle}</h1>

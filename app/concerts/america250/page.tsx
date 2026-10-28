@@ -10,6 +10,7 @@ import Layout from "../../../components/layout";
 import Section from "../../../components/section";
 import { getConcertBySlug } from "../../../lib/api";
 import { getVenuePagePath } from "../../../lib/utilities";
+import { ensembleReference } from "../../../lib/site-identity";
 import styles from "./america250.module.scss";
 
 const CONCERT_SLUG = "celebrate-americas-250th-anniversary-concert";
@@ -17,8 +18,12 @@ const CANONICAL_URL = "https://subrass.syr.edu/concerts/america250";
 const EVENT_TITLE = "America 250: A Celebration of Service, Education, and Musical Excellence";
 const CONCERT_START = "2026-11-13T18:30:00-05:00";
 const CONCERT_END = "2026-11-13T20:00:00-05:00";
-const FEATURED_IMAGE = "/america250/america250--featured-image.jpg";
 const SHOWCASE_IMAGE = "/america250/america250--left.jpg";
+const EVENT_IMAGES = [
+ "https://subrass.syr.edu/america250/seo/america250-concert-16x9.webp",
+ "https://subrass.syr.edu/america250/seo/america250-concert-4x3.webp",
+ "https://subrass.syr.edu/america250/seo/america250-concert-1x1.webp",
+];
 
 export const revalidate = 86400;
 
@@ -53,9 +58,9 @@ export async function generateMetadata(): Promise<Metadata> {
    url: CANONICAL_URL,
    title: socialTitle,
    description,
-   images: [{ url: FEATURED_IMAGE, width: 2000, height: 1294, alt: `${EVENT_TITLE} concert artwork` }],
+   images: [{ url: "/america250/seo/america250-concert-16x9.webp", width: 1920, height: 1080, alt: `${EVENT_TITLE} concert artwork` }],
   },
-  twitter: { card: "summary_large_image", title: socialTitle, description, images: [FEATURED_IMAGE] },
+  twitter: { card: "summary_large_image", title: socialTitle, description, images: ["/america250/seo/america250-concert-16x9.webp"] },
  };
 }
 
@@ -80,7 +85,7 @@ export default async function America250Page() {
   endDate: CONCERT_END,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  image: [`https://subrass.syr.edu${FEATURED_IMAGE}`],
+  image: EVENT_IMAGES,
   inLanguage: "en-US",
   keywords: "America 250, brass ensemble, military band, Syracuse, free concert",
   audience: { "@type": "Audience", audienceType: "General public" },
@@ -99,10 +104,10 @@ export default async function America250Page() {
    },
   },
   performer: [
-   { "@type": "MusicGroup", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
+   ensembleReference,
    { "@type": "MusicGroup", name: "10th Mountain Division Band", url: "https://home.army.mil/drum/units-tenants/10th-mountain-division-band" },
   ],
-  organizer: { "@type": "Organization", name: "Syracuse University Brass Ensemble", url: "https://subrass.syr.edu" },
+  organizer: ensembleReference,
   isAccessibleForFree: true,
   offers: { "@type": "Offer", url: CANONICAL_URL, price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
  };

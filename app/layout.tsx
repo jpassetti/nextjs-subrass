@@ -5,6 +5,8 @@ import Script from "next/script";
 import Analytics from "./analytics";
 import Providers from "./providers";
 import * as gtag from "../lib/gtag";
+import { ensembleImage16x9 } from "../lib/site-images";
+import { ensembleIdentity, WEBSITE_ID } from "../lib/site-identity";
 
 export const metadata: Metadata = {
  title: {
@@ -36,9 +38,9 @@ export const metadata: Metadata = {
   description: "Syracuse University Brass Ensemble official website.",
   images: [
    {
-    url: "/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg",
-    width: 1200,
-    height: 630,
+    url: ensembleImage16x9,
+    width: 1920,
+    height: 1080,
     alt: "Syracuse University Brass Ensemble",
    },
   ],
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
   card: "summary_large_image",
   title: "Syracuse University Brass Ensemble",
   description: "Syracuse University Brass Ensemble official website.",
-  images: ["/photos/1200x630/syracuse-university-brass-ensemble-1200x630px.jpg"],
+  images: [ensembleImage16x9],
  },
 };
 
@@ -67,6 +69,26 @@ export default function RootLayout({ children }) {
     />
    </head>
    <body>
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+       "@context": "https://schema.org",
+       "@graph": [
+        {
+         "@type": "WebSite",
+         "@id": WEBSITE_ID,
+         url: "https://subrass.syr.edu/",
+         name: "Syracuse University Brass Ensemble",
+         alternateName: "SU Brass Ensemble",
+         inLanguage: "en-US",
+         publisher: { "@id": ensembleIdentity["@id"] },
+        },
+        ensembleIdentity,
+       ],
+      }).replace(/</g, "\\u003c"),
+     }}
+    />
     <Script
      strategy="afterInteractive"
      src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
