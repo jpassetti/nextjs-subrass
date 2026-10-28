@@ -2,6 +2,7 @@ import ConcertInteractive from "../../components/concertInteractive";
 import Breadcrumbs from "../../components/breadcrumbs";
 import type { Metadata } from "next";
 import Image from "next/image";
+import HeroIntro from "../../components/hero-intro";
 import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
@@ -138,13 +139,12 @@ export default async function ConcertsPage() {
       <div className={styles.heroShade} aria-hidden="true"></div>
      </div>
      <div className={styles.heroContent}>
-      <h1>Upcoming Concerts</h1>
-      <p>
+      <HeroIntro title="Upcoming Concerts">
        Experience live brass music performed by the Syracuse University Brass
        Ensemble. Explore upcoming concerts featuring repertoire ranging from
        classical works to contemporary music, and join us for an inspiring live
        performance.
-      </p>
+      </HeroIntro>
      </div>
     </div>
 

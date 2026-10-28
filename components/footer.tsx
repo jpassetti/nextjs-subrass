@@ -1,12 +1,13 @@
 // @ts-nocheck
+"use client";
+
 import styles from "./footer.module.scss";
-import Section from "./section";
+import Nav from "./nav";
 
 const Footer = () => {
- const currentYear = new Date().getFullYear();
  return (
   <footer className={styles.footer}>
-   <Section>Copyright {currentYear}, Syracuse University.</Section>
+   <Nav.Legal />
   </footer>
  );
 };

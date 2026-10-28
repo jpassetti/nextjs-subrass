@@ -140,6 +140,30 @@ test("homepage slideshow provides accessible playback and progress controls", ()
  assert.match(showcase, /setActiveSlide/);
 });
 
+test("mobile layout preserves homepage hierarchy, slider spacing, and legal footer", () => {
+ const showcaseStyles = source("components/showcase.module.scss");
+ const sliderStyles = source("components/concertslider.module.scss");
+ const main = source("components/main.tsx");
+ const footer = source("components/footer.tsx");
+ const footerStyles = source("components/footer.module.scss");
+ assert.match(showcaseStyles, /font-size: clamp\(2rem, 7vw, 2\.6rem\)/);
+ assert.match(sliderStyles, /swiper-pagination\) \{ bottom: 4\.5rem; \}/);
+ assert.match(main, /<Footer \/>/);
+ assert.match(footer, /<Nav\.Legal \/>/);
+ assert.match(footerStyles, /breakpoint\(md\)[\s\S]*display: none/);
+});
+
+test("about and concerts showcases share the animated heading treatment", () => {
+ const about = source("app/about/page.tsx");
+ const concerts = source("app/concerts/page.tsx");
+ const heroIntro = source("components/hero-intro.tsx");
+ assert.match(about, /<HeroIntro title=\{title\}>/);
+ assert.match(concerts, /<HeroIntro title="Upcoming Concerts">/);
+ assert.match(heroIntro, /staggerChildren/);
+ assert.match(heroIntro, /scaleX: 0/);
+ assert.match(heroIntro, /useReducedMotion/);
+});
+
 test("concert page provides complete event SEO and social metadata", () => {
  const page = source("app/concerts/america250/page.tsx");
  assert.match(page, /title = "America 250 Concert"/);

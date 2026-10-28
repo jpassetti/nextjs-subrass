@@ -112,7 +112,7 @@
 		color: white;
 		z-index: 2;
 		font-family: variables.$font__sherman_serif;
-		font-size: 1.5rem;
+		font-size: clamp(1.1rem, 4.4vw, 1.35rem);
 		line-height: 1.5;
 		font-weight: 400;
 		display: flex;
@@ -124,7 +124,7 @@
 
 		h1 {
 			font-family: variables.$font__sherman_serif;
-			font-size: clamp(1.5rem, 2.5vw, 2rem);
+			font-size: clamp(2rem, 7vw, 2.6rem);
 			font-weight: 400;
 			line-height: 1.2;
 			margin-bottom: 0;
@@ -149,8 +149,11 @@
 		}
 		@include mixins.breakpoint(md) {
 			align-items: center;
+			font-size: 1.5rem;
 			padding: 3rem clamp(3rem, 8vw, 8rem) 5rem;
 			text-align: center;
+
+			h1 { font-size: clamp(2.25rem, 3.4vw, 3rem); }
 		}
 	}
 }

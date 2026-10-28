@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import Breadcrumbs from "../../components/breadcrumbs";
 import Col from "../../components/col";
+import HeroIntro from "../../components/hero-intro";
 import Layout from "../../components/layout";
 import MainContent from "../../components/maincontent";
 import Paragraph from "../../components/paragraph";
@@ -65,8 +66,9 @@ export default async function AboutPage() {
       <div className={styles.heroShade} aria-hidden="true"></div>
      </div>
      <div className={styles.heroContent}>
-      <h1>{title}</h1>
-      <p>Led by Music &amp; Artistic Director James T. Spencer, the Syracuse University Brass Ensemble performs music from every major musical period and champions new works by nationally recognized composers.</p>
+      <HeroIntro title={title}>
+       Led by Music &amp; Artistic Director James T. Spencer, the Syracuse University Brass Ensemble performs music from every major musical period and champions new works by nationally recognized composers.
+      </HeroIntro>
      </div>
     </div>
     <Row justifyContent="center">
