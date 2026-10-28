@@ -129,7 +129,7 @@ test("concert page displays an accessible visual breadcrumb trail", () => {
 
 test("concert program retains both ensembles, numbered sections, and official Army link", () => {
  const page = source("app/concerts/america250/page.tsx");
- assert.match(page, /src="\/images\/group-photo-2022\.jpg"/);
+ assert.match(page, /src="\/syracuse-university-brass-ensemble-2025\.webp"/);
  assert.match(page, /src="\/america250\/10th-mountain-division-band\.jpeg"/);
  assert.match(page, /programNumber[^>]*>1</);
  assert.match(page, /programNumber[^>]*>2</);
@@ -249,7 +249,8 @@ test("navigation, redirects, and sitemap point to canonical America 250 routes",
 test("Hendricks Chapel venue preserves showcase and practical visitor information", () => {
  const venue = source("app/concerts/venues/[slug]/page.tsx");
  const venueStyles = source("app/concerts/venues/[slug]/venue.module.scss");
- assert.match(venue, /Hendricks Chapel at Syracuse University/);
+ assert.match(venue, /className=\{styles\.heroImage\}/);
+ assert.match(venue, /The spiritual heart of Syracuse University/);
  assert.match(venue, /Visitor parking may be available at Irving Garage and University Avenue Garage/);
  assert.match(venue, /Parking is free/);
  assert.doesNotMatch(venue, /pay parking|cashless/i);

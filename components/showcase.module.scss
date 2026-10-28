@@ -2,43 +2,58 @@
 @use '../styles/mixins';
 .showcase {
 	width: calc(100% + 4rem);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
 	position: relative;
 	margin-top: -2rem;
 	margin-left: -2rem;
-	display: flex;
-	flex-direction: column;
-	
-	
-	.mobileShowcaseImage {
-		//height: 20vh;
-	}
-	@include mixins.breakpoint(md) {
-		height: 100vh;
-		align-items: center;
-		background-image: none;
-		.mobileShowcaseImage {
-			display: none;
+	display: grid;
+	overflow: hidden;
+
+	.visual {
+		aspect-ratio: 3 / 2;
+		position: relative;
+
+		@include mixins.breakpoint(md) {
+			aspect-ratio: 16 / 9;
+			max-height: 48rem;
 		}
-		&:before {
-			display: block;
+
+		&::after {
+			background: linear-gradient(180deg, transparent 76%, variables.$color__blue 100%);
 			content: '';
-			width: 100%;
-			height: 100%;
-			background: rgb(0, 0, 0);
-			background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+			inset: 0;
+			pointer-events: none;
 			position: absolute;
-			top: 0;
-			left: 0;
 			z-index: 1;
 		}
 	}
-	
+
+	.slideshow,
+	.slide {
+		inset: 0;
+		position: absolute;
+	}
+
+	.slideshow { background: variables.$color__blue; }
+
+	.slide {
+		animation: showcase-crossfade 30s linear infinite;
+		opacity: 0;
+
+		img {
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+			width: 100%;
+		}
+
+		&:nth-child(2) { animation-delay: 6s; }
+		&:nth-child(3) { animation-delay: 12s; }
+		&:nth-child(4) { animation-delay: 18s; }
+		&:nth-child(5) { animation-delay: 24s; }
+	}
+
 	.content {
 		width: 100%;
-		height: 100%;
 		color: white;
 		z-index: 2;
 		font-family: variables.$font__sherman_serif;
@@ -47,11 +62,13 @@
 		font-weight: 400;
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
-		//align-items: center;
-		padding: 2rem 2rem 4rem 2rem;
+		justify-content: center;
+		padding: 3rem 2rem;
 		position: relative;
 		background-color: variables.$color__blue;
+
+		p { max-width: 62rem; }
+
 		.line {
 			width: 5rem;
 			height: 5px;
@@ -59,10 +76,22 @@
 			margin-bottom: 2rem;
 		}
 		@include mixins.breakpoint(md) {
-			width: 60%;
-			background-color: transparent;
-			text-align: center;
 			align-items: center;
+			padding: 3rem clamp(3rem, 8vw, 8rem) 5rem;
+			text-align: center;
 		}
+	}
+}
+
+@keyframes showcase-crossfade {
+	0%, 16.667%, 100% { opacity: 1; }
+	20%, 96.667% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.showcase .slide {
+		animation: none;
+
+		&:first-child { opacity: 1; }
 	}
 }

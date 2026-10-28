@@ -1,4 +1,5 @@
 "use client";
+import Button from "./button";
 import { calendarFile, googleCalendarUrl } from "../lib/event-calendar.mjs";
 import { event as track } from "../lib/gtag";
 import styles from "./event-tools.module.scss";
@@ -15,10 +16,10 @@ export default function EventActions(props: Props) {
  }
  return <div className={styles.actions} aria-label="Event planning">
   {!props.past && <>
-   <a href={googleCalendarUrl(props)} target="_blank" rel="noopener noreferrer" onClick={() => record("calendar_google")}>Google Calendar</a>
-   <button type="button" onClick={download}>Apple / Outlook calendar (.ics)</button>
+   <Button href={googleCalendarUrl(props)} target="_blank" rel="noopener noreferrer" onClick={() => record("calendar_google")}>Google Calendar</Button>
+   <Button type="button" onClick={download}>Apple / Outlook calendar (.ics)</Button>
   </>}
-  <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(props.location)}`} target="_blank" rel="noopener noreferrer" onClick={() => record("event_directions")}>Directions to venue</a>
-  {props.parkingUrl && <a href={props.parkingUrl} target="_blank" rel="noopener noreferrer" onClick={() => record("event_parking")}>Parking directions</a>}
+  <Button href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(props.location)}`} target="_blank" rel="noopener noreferrer" onClick={() => record("event_directions")}>Directions to venue</Button>
+  {props.parkingUrl && <Button href={props.parkingUrl} target="_blank" rel="noopener noreferrer" onClick={() => record("event_parking")}>Parking directions</Button>}
  </div>;
 }

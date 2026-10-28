@@ -44,6 +44,7 @@ export default async function HomePage() {
    const concertDate = new Date(node.concertInformation.date);
    return concertDate >= today;
   }) || [];
+ const upcomingAcademicYear = upcomingConcerts[0]?.node?.academicYears?.edges?.[0]?.node?.name || "Upcoming";
 
  return (
   <Layout>
@@ -80,7 +81,7 @@ export default async function HomePage() {
   <Heading level={1} marginBottom="2" marginTop="2">
     Syracuse University Brass Ensemble - Live Brass Music
    </Heading>
-   <ConcertInteractive concerts={upcomingConcerts} label="Upcoming Concerts" />
+   <ConcertInteractive concerts={upcomingConcerts} sectionTitle="Upcoming Concerts" label={upcomingAcademicYear} />
   </Layout>
  );
 }

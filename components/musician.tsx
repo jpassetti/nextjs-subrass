@@ -170,7 +170,7 @@ const Musician = ({ data, teaser = false }) => {
      />
    <div className={styles.showcase}>
     <Heading level="4" marginBottom="4" color="white">
-     <Link href="/ensembles/2024-25">
+     <Link href="/ensembles">
       &laquo; Musicians
      </Link>
     </Heading>

@@ -9,7 +9,14 @@
 	@include mixins.breakpoint(md) {
 		padding: 6rem 2rem 2rem 2rem;
 		width: 18rem;
-		display: block;
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		position: sticky;
+		scrollbar-gutter: stable;
+		top: 0;
 	}
 	h1 {
 		font-family: variables.$font__sherman_sans;
@@ -24,6 +31,11 @@
 		}
 	}
 	
+}
+
+.legal {
+	margin-top: auto;
+	padding-top: 4rem;
 }
 .mobileHeader {
 	background-color: variables.$color__blue;

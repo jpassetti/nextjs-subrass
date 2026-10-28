@@ -44,6 +44,9 @@ const Header = ({position}) => {
 			<Nav />
 			<Nav.SocialNav />
 			<Nav.Members />
+			<div className={styles.legal}>
+				<Nav.Legal />
+			</div>
 		</header>
 		</>
 	)

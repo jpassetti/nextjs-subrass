@@ -1,0 +1,59 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.hero {
+	background: variables.$color__blue;
+	margin: -2rem 0 3rem -2rem;
+	overflow: hidden;
+	width: calc(100% + 4rem);
+}
+
+.heroVisual {
+	aspect-ratio: 3 / 2;
+	position: relative;
+
+	@include mixins.breakpoint(md) {
+		aspect-ratio: 16 / 9;
+		max-height: 48rem;
+	}
+}
+
+.heroImage {
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	width: 100%;
+}
+
+.heroShade {
+	background: linear-gradient(180deg, transparent 74%, variables.$color__blue 100%);
+	inset: 0;
+	position: absolute;
+}
+
+.heroContent {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2.5rem 2rem 4.5rem;
+	text-align: center;
+
+	h1 {
+		font-family: variables.$font__sherman_serif;
+		font-size: clamp(2.1rem, 4.3vw, 4rem);
+		font-weight: 400;
+		line-height: 1.05;
+		margin-bottom: 1.5rem;
+		text-wrap: balance;
+	}
+
+	p {
+		font-family: variables.$font__sherman_serif;
+		font-size: clamp(1.1rem, 2vw, 1.45rem);
+		line-height: 1.55;
+		max-width: 52rem;
+		text-wrap: pretty;
+	}
+}

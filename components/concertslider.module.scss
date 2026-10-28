@@ -1,13 +1,146 @@
 @use '../styles/variables';
-@use '../styles/mixins';
 
-.mySwiper {
-	//background-color: red;
+.sliderShell {
+	position: relative;
+}
+
+.slider {
+	--swiper-pagination-bullet-inactive-color: #{variables.$color__blue};
+	--swiper-pagination-color: #{variables.$color__orange__medium};
 	margin-left: -2rem;
 	margin-right: -2rem;
-	padding: 0 2rem 3rem 2rem;
+	padding: .5rem 2rem 4rem;
+
+	:global(.swiper-pagination-bullet) {
+		height: .7rem;
+		width: .7rem;
+	}
 }
-.bulletActive {
-	background-color: variables.$color__blue;
-	opacity: 1;
+
+.navigationButton {
+	align-items: center;
+	background: variables.$color__orange__medium;
+	border: 2px solid white;
+	border-radius: 50%;
+	box-shadow: 0 .15rem .75rem rgba(0, 0, 0, .25);
+	color: white;
+	cursor: pointer;
+	display: flex;
+	height: 3rem;
+	justify-content: center;
+	padding: .85rem;
+	position: absolute;
+	bottom: .35rem;
+	transition: background-color .2s ease, opacity .2s ease, transform .2s ease;
+	width: 3rem;
+	z-index: 5;
+
+	svg { height: 100%; width: 100%; }
+
+	&:hover,
+	&:focus-visible {
+		background: variables.$color__blue;
+		transform: scale(1.05);
+	}
+
+	&:focus-visible {
+		outline: 3px solid variables.$color__orange;
+		outline-offset: 3px;
+	}
+
+	&:global(.swiper-button-disabled) {
+		cursor: default;
+		opacity: .35;
+		transform: none;
+	}
+}
+
+.previousButton { right: 5.4rem; }
+.nextButton { right: 2rem; }
+
+.slide { height: auto; }
+
+.card {
+	background: variables.$color__blue;
+	border-top: .4rem solid variables.$color__orange;
+	color: white;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	text-decoration: none;
+	transition: transform .2s ease;
+
+	&:hover,
+	&:focus-visible { transform: translateY(-.2rem); }
+
+	&:focus-visible {
+		outline: 3px solid variables.$color__orange;
+		outline-offset: -3px;
+	}
+}
+
+.imageFrame {
+	aspect-ratio: 3 / 2;
+	background: variables.$color__orange_10;
+	display: block;
+	overflow: hidden;
+	position: relative;
+}
+
+.image {
+	height: 100%;
+	object-fit: cover;
+	transition: transform .4s ease;
+	width: 100%;
+}
+
+.card:hover .image,
+.card:focus-visible .image { transform: scale(1.03); }
+
+.cardContent {
+	display: flex;
+	flex-direction: column;
+	gap: .55rem;
+	justify-content: flex-start;
+	padding: 1.5rem;
+	width: 100%;
+
+	time {
+		color: variables.$color__orange;
+		font-family: variables.$font__sherman_sans;
+		font-size: .85rem;
+		font-weight: 700;
+		letter-spacing: .05em;
+		text-transform: uppercase;
+	}
+
+	strong {
+		font-family: variables.$font__sherman_serif;
+		font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+		font-weight: 400;
+		line-height: 1.2;
+		text-wrap: balance;
+	}
+}
+
+.meta {
+	font-family: variables.$font__sherman_sans;
+	font-size: .95rem;
+	line-height: 1.4;
+}
+
+.cta {
+	font-family: variables.$font__sherman_sans;
+	font-size: .9rem;
+	font-weight: 700;
+	margin-top: .35rem;
+	text-decoration: underline;
+	text-underline-offset: .2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.card,
+	.image { transition: none; }
 }

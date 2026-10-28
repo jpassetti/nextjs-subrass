@@ -1,13 +1,13 @@
 import Image from "next/image";
 
 import Col from "../../components/col";
-import Heading from "../../components/heading";
 import Layout from "../../components/layout";
 import MainContent from "../../components/maincontent";
 import Paragraph from "../../components/paragraph";
 import Row from "../../components/row";
 import Section from "../../components/section";
 import { getPageBySlug } from "../../lib/api";
+import styles from "./about.module.scss";
 
 export const metadata = {
  title: "About the Syracuse University Brass Ensemble - History & Musical Excellence",
@@ -23,33 +23,33 @@ export const revalidate = 86400;
 export default async function AboutPage() {
  const pageData = await getPageBySlug("about");
 
- const { title, content, featuredImage } = pageData || {
+ const { title, content } = pageData || {
   title: "About",
   content: "",
-  featuredImage: null,
  };
- const featuredNode = featuredImage?.node;
 
  return (
   <Layout>
    <Section>
+    <div className={styles.hero}>
+     <div className={styles.heroVisual}>
+      <Image
+       src="/syracuse-university-brass-ensemble-2025.webp"
+       alt="Members of the Syracuse University Brass Ensemble"
+       fill
+       sizes="(min-width: 1200px) 72rem, 100vw"
+       className={styles.heroImage}
+       priority
+      />
+      <div className={styles.heroShade} aria-hidden="true"></div>
+     </div>
+     <div className={styles.heroContent}>
+      <h1>{title}</h1>
+      <p>Led by Music &amp; Artistic Director James T. Spencer, the Syracuse University Brass Ensemble performs music from every major musical period and champions new works by nationally recognized composers.</p>
+     </div>
+    </div>
     <Row justifyContent="center">
      <Col xs="12" sm="8" paddingTop="0">
-    <Heading level={1} marginTop="8" marginBottom="4">
-       {title}
-      </Heading>
-      {featuredNode ? (
-       <div style={{ marginBottom: "1rem" }}>
-        <Image
-         src={featuredNode.sourceUrl}
-         alt={featuredNode.altText || title || "Syracuse University Brass Ensemble"}
-         width={featuredNode.mediaDetails?.width || 1200}
-         height={featuredNode.mediaDetails?.height || 800}
-         className="responsive-img"
-         loading="eager"
-        />
-       </div>
-      ) : null}
       {content ? (
        <MainContent content={content} />
       ) : (

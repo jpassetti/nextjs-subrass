@@ -1,14 +1,233 @@
 @use "../styles/mixins";
 @use "../styles/variables";
 
+.concertPage {
+ background: variables.$color__blue;
+ color: white;
+ margin: -2rem;
+ width: calc(100% + 4rem);
+}
+
+.hero {
+ background: variables.$color__blue;
+ overflow: hidden;
+}
+
+.heroVisual {
+ aspect-ratio: 3 / 2;
+ position: relative;
+
+ @include mixins.breakpoint(md) {
+  aspect-ratio: 16 / 9;
+  max-height: 48rem;
+ }
+}
+
+.heroImage {
+ height: 100%;
+ object-fit: cover;
+ object-position: center;
+ width: 100%;
+}
+
+.heroShade {
+ background: linear-gradient(180deg, transparent 74%, variables.$color__blue 100%);
+ inset: 0;
+ position: absolute;
+}
+
+.heroContent {
+ align-items: center;
+ color: white;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+	padding: 2.5rem 2rem 2rem;
+ text-align: center;
+
+ h1 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2.1rem, 4.3vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  max-width: 60rem;
+  text-wrap: balance;
+ }
+
+ p {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.55;
+ }
+}
+
+.heroDetails {
+ border-top: 1px solid rgba(255, 255, 255, .32);
+ display: grid;
+ margin: 0 auto;
+ max-width: 72rem;
+ padding: 0 2rem 4.5rem;
+ text-align: center;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+ div {
+  padding: 1.5rem 0;
+
+  @include mixins.breakpoint(sm) { padding: 1.5rem; }
+ }
+
+ div + div {
+  border-top: 1px solid rgba(255, 255, 255, .2);
+
+  @include mixins.breakpoint(sm) {
+   border-left: 1px solid rgba(255, 255, 255, .2);
+   border-top: 0;
+  }
+ }
+
+ dd {
+  color: white;
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0;
+ }
+
+ a { color: white; text-underline-offset: .2rem; }
+}
+
+.heroDetailsFlush { padding-bottom: 0; }
+
+.backLink {
+ color: white;
+ font-family: variables.$font__sherman_sans;
+ font-size: .95rem;
+ font-weight: 700;
+ margin-bottom: 1.5rem;
+ text-underline-offset: .2rem;
+}
+
+.concertNavigation {
+ display: grid;
+ gap: 1rem;
+ grid-template-columns: minmax(0, 1fr);
+ margin: 3rem auto 0;
+ max-width: 72rem;
+ padding: 0;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.concertNavigationCard {
+ background: #000e54;
+ border-top: .35rem solid variables.$color__orange;
+ color: white;
+ display: flex;
+ flex-direction: column;
+ gap: .45rem;
+ justify-content: flex-end;
+ min-height: 15rem;
+ overflow: hidden;
+ position: relative;
+ text-decoration: none;
+ transition: transform .2s ease;
+
+ &:hover,
+ &:focus-visible {
+  transform: translateY(-.15rem);
+ }
+
+ &:focus-visible {
+  outline: 3px solid variables.$color__orange;
+  outline-offset: 3px;
+ }
+}
+
+.concertNavigationImage {
+ height: 100%;
+ object-fit: cover;
+ transition: transform .35s ease;
+ width: 100%;
+}
+
+.concertNavigationCard:hover .concertNavigationImage,
+.concertNavigationCard:focus-visible .concertNavigationImage { transform: scale(1.025); }
+
+.concertNavigationShade {
+ background: linear-gradient(180deg, rgba(0, 8, 62, .05) 20%, rgba(0, 8, 62, .96) 100%);
+ inset: 0;
+ position: absolute;
+}
+
+.concertNavigationContent {
+ display: flex;
+ flex-direction: column;
+ gap: .45rem;
+ padding: 1.5rem;
+ position: relative;
+ z-index: 1;
+
+ strong {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.3;
+ }
+}
+
+.concertNavigationDirection {
+ color: variables.$color__orange;
+ font-family: variables.$font__sherman_sans;
+ font-size: .8rem;
+ font-weight: 700;
+ letter-spacing: .06em;
+ text-transform: uppercase;
+}
+
+.concertNavigationMeta {
+ font-family: variables.$font__sherman_sans;
+ font-size: .95rem;
+ line-height: 1.4;
+}
+
+.nextConcert {
+ @include mixins.breakpoint(sm) {
+  text-align: right;
+
+  &:only-child { grid-column: 2; }
+ }
+}
+
 .content {
+ color: white;
+ margin-left: auto;
+ margin-right: auto;
+ max-width: 44rem;
+
  p {
   font-size: 1.1rem;
-  line-height: 1.4;
+  line-height: 1.6;
   font-family: variables.$font__sherman_sans;
-  color: variables.$color__blue;
+  color: white;
   margin-bottom: 1rem;
  }
+
+ h2, h3, h4, h5, h6 { color: white; }
+ a { color: variables.$color__orange; }
+}
+
+.concertBody {
+ margin: 0 auto;
+ max-width: 72rem;
+ padding: 2rem 2rem 4.5rem;
+}
+
+.noContent {
+ padding-top: 0;
+
+ > section:first-child { margin-top: 0; }
 }
 
 .concert {

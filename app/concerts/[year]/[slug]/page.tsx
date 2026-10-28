@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 
 import Concert from "../../../../components/concert";
 import Layout from "../../../../components/layout";
+import PageTransition from "../../../../components/page-transition";
 import Section from "../../../../components/section";
-import { getAllConcertSlugs, getConcertBySlug } from "../../../../lib/api";
+import { getAllConcerts, getAllConcertSlugs, getConcertBySlug } from "../../../../lib/api";
+import { getConcertDate } from "../../../../lib/utilities";
 
 export const revalidate = 86400;
 
@@ -89,6 +91,15 @@ export default async function SingleConcertPage({ params }) {
   notFound();
  }
 
+ const concerts = await getAllConcerts();
+ const orderedConcerts = concerts
+  .map((edge) => edge.node)
+  .filter((concert) => concert?.slug && getConcertDate(concert))
+  .sort((a, b) => new Date(getConcertDate(a)).getTime() - new Date(getConcertDate(b)).getTime());
+ const concertIndex = orderedConcerts.findIndex((concert) => concert.slug === concertSlug);
+ const previousConcert = concertIndex > 0 ? orderedConcerts[concertIndex - 1] : null;
+ const nextConcert = concertIndex >= 0 && concertIndex < orderedConcerts.length - 1 ? orderedConcerts[concertIndex + 1] : null;
+
  const concertTitle = concertData?.title || "Concert";
  const concertCanonicalUrl = concertData?.uri
   ? `https://subrass.syr.edu${concertData.uri}`
@@ -125,7 +136,9 @@ export default async function SingleConcertPage({ params }) {
     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
    <Section>
-    <Concert data={concertData} />
+    <PageTransition transitionKey={concertSlug}>
+     <Concert data={concertData} previousConcert={previousConcert} nextConcert={nextConcert} />
+    </PageTransition>
    </Section>
   </Layout>
  );

@@ -219,7 +219,7 @@ export default async function America250Page() {
       <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faBookOpen} aria-hidden="true" />Concert program</h2>
       <div className={styles.programGrid}>
        <article>
-        <Image className={styles.programImage} src="/images/group-photo-2022.jpg" alt="Members of the Syracuse University Brass Ensemble" width={2200} height={870} sizes="(min-width: 700px) 36vw, 100vw" />
+        <Image className={styles.programImage} src="/syracuse-university-brass-ensemble-2025.webp" alt="Members of the Syracuse University Brass Ensemble" width={2400} height={1567} sizes="(min-width: 700px) 36vw, 100vw" />
         <div className={styles.programCardBody}>
          <div className={styles.programNumber} aria-hidden="true">1</div>
          <div>

@@ -9,13 +9,19 @@ import ConcertSlider from './concertSlider';
 import Heading from './heading';
 import Row from './row';
 import Section from './section'
+import styles from './concertInteractive.module.scss';
 
-const ConcertInteractive = ({ label, concerts, listOnly = false }) => {
+const ConcertInteractive = ({ sectionTitle = "", label, concerts, listOnly = false }) => {
     const [displayAsList, setDisplayAsList] = useState(listOnly);
 
     return <Section>
         <Row justifyContent="space-between" alignItems="center" marginTop={2}>
-            <Heading level={2} marginLeft={1}>{label}</Heading>
+            <Heading level={2} className={sectionTitle ? styles.sectionHeading : ""} marginLeft={1}>
+                {sectionTitle ? <>
+                    <span className={styles.sectionTitle}>{sectionTitle}</span>
+                    <span className={styles.year}>{label}</span>
+                </> : label}
+            </Heading>
             {!listOnly ? (
                 <div>
                     <ButtonUI 
@@ -31,7 +37,7 @@ const ConcertInteractive = ({ label, concerts, listOnly = false }) => {
                 </div>
             ) : null}
         </Row>
-		{displayAsList ? 
+        {concerts.length === 0 ? null : displayAsList ?
             <ConcertList concerts={concerts} />
 		: 
 		    <ConcertSlider concerts={concerts} />

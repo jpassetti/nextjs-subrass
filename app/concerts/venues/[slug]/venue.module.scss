@@ -1,26 +1,151 @@
 @use '../../../../styles/mixins';
 @use '../../../../styles/variables';
 
+.hero {
+ background: variables.$color__blue;
+ margin: -2rem 0 3rem -2rem;
+ overflow: hidden;
+ width: calc(100% + 4rem);
+}
+
+.heroVisual {
+ aspect-ratio: 3 / 2;
+ position: relative;
+
+ @include mixins.breakpoint(md) {
+  aspect-ratio: 16 / 9;
+  max-height: 48rem;
+ }
+}
+
+.heroImage {
+ height: 100%;
+ object-fit: cover;
+ object-position: center;
+ width: 100%;
+}
+
+.heroShade {
+ background: linear-gradient(180deg, transparent 74%, variables.$color__blue 100%);
+ inset: 0;
+ position: absolute;
+}
+
+.heroContent {
+ align-items: center;
+ color: white;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ padding: 2.5rem 2rem 4.5rem;
+ text-align: center;
+
+ h1 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2.1rem, 4.3vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  max-width: 60rem;
+  text-wrap: balance;
+ }
+
+ p {
+  font-family: variables.$font__sherman_sans;
+  font-size: 1.1rem;
+  line-height: 1.5;
+ }
+}
+
+.backLink {
+ color: white;
+ font-family: variables.$font__sherman_sans;
+ font-size: .95rem;
+ font-weight: 700;
+ margin-bottom: 1.5rem;
+ text-underline-offset: .2rem;
+}
+
+.upcomingList {
+ border-top: 1px solid variables.$color__gray__light;
+}
+
+.navigationTools {
+ background: variables.$color__orange_10;
+ border-left: .4rem solid variables.$color__orange;
+ margin: 3rem 0;
+ max-width: 72rem;
+ padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.mapActions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+ margin-top: 1.25rem;
+}
+
+.upcomingItem {
+ align-items: center;
+ border-bottom: 1px solid variables.$color__gray__light;
+ color: variables.$color__blue;
+ display: grid;
+ gap: 1rem;
+ grid-template-columns: minmax(8rem, .75fr) minmax(0, 2fr) auto;
+ padding: 1.25rem 1rem;
+ text-decoration: none;
+ transition: background-color .2s ease;
+
+ time {
+  font-family: variables.$font__sherman_sans;
+  font-size: .95rem;
+  font-weight: 700;
+ }
+
+ &:hover,
+ &:focus-visible { background: variables.$color__orange_10; }
+
+ &:focus-visible {
+  outline: 3px solid variables.$color__orange;
+  outline-offset: -3px;
+ }
+
+ @media (max-width: 36rem) {
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  time { grid-column: 1 / -1; }
+ }
+}
+
+.upcomingItemContent {
+ display: flex;
+ flex-direction: column;
+ gap: .3rem;
+ min-width: 0;
+
+ strong {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.3;
+ }
+
+ > span {
+  font-family: variables.$font__sherman_sans;
+  font-size: .95rem;
+ }
+}
+
+.upcomingItemArrow {
+ color: variables.$color__orange__medium;
+ font-size: 1.5rem;
+ font-weight: 700;
+}
+
 .venueDetails {
  color: variables.$color__blue;
  font-family: variables.$font__sherman_sans;
  max-width: 72rem;
-}
-
-.showcase {
- background: variables.$color__blue;
- margin: 2rem 0 2.5rem;
- max-height: 34rem;
- overflow: hidden;
-}
-
-.showcaseImage {
- display: block;
- height: auto;
- max-height: 34rem;
- object-fit: cover;
- object-position: center;
- width: 100%;
 }
 
 .introduction {

@@ -1,0 +1,38 @@
+@use '../styles/variables';
+
+.sectionHeading {
+	align-items: center;
+	display: flex;
+	flex-wrap: nowrap;
+	gap: .55rem;
+	white-space: nowrap;
+}
+
+.sectionTitle {
+	font-family: variables.$font__sherman_sans;
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+.year {
+	font-family: variables.$font__sherman_sans;
+	font-size: 1.35rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	margin-left: .2rem;
+	padding-left: 1rem;
+	position: relative;
+	text-transform: none;
+
+	&::before {
+		background: variables.$color__orange__medium;
+		bottom: -.2rem;
+		content: '';
+		left: 0;
+		position: absolute;
+		top: -.2rem;
+		width: 2px;
+	}
+}

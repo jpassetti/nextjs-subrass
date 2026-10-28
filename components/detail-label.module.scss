@@ -1,0 +1,12 @@
+@use '../styles/variables';
+
+.label.label {
+	color: variables.$color__orange;
+	font-family: variables.$font__sherman_sans;
+	font-size: .8rem;
+	font-weight: 700;
+	letter-spacing: .08em;
+	line-height: 1.3;
+	margin-bottom: .65rem;
+	text-transform: uppercase;
+}

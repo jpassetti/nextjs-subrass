@@ -1,0 +1,49 @@
+@use '../styles/variables';
+
+.yearNav {
+	border-bottom: 1px solid variables.$color__gray__light;
+	border-top: 1px solid variables.$color__gray__light;
+	margin: 2rem 0 3rem;
+	padding: 1.25rem 0;
+}
+
+.label {
+	color: variables.$color__orange__medium;
+	display: block;
+	font-family: variables.$font__sherman_sans;
+	font-size: .8rem;
+	font-weight: 700;
+	letter-spacing: .08em;
+	margin-bottom: .75rem;
+	text-transform: uppercase;
+}
+
+.links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+
+	a {
+		background: variables.$color__orange_10;
+		border: 2px solid transparent;
+		border-radius: 2rem;
+		color: variables.$color__blue;
+		font-family: variables.$font__sherman_sans;
+		font-weight: 700;
+		padding: .55rem .9rem;
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible { border-color: variables.$color__orange; }
+
+		&:focus-visible {
+			outline: 3px solid variables.$color__orange;
+			outline-offset: 2px;
+		}
+	}
+
+	.active {
+		background: variables.$color__blue;
+		color: white;
+	}
+}

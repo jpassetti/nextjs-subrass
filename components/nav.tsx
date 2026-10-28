@@ -27,7 +27,7 @@ const navLinks = [
  },
  {
   title: "Musicians",
-  path: "/ensembles/2025-26",
+  path: "/ensembles",
  },
  {
   title: "Contact",
@@ -107,6 +107,20 @@ const Members = () => {
  );
 };
 Nav.Members = Members;
+const Legal = () => {
+ const currentYear = new Date().getFullYear();
+
+ return (
+  <div className={styles.legalNav}>
+   <p>&copy; {currentYear} Syracuse University.</p>
+   <nav aria-label="Legal and accessibility">
+    <a href="https://www.syracuse.edu/privacy-policy/">Privacy Policy</a>
+    <a href="https://www.syracuse.edu/about/accessibility/">Accessibility</a>
+   </nav>
+  </div>
+ );
+};
+Nav.Legal = Legal;
 const Mobile = ({ onNavigate }) => {
  const pathname = usePathname();
  let mobileNavClasses = cx({

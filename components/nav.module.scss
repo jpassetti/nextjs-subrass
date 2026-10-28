@@ -103,3 +103,35 @@
   }
  }
 }
+
+.legalNav {
+ color: white;
+ font-family: variables.$font__sherman_sans;
+ font-size: .75rem;
+ line-height: 1.45;
+ text-align: center;
+
+ p { margin-bottom: .5rem; }
+
+ nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .75rem;
+  justify-content: center;
+ }
+
+ a {
+  color: inherit;
+  text-underline-offset: .2rem;
+
+  &:hover,
+  &:focus-visible { color: variables.$color__orange; }
+ }
+
+ @include mixins.breakpoint(md) {
+  color: variables.$color__blue;
+  text-align: left;
+
+  nav { justify-content: flex-start; }
+ }
+}

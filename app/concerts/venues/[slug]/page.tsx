@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import moment from "moment-timezone";
 import { notFound } from "next/navigation";
 
+import Button from "../../../../components/button";
+import ConcertInteractive from "../../../../components/concertInteractive";
 import Heading from "../../../../components/heading";
 import Layout from "../../../../components/layout";
 import Paragraph from "../../../../components/paragraph";
 import Section from "../../../../components/section";
 import { getAllConcerts } from "../../../../lib/api";
-import { getConcertPagePath, getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
+import { getAPStyleFormattedDate, getAPStyleFormattedTime, getConcertDate, getConcertPagePath, getVenuePagePath, slugifyVenueName } from "../../../../lib/utilities";
 import styles from "./venue.module.scss";
 
 const HENDRICKS_CHAPEL_SLUG = "hendricks-chapel";
@@ -152,6 +155,9 @@ export default async function VenuePage({ params }) {
  const featuredImage = venue.featuredImage?.node;
  const canonicalPath = getVenuePagePath(venueTitle);
  const canonicalUrl = `https://subrass.syr.edu${canonicalPath}`;
+ const navigationAddress = `${venueTitle}, ${displayAddress.street}, ${displayAddress.city}, ${displayAddress.state?.toUpperCase?.() || displayAddress.state} ${displayAddress.zipCode}`;
+ const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(navigationAddress)}`;
+ const appleMapsUrl = `https://maps.apple.com/?daddr=${encodeURIComponent(navigationAddress)}&dirflg=d`;
 
  const upcoming = venueData.concerts.filter((concert) => {
   return new Date(concert?.node?.concertInformation?.date || 0) >= now;
@@ -230,30 +236,32 @@ export default async function VenuePage({ params }) {
     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
    />
    <Section>
-    <Heading level={1} marginTop="8" marginBottom="2">
-     {venueTitle}
-    </Heading>
-    <Paragraph diminish>
-     {displayAddress.street}
-     <br />
-     {displayAddress.city}, {displayAddress.state?.toUpperCase?.() || displayAddress.state} {displayAddress.zipCode}
-    </Paragraph>
+    <div className={styles.hero}>
+     {featuredImage?.sourceUrl ? (
+      <div className={styles.heroVisual}>
+       <Image
+        src={featuredImage.sourceUrl}
+        alt={featuredImage.altText || venueTitle}
+        fill
+        sizes="(min-width: 1200px) 72rem, 100vw"
+        className={styles.heroImage}
+        priority
+       />
+       <div className={styles.heroShade} aria-hidden="true"></div>
+      </div>
+     ) : null}
+     <div className={styles.heroContent}>
+      <Link className={styles.backLink} href="/concerts">&larr; Concerts</Link>
+      <h1>{venueTitle}</h1>
+      <p>
+       {displayAddress.street}<br />
+       {displayAddress.city}, {displayAddress.state?.toUpperCase?.() || displayAddress.state} {displayAddress.zipCode}
+      </p>
+     </div>
+    </div>
 
     {isHendricksChapel ? (
      <div className={styles.venueDetails}>
-      {featuredImage?.sourceUrl ? (
-       <figure className={styles.showcase}>
-        <Image
-         src={featuredImage.sourceUrl}
-         alt={featuredImage.altText || "Hendricks Chapel at Syracuse University"}
-         width={featuredImage.mediaDetails?.width || 1600}
-         height={featuredImage.mediaDetails?.height || 900}
-         sizes="(min-width: 1200px) 72rem, 100vw"
-         className={styles.showcaseImage}
-         priority
-        />
-       </figure>
-      ) : null}
       <div className={styles.introduction}>
        <p className={styles.eyebrow}>The spiritual heart of Syracuse University</p>
        <p className={styles.lede}>
@@ -293,33 +301,52 @@ export default async function VenuePage({ params }) {
      </div>
     ) : null}
 
+    <section className={styles.navigationTools} aria-labelledby="venue-directions-heading">
+     <Heading level={2} marginTop={0} marginBottom={1}>
+      <span id="venue-directions-heading">Get Directions</span>
+     </Heading>
+     <Paragraph>
+      Navigate to {venueTitle} at {displayAddress.street}, {displayAddress.city}, {displayAddress.state?.toUpperCase?.() || displayAddress.state} {displayAddress.zipCode}.
+     </Paragraph>
+     <div className={styles.mapActions}>
+      <Button href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</Button>
+      <Button href={appleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Apple Maps</Button>
+     </div>
+    </section>
+
     <Heading level={2} marginTop="6" marginBottom="2">
      Upcoming Concerts
     </Heading>
     {upcoming.length ? (
-     upcoming.map((concert) => (
-       <Paragraph key={concert.node.uri || concert.node.title} marginBottom="2">
-        <Link href={getConcertPagePath(concert.node)}>{concert.node.title}</Link>
-      </Paragraph>
-     ))
+     <ul className={styles.upcomingList}>
+      {upcoming.map((concert) => {
+       const concertDate = getConcertDate(concert.node);
+
+       return (
+        <li key={concert.node.uri || concert.node.title}>
+         <Link className={styles.upcomingItem} href={getConcertPagePath(concert.node)}>
+          <time dateTime={moment(concertDate).toISOString()}>{getAPStyleFormattedDate(concertDate, moment)}</time>
+          <span className={styles.upcomingItemContent}>
+           <strong>{concert.node.title}</strong>
+           <span>{getAPStyleFormattedTime(concertDate, moment)}</span>
+          </span>
+          <span className={styles.upcomingItemArrow} aria-hidden="true">&rarr;</span>
+         </Link>
+        </li>
+       );
+      })}
+     </ul>
     ) : (
      <Paragraph diminish>No upcoming concerts are currently scheduled at this venue.</Paragraph>
     )}
 
-    <Heading level={2} marginTop="6" marginBottom="2">
-     Past Concerts
-    </Heading>
     {past.length ? (
-     past
-      .slice()
-      .reverse()
-      .map((concert) => (
-        <Paragraph key={concert.node.uri || concert.node.title} marginBottom="2">
-         <Link href={getConcertPagePath(concert.node)}>{concert.node.title}</Link>
-       </Paragraph>
-      ))
+     <ConcertInteractive concerts={past.slice().reverse()} label="Past Concerts" listOnly />
     ) : (
-     <Paragraph diminish>No past concerts found for this venue.</Paragraph>
+     <>
+      <Heading level={2} marginTop="6" marginBottom="2">Past Concerts</Heading>
+      <Paragraph diminish>No past concerts found for this venue.</Paragraph>
+     </>
     )}
    </Section>
   </Layout>

@@ -1,11 +1,12 @@
 import ConcertInteractive from "../../components/concertInteractive";
 import type { Metadata } from "next";
-import Heading from "../../components/heading";
+import Image from "next/image";
 import Layout from "../../components/layout";
 import Paragraph from "../../components/paragraph";
 import Section from "../../components/section";
 import { getAllConcerts } from "../../lib/api";
-import { getConcertPagePath } from "../../lib/utilities";
+import { getConcertDate, getConcertPagePath } from "../../lib/utilities";
+import styles from "./concerts.module.scss";
 
 export const metadata: Metadata = {
  title: "Upcoming Concerts - Syracuse University Brass Ensemble Live Performances",
@@ -91,9 +92,6 @@ export default async function ConcertsPage() {
    return startYearB - startYearA;
   });
 
- const hasAnyPastConcerts =
-  currentYearPastConcerts.length > 0 || previousAcademicYears.length > 0;
-
  // Overview pages link to the canonical event pages without declaring partial events.
  const upcomingEventList = currentYearUpcomingConcerts.slice(0, 20).map(({ node }, index) => ({
   "@type": "ListItem",
@@ -120,37 +118,44 @@ export default async function ConcertsPage() {
     }}
    />
    <Section>
-    <Heading level={1} marginTop="8" marginBottom="4">
-     Upcoming Concerts - Live Brass Music
-    </Heading>
-    <Paragraph type="intro">
-     Experience the powerful sound of brass live! The Syracuse University Brass
-     Ensemble performs throughout the year with a diverse repertoire, from
-     classical to contemporary. Check out our upcoming concerts and enjoy an
-     evening of inspiring music.
-    </Paragraph>
+    <div className={styles.hero}>
+     <div className={styles.heroVisual}>
+      <Image
+       src="/horns-and-harmonies-2025/HH_DSC0513.webp"
+       alt="The Syracuse University Brass Ensemble performing in Hendricks Chapel"
+       fill
+       sizes="(min-width: 1200px) 72rem, 100vw"
+       className={styles.heroImage}
+       priority
+      />
+      <div className={styles.heroShade} aria-hidden="true"></div>
+     </div>
+     <div className={styles.heroContent}>
+      <h1>Upcoming Concerts - Live Brass Music</h1>
+      <p>
+       Experience the powerful sound of brass live! The&nbsp;Syracuse University Brass
+       Ensemble performs throughout the year with a diverse repertoire, from
+       classical to contemporary. Check out our upcoming concerts and enjoy an
+       evening of inspiring music.
+      </p>
+     </div>
+    </div>
 
-    <Heading level={2} marginTop="6" marginBottom="2">
-     Upcoming Concerts
-    </Heading>
+    <ConcertInteractive
+     concerts={currentYearUpcomingConcerts}
+     sectionTitle="Upcoming Concerts"
+     label={currentAcademicYear}
+    />
     {currentYearUpcomingConcerts.length ? (
-     <ConcertInteractive
-      concerts={currentYearUpcomingConcerts}
-      label={currentAcademicYear}
-     />
+     null
     ) : (
      <Paragraph diminish>No upcoming concerts are currently scheduled.</Paragraph>
     )}
 
-    {hasAnyPastConcerts ? (
-    <Heading level={2} marginTop="8" marginBottom="2">
-      Past Concerts
-     </Heading>
-    ) : null}
-
     {currentYearPastConcerts.length ? (
      <ConcertInteractive
       concerts={currentYearPastConcerts}
+      sectionTitle="Past Concerts"
       label={currentAcademicYear}
       listOnly
      />
@@ -160,7 +165,10 @@ export default async function ConcertsPage() {
      return (
       <ConcertInteractive
        key={yearLabel}
-       concerts={concertsByAcademicYear[yearLabel]}
+       concerts={[...concertsByAcademicYear[yearLabel]].sort((a, b) => {
+        return new Date(getConcertDate(b.node)).getTime() - new Date(getConcertDate(a.node)).getTime();
+       })}
+       sectionTitle="Past Concerts"
        label={yearLabel}
        listOnly
       />

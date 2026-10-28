@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import Grid from "../../../components/grid";
+import EnsembleRoster from "../../../components/ensemble-roster";
+import EnsembleYearNav from "../../../components/ensemble-year-nav";
 import Heading from "../../../components/heading";
 import Layout from "../../../components/layout";
-import Musician from "../../../components/musician";
-import Section from "../../../components/section";
 import { getAllEnsembleSlugs, getEnsembleBySlug } from "../../../lib/api";
+
+const CURRENT_ENSEMBLE_SLUG = "2026-27";
 
 export const revalidate = 86400;
 
@@ -166,13 +167,11 @@ export default async function EnsemblePage({ params }) {
   notFound();
  }
 
- const { title, ensembleInformation } = ensembleData;
- const conductors = Array.isArray(ensembleInformation?.conductor)
-  ? ensembleInformation.conductor
-  : [];
- const instruments = Array.isArray(ensembleInformation?.instruments)
-  ? ensembleInformation.instruments
-  : [];
+ const { title } = ensembleData;
+ const ensembleSlugs = (await getAllEnsembleSlugs())
+  .map((edge) => edge?.node?.slug)
+  .filter(Boolean)
+  .sort((a, b) => (a > b ? -1 : 1));
  const ensembleCanonicalUrl = `https://subrass.syr.edu/ensembles/${ensembleData?.slug || ensembleId}`;
  const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -212,63 +211,8 @@ export default async function EnsemblePage({ params }) {
   <Heading level={1} marginTop="8" marginBottom="4">
     {title} Ensemble
    </Heading>
-
-   {conductors.filter((c) => c?.personInformation).length > 0 ? (
-    <Section>
-     <Heading
-      level={2}
-      marginTop="6"
-      marginBottom="2"
-      borderTop="1"
-      textTransform="uppercase"
-     >
-      Conductors
-     </Heading>
-     <Grid>
-      {conductors
-       .filter((part) => part?.personInformation)
-       .map((part, index) => (
-        <Grid.Item key={`conductor-${index}`}>
-         <Musician data={part} teaser />
-        </Grid.Item>
-       ))}
-     </Grid>
-    </Section>
-   ) : null}
-
-   {instruments.length > 0
-    ? instruments.map((part, index) => {
-       const instrumentObj = part?.instrument || {};
-       const instrumentName = instrumentObj?.name || "";
-       const musicians = (Array.isArray(part?.musicians) ? part.musicians : []).filter(
-        (m) => m?.personInformation
-       );
-
-       return (
-        <Section key={`instrument-${index}`}>
-         {instrumentName ? (
-          <Heading
-           level={2}
-           marginTop="6"
-           marginBottom="2"
-           borderTop="1"
-           textTransform="uppercase"
-          >
-           {instrumentName}
-           {instrumentName !== "Percussion" ? "s" : ""}
-          </Heading>
-         ) : null}
-         <Grid>
-          {musicians.map((musician, musicianIndex) => (
-           <Grid.Item key={`musician-${musicianIndex}`}>
-            <Musician data={musician} teaser />
-           </Grid.Item>
-          ))}
-         </Grid>
-        </Section>
-       );
-      })
-    : null}
+   <EnsembleYearNav currentSlug={ensembleData.slug || ensembleId} currentYearSlug={CURRENT_ENSEMBLE_SLUG} slugs={ensembleSlugs} />
+   <EnsembleRoster ensembleData={ensembleData} />
   </Layout>
  );
 }

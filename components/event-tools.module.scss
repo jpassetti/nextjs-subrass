@@ -5,15 +5,53 @@
  background: #f1f4f7;
  border-left: 4px solid #f76900;
  color: #000e54;
- h2 { margin: 0 0 0.75rem; font-size: 1.4rem; }
  p { color: inherit; margin-bottom: 0.75rem; line-height: 1.5; }
- a { color: inherit; text-underline-offset: 0.2em; }
+ p a, li a { color: inherit; text-underline-offset: 0.2em; }
  ul { padding-left: 1.25rem; }
  li { list-style: disc; margin-bottom: 0.5rem; }
 }
 .actions {
  display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 1rem 0;
- a, button { display: inline-flex; align-items: center; padding: 0.65rem 0.8rem; border: 1px solid #000e54; border-radius: 0.3rem; background: white; color: #000e54; font: inherit; line-height: 1.4; cursor: pointer; text-decoration: none; }
- a:hover, button:hover { background: #000e54; color: white; }
- a:focus-visible, button:focus-visible { outline: 3px solid #f76900; outline-offset: 3px; }
+}
+
+.dark {
+ background: transparent;
+ border-left: 0;
+ border-top: 1px solid rgba(255, 255, 255, .32);
+ color: white;
+ margin: 3rem -2rem 0;
+ max-width: none;
+ padding: 2.5rem 1rem 0;
+ text-align: center;
+ width: calc(100% + 4rem);
+
+ h3 { color: white; }
+
+ p {
+  font-size: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 48rem;
+ }
+
+ .actions {
+  justify-content: center;
+  margin: 1.25rem 0;
+ }
+
+ .actions a,
+ .actions button {
+  background: white;
+  border-color: white;
+  color: variables.$color__blue;
+  font-size: .9rem;
+  padding: .6rem .8rem;
+
+  &:hover,
+  &:focus-visible {
+   background: variables.$color__orange;
+   border-color: variables.$color__orange;
+   color: variables.$color__blue;
+  }
+ }
 }

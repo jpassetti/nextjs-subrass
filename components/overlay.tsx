@@ -50,6 +50,9 @@ const Overlay = ({closeHandler}) => {
 		<Nav.Mobile onNavigate={closeHandler} />
 		<Nav.SocialNav />
 		<Nav.Members />
+		<div className={styles.legal}>
+			<Nav.Legal />
+		</div>
 	</motion.div>
 }
 export default Overlay;
