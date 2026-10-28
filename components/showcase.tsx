@@ -1,9 +1,11 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import styles from "./showcase.module.scss";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 const showcaseImages = [
  "/syracuse-university-brass-ensemble-2025.webp",
@@ -19,6 +21,10 @@ interface ShowcaseProps {
 
 const Showcase = ({ children }: ShowcaseProps) => {
  const reduceMotion = useReducedMotion();
+ const [pauseOverride, setPauseOverride] = useState<boolean | null>(null);
+ const [activeSlide, setActiveSlide] = useState(0);
+ const isPaused = pauseOverride ?? Boolean(reduceMotion);
+
  const itemVariants = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : .4, ease: "easeOut" as const } },
@@ -26,20 +32,48 @@ const Showcase = ({ children }: ShowcaseProps) => {
 
  return (
   <div className={styles.showcase}>
-   <div className={styles.visual}>
+   <div className={`${styles.visual} ${isPaused ? styles.paused : ""}`}>
     <div className={styles.slideshow} aria-hidden="true">
-     {showcaseImages.map((src, index) => (
-      <div className={styles.slide} key={src}>
+     <AnimatePresence initial={false}>
+      <motion.div
+       className={styles.slide}
+       key={showcaseImages[activeSlide]}
+       initial={{ opacity: 0 }}
+       animate={{ opacity: 1 }}
+       exit={{ opacity: 0 }}
+       transition={{ duration: reduceMotion ? 0 : .8, ease: "easeInOut" }}
+      >
        <Image
-        src={src}
+        src={showcaseImages[activeSlide]}
         alt=""
         fill
         sizes="(min-width: 768px) 68vw, 100vw"
-        priority={index === 0}
+        priority={activeSlide === 0}
        />
-      </div>
-     ))}
+      </motion.div>
+     </AnimatePresence>
     </div>
+    <div className={styles.slideshowControls}>
+     <button
+      type="button"
+      className={styles.slideshowToggle}
+      onClick={() => setPauseOverride(!isPaused)}
+      aria-label={isPaused ? "Play homepage slideshow" : "Pause homepage slideshow"}
+      aria-pressed={isPaused}
+     >
+      <FontAwesomeIcon icon={isPaused ? faPlay : faPause} aria-hidden="true" />
+     </button>
+    </div>
+    <span className={styles.progressTrack} aria-hidden="true">
+     <span
+      className={styles.progressBar}
+      onAnimationIteration={() => {
+       if (!isPaused) {
+        setActiveSlide((current) => (current + 1) % showcaseImages.length);
+       }
+      }}
+     ></span>
+    </span>
    </div>
    <motion.div
     className={styles.content}

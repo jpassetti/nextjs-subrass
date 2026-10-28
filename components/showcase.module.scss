@@ -27,6 +27,66 @@
 		}
 	}
 
+	.slideshowControls {
+		align-items: center;
+		display: flex;
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+		z-index: 3;
+	}
+
+	.slideshowToggle {
+		align-items: center;
+		-webkit-backdrop-filter: blur(3px);
+		backdrop-filter: blur(3px);
+		background: rgba(10, 32, 78, .68);
+		border: 1px solid rgba(255, 255, 255, .85);
+		border-radius: 50%;
+		box-shadow: 0 .12rem .5rem rgba(0, 0, 0, .18);
+		color: white;
+		cursor: pointer;
+		display: flex;
+		height: 2.35rem;
+		justify-content: center;
+		padding: .65rem;
+		transition: background-color .2s ease, transform .2s ease;
+		width: 2.35rem;
+
+		svg { height: 100%; width: 100%; }
+
+		&:hover { background: variables.$color__orange__medium; }
+
+		&:focus-visible {
+			outline: 3px solid white;
+			outline-offset: 3px;
+		}
+	}
+
+	.progressTrack {
+		background: rgba(255, 255, 255, .16);
+		display: block;
+		height: 3px;
+		inset: 0 0 auto;
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+		z-index: 4;
+	}
+
+	.progressBar {
+		animation: showcase-progress 6s linear infinite;
+		background: variables.$color__orange;
+		display: block;
+		height: 100%;
+		transform-origin: left center;
+		width: 100%;
+	}
+
+	.paused {
+		.progressBar { animation-play-state: paused; }
+	}
+
 	.slideshow,
 	.slide {
 		inset: 0;
@@ -36,8 +96,7 @@
 	.slideshow { background: variables.$color__blue; }
 
 	.slide {
-		animation: showcase-crossfade 30s linear infinite;
-		opacity: 0;
+		opacity: 1;
 
 		img {
 			height: 100%;
@@ -46,10 +105,6 @@
 			width: 100%;
 		}
 
-		&:nth-child(2) { animation-delay: 6s; }
-		&:nth-child(3) { animation-delay: 12s; }
-		&:nth-child(4) { animation-delay: 18s; }
-		&:nth-child(5) { animation-delay: 24s; }
 	}
 
 	.content {
@@ -102,15 +157,11 @@
 
 .noWrap { white-space: nowrap; }
 
-@keyframes showcase-crossfade {
-	0%, 16.667%, 100% { opacity: 1; }
-	20%, 96.667% { opacity: 0; }
+@keyframes showcase-progress {
+	from { transform: scaleX(0); }
+	to { transform: scaleX(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.showcase .slide {
-		animation: none;
-
-		&:first-child { opacity: 1; }
-	}
+	.showcase .slideshowToggle { transition: none; }
 }

@@ -126,6 +126,20 @@ test("mobile navigation restores the page layout after route changes", () => {
  assert.match(providers, /body\.style\.width = originalWidth/);
 });
 
+test("homepage slideshow provides accessible playback and progress controls", () => {
+ const showcase = source("components/showcase.tsx");
+ const styles = source("components/showcase.module.scss");
+ assert.match(showcase, /Play homepage slideshow/);
+ assert.match(showcase, /Pause homepage slideshow/);
+ assert.match(showcase, /aria-pressed=\{isPaused\}/);
+ assert.match(showcase, /faPause/);
+ assert.match(showcase, /faPlay/);
+ assert.match(styles, /@keyframes showcase-progress/);
+ assert.match(styles, /animation-play-state: paused/);
+ assert.match(showcase, /onAnimationIteration/);
+ assert.match(showcase, /setActiveSlide/);
+});
+
 test("concert page provides complete event SEO and social metadata", () => {
  const page = source("app/concerts/america250/page.tsx");
  assert.match(page, /title = "America 250 Concert"/);
