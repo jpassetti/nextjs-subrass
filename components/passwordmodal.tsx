@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 import styles from './passwordmodal.module.scss';
 import ButtonUI from "./buttonui";
@@ -40,7 +41,9 @@ function PasswordModal({ isOpen, onClose}) {
     }
     };
      
-    return (
+    if (!isOpen) return null;
+
+    return createPortal(
       <div className={styles.modal_background}>
         <div className={styles.modal}>
         {!linkVisible ? <form onSubmit={handleSubmit}>
@@ -62,7 +65,8 @@ function PasswordModal({ isOpen, onClose}) {
           </a>
       </Paragraph>}
           </div>
-      </div>
+      </div>,
+      document.body
     );
   }
 export default PasswordModal
