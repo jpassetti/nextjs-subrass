@@ -22,7 +22,8 @@ export default function AnnouncementBanner() {
  }, []);
 
  const normalizedPath = pathname.replace(/\/+$/, "") || "/";
- if (!isActive || normalizedPath === "/concerts/america250") return null;
+ const isAmerica250Route = normalizedPath === "/concerts/america250" || normalizedPath.startsWith("/concerts/america250/");
+ if (!isActive || isAmerica250Route) return null;
 
  return (
   <aside className={styles.banner} aria-label="America 250 event announcement">

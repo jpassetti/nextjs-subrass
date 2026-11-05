@@ -125,6 +125,7 @@ test("sitewide America 250 announcement expires after the event and skips its la
  assert.match(main, /<AnnouncementBanner \/>/);
  assert.match(banner, /2026-11-14T00:00:00-05:00/);
  assert.match(banner, /normalizedPath === "\/concerts\/america250"/);
+ assert.match(banner, /normalizedPath\.startsWith\("\/concerts\/america250\/"\)/);
  assert.match(banner, /Date\.now\(\) < expiration/);
  assert.match(banner, /America 250 at Hendricks Chapel/);
  assert.match(banner, /Free musician masterclass and concert/);
