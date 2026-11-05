@@ -15,7 +15,7 @@ Master class information is available at `/concerts/america250/master-class`, th
    - `RSVP_REPLY_TO`: monitored inbox for replies, recommended as `subrass@syr.edu`
    - `RSVP_NOTIFICATION_TO`: administrator inbox receiving new-registration alerts
 
-Registration notifications contain no student contact information or notes. A notification failure is logged but does not cause an otherwise successful database registration to fail.
+Administrator notifications contain no registrant contact information or notes. College and community musicians also receive a confirmation email with the event schedule, venue, parking, concert, and contact details. An email-delivery failure is logged but does not cause an otherwise successful database registration to fail.
 
 ## Quality and Health
 

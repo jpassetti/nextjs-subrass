@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getDatabase } from "../../../../lib/neon";
-import { sendMasterClassNotification } from "../../../../lib/master-class-notification.mjs";
+import { sendMasterClassConfirmation, sendMasterClassNotification } from "../../../../lib/master-class-notification.mjs";
 import {
  isValidCommunityMasterClassRegistration,
  normalizeCommunityMasterClassRegistration,
@@ -26,11 +26,18 @@ export async function POST(request: Request) {
      ${registration.phone || null}, ${registration.instrument}, ${registration.notes || null}, ${registration.consentToContact}, ${"community"})
    returning id
   `;
+  const registrationId = String(insertedRows[0]?.id || "unknown");
 
   try {
-   await sendMasterClassNotification({ registrationId: String(insertedRows[0]?.id || "unknown") });
+   await sendMasterClassNotification({ registrationId, registrationType: "community" });
   } catch (notificationError) {
    console.error("Master class community-musician notification failed", notificationError);
+  }
+
+  try {
+   await sendMasterClassConfirmation({ registrationId, email: registration.email, firstName: registration.firstName });
+  } catch (confirmationError) {
+   console.error("Master class community-musician confirmation failed", confirmationError);
   }
 
   return NextResponse.json({ success: true }, { status: 201 });

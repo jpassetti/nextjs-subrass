@@ -422,6 +422,18 @@ test("registration persists before sending a non-fatal email notification", () =
  assert.match(route, /returning id/);
 });
 
+test("community registration sends independent admin and registrant emails after persistence", () => {
+ const route = source("app/api/master-class/register-community/route.ts");
+ const insertPosition = route.indexOf("insert into master_class_registrations");
+ const adminPosition = route.indexOf("await sendMasterClassNotification");
+ const confirmationPosition = route.indexOf("await sendMasterClassConfirmation");
+ assert.ok(insertPosition > -1 && adminPosition > insertPosition && confirmationPosition > adminPosition);
+ assert.match(route, /registrationType: "community"/);
+ assert.match(route, /email: registration\.email, firstName: registration\.firstName/);
+ assert.match(route, /catch \(notificationError\)/);
+ assert.match(route, /catch \(confirmationError\)/);
+});
+
 test("admin provides authenticated create, update, archive, and restore operations", () => {
  const createRoute = source("app/api/master-class/admin/registrations/route.ts");
  const recordRoute = source("app/api/master-class/admin/registrations/[id]/route.ts");
