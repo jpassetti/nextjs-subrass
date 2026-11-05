@@ -101,11 +101,11 @@ const checks = [
   tests: [
    {
     name: "person JSON-LD includes canonical url",
-    regex: /url:\s*`https:\/\/subrass\.syr\.edu\/about\/musicians\//,
+    regex: /const profileUrl = `https:\/\/subrass\.syr\.edu\/about\/musicians\/\$\{slug\}`;[\s\S]*url:\s*profileUrl/,
    },
    {
     name: "person JSON-LD includes affiliation object",
-    regex: /affiliation:\s*\{\s*"@type":\s*"MusicGroup"/s,
+    regex: /affiliation:\s*ensembleReference/,
    },
   ],
  },

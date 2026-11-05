@@ -1,0 +1,69 @@
+@use '../styles/variables';
+
+.banner {
+ align-items: center;
+ background: variables.$color__blue;
+ border-top: .2rem solid variables.$color__orange;
+ color: white;
+ display: flex;
+ flex-wrap: wrap;
+ font-family: variables.$font__sherman_sans;
+ gap: .75rem 1.5rem;
+ justify-content: space-between;
+ margin: -2rem -2rem 2rem;
+ padding: .75rem 1.25rem;
+ width: calc(100% + 4rem);
+}
+
+.message {
+ align-items: center;
+ display: flex;
+ flex: 1 1 30rem;
+ gap: .75rem;
+ min-width: 0;
+
+ p { align-items: baseline; display: flex; flex-wrap: wrap; gap: .35rem; line-height: 1.35; margin: 0; }
+ strong { color: white; font-size: .95rem; }
+ p > span:not(.separator) { color: rgba(255, 255, 255, .82); font-size: .9rem; }
+}
+
+.badge {
+ background: variables.$color__orange;
+ border-radius: 999px;
+ color: variables.$color__blue;
+ flex: 0 0 auto;
+ font-size: .7rem;
+ font-weight: 700;
+ letter-spacing: .05em;
+ padding: .3rem .55rem;
+ text-transform: uppercase;
+}
+
+.separator { color: variables.$color__orange; font-weight: 700; }
+.noWrap { white-space: nowrap; }
+
+.actions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: .6rem 1rem;
+
+ a {
+  color: white;
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration-color: variables.$color__orange;
+  text-decoration-thickness: .12rem;
+  text-underline-offset: .2rem;
+  white-space: nowrap;
+ }
+
+ a:hover,
+ a:focus-visible { color: variables.$color__orange; }
+}
+
+@media (max-width: 43.6875rem) {
+ .banner { align-items: flex-start; flex-direction: column; gap: .65rem; padding: .8rem 1rem; }
+ .message { align-items: flex-start; flex: none; flex-direction: column; gap: .5rem; width: 100%; }
+ .separator { margin: 0 .3rem; }
+ .actions { padding-left: 0; }
+}

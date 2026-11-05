@@ -7,9 +7,9 @@ import {
  masterClassRegistrationsToCsv,
 } from "../lib/master-class-export.mjs";
 
-test("exports all student and instructor columns in a stable order", () => {
+test("exports all musician and instructor columns in a stable order", () => {
  assert.deepEqual(MASTER_CLASS_EXPORT_HEADINGS, [
-  "Submitted", "Registration source", "Registration group", "First name", "Last name", "School name", "Student email", "Student phone", "Parent or guardian name", "Parent or guardian email", "Parent or guardian phone",
+  "Submitted", "Registration source", "Registration group", "First name", "Last name", "School or musical affiliation", "Email", "Phone", "Parent or guardian name", "Parent or guardian email", "Parent or guardian phone",
   "Music instructor", "Instructor email", "Instructor phone", "Instrument", "Grade level", "Notes",
  ]);
 });

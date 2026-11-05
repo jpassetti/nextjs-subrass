@@ -112,16 +112,47 @@ test("concert landing page preserves essential event facts and navigation target
   'id="program"',
   'id="parking"',
  ]) assert.match(page, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
- assert.match(page, /Free student masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
+ assert.match(page, /Free musician masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
  assert.match(page, /Free concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
  assert.match(page, /The concert is free and open to the public/);
- assert.match(page, /student masterclass is also free/);
+ assert.match(page, /musician masterclass is also free/);
  assert.match(page, /Parking is free/);
+});
+
+test("sitewide America 250 announcement expires after the event and skips its landing page", () => {
+ const main = source("components/main.tsx");
+ const banner = source("components/announcement-banner.tsx");
+ assert.match(main, /<AnnouncementBanner \/>/);
+ assert.match(banner, /2026-11-14T00:00:00-05:00/);
+ assert.match(banner, /normalizedPath === "\/concerts\/america250"/);
+ assert.match(banner, /Date\.now\(\) < expiration/);
+ assert.match(banner, /America 250 at Hendricks Chapel/);
+ assert.match(banner, /Free musician masterclass and concert/);
+ assert.match(banner, /<span className=\{styles\.badge\}>Upcoming<\/span>/);
+ assert.match(banner, /className=\{styles\.noWrap\}>Friday, Nov\. 13/);
+ assert.match(banner, /className=\{styles\.noWrap\}>Free musician masterclass and concert/);
+ assert.match(banner, /href="\/concerts\/america250"/);
+ assert.match(banner, /href="\/concerts\/america250\/master-class\/rsvp"/);
 });
 
 test("full-width layout offsets row gutters to prevent mobile horizontal scrolling", () => {
  const containerStyles = source("components/container.module.scss");
  assert.match(containerStyles, /&\.full\s*\{[\s\S]*padding-left: \.5rem;[\s\S]*padding-right: \.5rem;/);
+});
+
+test("breadcrumb gutters are explicit for full-bleed showcases", () => {
+ const breadcrumbs = source("components/breadcrumbs.tsx");
+ const breadcrumbStyles = source("components/breadcrumbs.module.scss");
+ const about = source("app/about/page.tsx");
+ const concerts = source("app/concerts/page.tsx");
+ const concert = source("components/concert.tsx");
+ const venue = source("app/concerts/venues/[slug]/page.tsx");
+ const rsvp = source("app/concerts/america250/master-class/rsvp/page.tsx");
+ assert.match(breadcrumbs, /gutter = "none"/);
+ assert.match(breadcrumbs, /gutter\?: "none" \| "page"/);
+ assert.match(breadcrumbStyles, /\.pageGutter\s*\{[\s\S]*padding-left: 2rem;[\s\S]*padding-right: 2rem;/);
+ for (const showcase of [about, concerts, concert, venue]) assert.match(showcase, /gutter="page"/);
+ assert.doesNotMatch(rsvp, /gutter="page"/);
 });
 
 test("mobile navigation restores the page layout after route changes", () => {
@@ -225,14 +256,14 @@ test("visitor information separates admission, parking, and accommodations", () 
  assert.match(page, /Parking is free/);
 });
 
-test("master class routes enforce high-school-only messaging and route separation", () => {
+test("master class routes welcome high school, college, and community musicians", () => {
  const landing = source("app/concerts/america250/master-class/page.tsx");
  const rsvp = source("app/concerts/america250/master-class/rsvp/page.tsx");
- assert.match(landing, /Students in grades 9–12/);
+ assert.match(landing, /High school, college, and community musicians/);
  assert.match(landing, /\/concerts\/america250\/master-class\/rsvp/);
  assert.match(landing, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(landing, /<span aria-current="page">Masterclass<\/span>/);
- assert.match(rsvp, /exclusively for students currently enrolled in grades 9–12/);
+ assert.match(rsvp, /welcomes high school students, college musicians, and adult musicians/);
  assert.match(rsvp, /RegistrationOptions/);
  assert.match(rsvp, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(rsvp, /<Link href="\/concerts\/america250\/master-class">Masterclass<\/Link>/);
@@ -278,7 +309,7 @@ test("RSVP page offers a multi-student music educator registration flow", () => 
  const route = source("app/api/master-class/register-educator/route.ts");
  const schema = source("database/master-class-registrations.sql");
  assert.match(page, /RegistrationOptions/);
- assert.match(page, /music educators may register multiple students/);
+ assert.match(page, /music educators may register multiple high school students/);
  assert.match(options, /Individual registration/);
  assert.match(options, /Music educator registration/);
  assert.match(educatorForm, /Add another student/);
@@ -289,6 +320,25 @@ test("RSVP page offers a multi-student music educator registration flow", () => 
  assert.match(schema, /registration_source text not null default 'individual'/);
  assert.match(schema, /registration_group_id text/);
  assert.match(schema, /alter column email drop not null/);
+});
+
+test("RSVP page offers an independent college and community musician flow", () => {
+ const options = source("app/master-class/registration-options.tsx");
+ const form = source("app/master-class/community-registration-form.tsx");
+ const route = source("app/api/master-class/register-community/route.ts");
+ const admin = source("app/master-class/admin/page.tsx");
+ assert.match(options, /College &amp; community musicians/);
+ assert.match(options, /age 18 and older/);
+ assert.match(form, /Musician information/);
+ assert.match(form, /College, ensemble, or musical affiliation/);
+ for (const name of ["firstName", "lastName", "email", "instrument"]) {
+  assert.match(form, new RegExp(`name="${name}"[^>]*required|required[^>]*name="${name}"`));
+ }
+ assert.doesNotMatch(form, /parentName|teacherName|gradeLevel/);
+ assert.match(form, /name="ageConfirmed"[^>]*required|required[^>]*name="ageConfirmed"/);
+ assert.match(route, /registration_source/);
+ assert.match(route, /\$\{"community"\}/);
+ assert.match(admin, /College\/community musician/);
 });
 
 test("database and admin tools retain parent and instructor contact fields", () => {

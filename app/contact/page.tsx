@@ -45,11 +45,13 @@ export default function ContactPage() {
     <div>
      <Label htmlFor="mailing_address">Mailing address</Label>
      <div id="mailing_address">
-      Room 1-014, Center for Science and Technology
-      <br />
-      Syracuse University
-      <br />
-      Syracuse, NY 13244-4100
+      <Paragraph marginBottom="0">
+       Room 1-014, Center for Science and Technology
+       <br />
+       Syracuse University
+       <br />
+       Syracuse, NY 13244-4100
+      </Paragraph>
      </div>
     </div>
    </Section>

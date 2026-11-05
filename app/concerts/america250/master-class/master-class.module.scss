@@ -26,6 +26,26 @@
  span[aria-current='page'] { font-weight: 700; }
 }
 
+.breadcrumbHome {
+ align-items: center;
+ background: variables.$color__orange_10;
+ border-radius: 50%;
+ display: inline-flex;
+ height: 2rem;
+ justify-content: center;
+ text-decoration: none !important;
+ transition: background-color .2s ease, color .2s ease;
+ width: 2rem;
+
+ svg { width: .85rem; }
+
+ &:hover,
+ &:focus-visible {
+  background: variables.$color__orange;
+  color: variables.$color__blue;
+ }
+}
+
 .hero {
  background: variables.$color__orange_10;
  border-left: .5rem solid variables.$color__orange;

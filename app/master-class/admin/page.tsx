@@ -70,9 +70,9 @@ export default async function MasterClassAdminPage({ searchParams }) {
    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Master Class", href: "/concerts/america250/master-class" }, { label: "Registration Admin" }]} />
    <div className={styles.adminHeader}>
     <div>
-     <p className={styles.adminEyebrow}>America 250 · Student master class</p>
+     <p className={styles.adminEyebrow}>America 250 · Musician master class</p>
      <Heading level={1} marginTop="1" marginBottom="1">Registration Admin</Heading>
-     <p className={styles.adminSubhead}>Search, organize, and export student registrations.</p>
+     <p className={styles.adminSubhead}>Search, organize, and export musician registrations.</p>
     </div>
     <div className={styles.adminActions}>
      <Link className={styles.button} href="/master-class/admin/registrations/new">Add registration</Link>
@@ -88,7 +88,7 @@ export default async function MasterClassAdminPage({ searchParams }) {
    </div>
 
    <form className={styles.filterPanel} action="/master-class/admin" method="get">
-    <div className={styles.searchField}><label htmlFor="admin-search">Search registrations</label><input id="admin-search" name="q" type="search" defaultValue={filters.q} placeholder="Student, parent, school, instructor, email, instrument…" /></div>
+    <div className={styles.searchField}><label htmlFor="admin-search">Search registrations</label><input id="admin-search" name="q" type="search" defaultValue={filters.q} placeholder="Musician, parent, school, affiliation, instructor, email, instrument…" /></div>
     <div className={styles.compactField}><label htmlFor="admin-grade">Grade</label><select id="admin-grade" name="grade" defaultValue={filters.grade}><option value="">All grades</option>{[9, 10, 11, 12].map((grade) => <option key={grade} value={grade}>Grade {grade}</option>)}</select></div>
     <div className={styles.compactField}><label htmlFor="admin-instrument">Instrument</label><select id="admin-instrument" name="instrument" defaultValue={filters.instrument}><option value="">All instruments</option>{instrumentRows.map((row) => <option key={String(row.instrument)} value={String(row.instrument)}>{String(row.instrument)}</option>)}</select></div>
     <div className={styles.compactField}><label htmlFor="admin-from">Submitted from</label><input id="admin-from" name="from" type="date" defaultValue={filters.from} /></div>
@@ -105,22 +105,22 @@ export default async function MasterClassAdminPage({ searchParams }) {
    {rows.length ? <>
     <div className={styles.desktopTableWrap}><table className={styles.adminTable}>
      <caption className={styles.srOnly}>Master class registration results</caption>
-     <thead><tr><th>Submitted</th><th>Student</th><th>School and instructor</th><th>Notes</th></tr></thead>
+     <thead><tr><th>Submitted</th><th>Musician</th><th>School, affiliation, or instructor</th><th>Notes</th></tr></thead>
      <tbody>{rows.map((row) => <tr key={String(row.id)}>
-      <td><time dateTime={new Date(String(row.created_at)).toISOString()}>{dateTimeFormatter.format(new Date(String(row.created_at)))}</time>{row.registration_source === "educator" ? <span className={styles.detailLabel}>Educator submission</span> : null}</td>
-      <td><strong className={styles.personName}>{display(row.first_name)} {display(row.last_name)}</strong><div className={styles.badges}><span>Grade {display(row.grade_level)}</span><span>{display(row.instrument)}</span>{row.registration_source === "educator" ? <span>Educator registered</span> : null}{row.deleted_at ? <span className={styles.archivedBadge}>Archived</span> : null}</div>{row.email ? <a href={`mailto:${row.email}`}>{String(row.email)}</a> : <span>Student email not provided</span>}{row.phone ? <a href={`tel:${row.phone}`}>{String(row.phone)}</a> : null}<span className={styles.detailLabel}>Parent or guardian</span><span>{display(row.parent_name)}</span>{row.parent_email ? <a href={`mailto:${row.parent_email}`}>{String(row.parent_email)}</a> : null}{row.parent_phone ? <a href={`tel:${row.parent_phone}`}>{String(row.parent_phone)}</a> : null}<Link className={styles.rowAction} href={`/master-class/admin/registrations/${row.id}`}>View and edit</Link></td>
-      <td><strong>{display(row.school)}</strong><span className={styles.detailLabel}>Music instructor</span><span>{display(row.teacher_name)}</span>{row.teacher_email ? <a href={`mailto:${row.teacher_email}`}>{String(row.teacher_email)}</a> : null}{row.teacher_phone ? <a href={`tel:${row.teacher_phone}`}>{String(row.teacher_phone)}</a> : null}</td>
+      <td><time dateTime={new Date(String(row.created_at)).toISOString()}>{dateTimeFormatter.format(new Date(String(row.created_at)))}</time>{row.registration_source === "educator" ? <span className={styles.detailLabel}>Educator submission</span> : row.registration_source === "community" ? <span className={styles.detailLabel}>College/community musician</span> : null}</td>
+      <td><strong className={styles.personName}>{display(row.first_name)} {display(row.last_name)}</strong><div className={styles.badges}>{row.grade_level ? <span>Grade {display(row.grade_level)}</span> : null}<span>{display(row.instrument)}</span>{row.registration_source === "educator" ? <span>Educator registered</span> : null}{row.registration_source === "community" ? <span>Adult musician</span> : null}{row.deleted_at ? <span className={styles.archivedBadge}>Archived</span> : null}</div>{row.email ? <a href={`mailto:${row.email}`}>{String(row.email)}</a> : <span>Email not provided</span>}{row.phone ? <a href={`tel:${row.phone}`}>{String(row.phone)}</a> : null}{row.registration_source !== "community" ? <><span className={styles.detailLabel}>Parent or guardian</span><span>{display(row.parent_name)}</span>{row.parent_email ? <a href={`mailto:${row.parent_email}`}>{String(row.parent_email)}</a> : null}{row.parent_phone ? <a href={`tel:${row.parent_phone}`}>{String(row.parent_phone)}</a> : null}</> : null}<Link className={styles.rowAction} href={`/master-class/admin/registrations/${row.id}`}>View and edit</Link></td>
+      <td><strong>{display(row.school)}</strong>{row.registration_source !== "community" ? <><span className={styles.detailLabel}>Music instructor</span><span>{display(row.teacher_name)}</span>{row.teacher_email ? <a href={`mailto:${row.teacher_email}`}>{String(row.teacher_email)}</a> : null}{row.teacher_phone ? <a href={`tel:${row.teacher_phone}`}>{String(row.teacher_phone)}</a> : null}</> : null}</td>
       <td className={styles.notesCell}>{display(row.notes)}</td>
      </tr>)}</tbody>
     </table></div>
 
     <div className={styles.registrationCards}>{rows.map((row) => <article className={styles.registrationCard} key={String(row.id)}>
-     <div className={styles.cardHeader}><div><strong className={styles.personName}>{display(row.first_name)} {display(row.last_name)}</strong><div className={styles.badges}><span>Grade {display(row.grade_level)}</span><span>{display(row.instrument)}</span>{row.registration_source === "educator" ? <span>Educator registered</span> : null}{row.deleted_at ? <span className={styles.archivedBadge}>Archived</span> : null}</div></div><time dateTime={new Date(String(row.created_at)).toISOString()}>{dateTimeFormatter.format(new Date(String(row.created_at)))}</time></div>
+     <div className={styles.cardHeader}><div><strong className={styles.personName}>{display(row.first_name)} {display(row.last_name)}</strong><div className={styles.badges}>{row.grade_level ? <span>Grade {display(row.grade_level)}</span> : null}<span>{display(row.instrument)}</span>{row.registration_source === "educator" ? <span>Educator registered</span> : null}{row.registration_source === "community" ? <span>Adult musician</span> : null}{row.deleted_at ? <span className={styles.archivedBadge}>Archived</span> : null}</div></div><time dateTime={new Date(String(row.created_at)).toISOString()}>{dateTimeFormatter.format(new Date(String(row.created_at)))}</time></div>
      <dl>
-      <div><dt>Student contact</dt><dd>{row.email ? <a href={`mailto:${row.email}`}>{String(row.email)}</a> : "Not provided"}{row.phone ? <><br /><a href={`tel:${row.phone}`}>{String(row.phone)}</a></> : null}</dd></div>
-      <div><dt>Parent or guardian</dt><dd>{display(row.parent_name)}{row.parent_email ? <><br /><a href={`mailto:${row.parent_email}`}>{String(row.parent_email)}</a></> : null}{row.parent_phone ? <><br /><a href={`tel:${row.parent_phone}`}>{String(row.parent_phone)}</a></> : null}</dd></div>
-      <div><dt>School</dt><dd>{display(row.school)}</dd></div>
-      <div><dt>Music instructor</dt><dd>{display(row.teacher_name)}{row.teacher_email ? <><br /><a href={`mailto:${row.teacher_email}`}>{String(row.teacher_email)}</a></> : null}{row.teacher_phone ? <><br /><a href={`tel:${row.teacher_phone}`}>{String(row.teacher_phone)}</a></> : null}</dd></div>
+      <div><dt>{row.registration_source === "community" ? "Musician contact" : "Student contact"}</dt><dd>{row.email ? <a href={`mailto:${row.email}`}>{String(row.email)}</a> : "Not provided"}{row.phone ? <><br /><a href={`tel:${row.phone}`}>{String(row.phone)}</a></> : null}</dd></div>
+      {row.registration_source !== "community" ? <div><dt>Parent or guardian</dt><dd>{display(row.parent_name)}{row.parent_email ? <><br /><a href={`mailto:${row.parent_email}`}>{String(row.parent_email)}</a></> : null}{row.parent_phone ? <><br /><a href={`tel:${row.parent_phone}`}>{String(row.parent_phone)}</a></> : null}</dd></div> : null}
+      <div><dt>{row.registration_source === "community" ? "Musical affiliation" : "School"}</dt><dd>{display(row.school)}</dd></div>
+      {row.registration_source !== "community" ? <div><dt>Music instructor</dt><dd>{display(row.teacher_name)}{row.teacher_email ? <><br /><a href={`mailto:${row.teacher_email}`}>{String(row.teacher_email)}</a></> : null}{row.teacher_phone ? <><br /><a href={`tel:${row.teacher_phone}`}>{String(row.teacher_phone)}</a></> : null}</dd></div> : null}
       <div><dt>Notes</dt><dd>{display(row.notes)}</dd></div>
      </dl>
      <Link className={styles.rowAction} href={`/master-class/admin/registrations/${row.id}`}>View and edit registration</Link>

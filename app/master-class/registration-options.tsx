@@ -4,10 +4,11 @@ import { useState } from "react";
 
 import EducatorRegistrationForm from "./educator-registration-form";
 import RegistrationForm from "./registration-form";
+import CommunityRegistrationForm from "./community-registration-form";
 import styles from "./master-class.module.scss";
 
 export default function RegistrationOptions() {
- const [registrationType, setRegistrationType] = useState<"individual" | "educator">("individual");
+ const [registrationType, setRegistrationType] = useState<"individual" | "educator" | "community">("individual");
 
  return (
   <div>
@@ -20,8 +21,12 @@ export default function RegistrationOptions() {
      <strong>Music educator registration</strong>
      <span>Register multiple students in one submission</span>
     </button>
+    <button className={registrationType === "community" ? styles.registrationTypeActive : styles.registrationTypeButton} type="button" onClick={() => setRegistrationType("community")} aria-pressed={registrationType === "community"}>
+     <strong>College &amp; community musicians</strong>
+     <span>For musicians age 18 and older registering themselves</span>
+    </button>
    </div>
-   {registrationType === "individual" ? <RegistrationForm /> : <EducatorRegistrationForm />}
+   {registrationType === "individual" ? <RegistrationForm /> : registrationType === "educator" ? <EducatorRegistrationForm /> : <CommunityRegistrationForm />}
   </div>
  );
 }

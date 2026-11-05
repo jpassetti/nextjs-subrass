@@ -26,6 +26,26 @@
  span[aria-current='page'] { font-weight: 700; }
 }
 
+.breadcrumbHome {
+ align-items: center;
+ background: variables.$color__orange_10;
+ border-radius: 50%;
+ display: inline-flex;
+ height: 2rem;
+ justify-content: center;
+ text-decoration: none !important;
+ transition: background-color .2s ease, color .2s ease;
+ width: 2rem;
+
+ svg { width: .85rem; }
+
+ &:hover,
+ &:focus-visible {
+  background: variables.$color__orange;
+  color: variables.$color__blue;
+ }
+}
+
 .form {
  display: grid;
  gap: 1.75rem;
@@ -126,7 +146,7 @@
  gap: 1rem;
  margin: 2rem 0;
 
- @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
 }
 
 .registrationTypeButton, .registrationTypeActive {

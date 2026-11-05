@@ -126,6 +126,7 @@ export default async function ConcertsPage() {
       <Breadcrumbs
        theme="dark"
        overlay
+       gutter="page"
        items={[{ label: "Home", href: "/" }, { label: "Concerts" }]}
       />
       <Image

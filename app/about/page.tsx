@@ -53,6 +53,7 @@ export default async function AboutPage() {
       <Breadcrumbs
        theme="dark"
        overlay
+       gutter="page"
        items={[{ label: "Home", href: "/" }, { label: "About" }]}
       />
       <Image

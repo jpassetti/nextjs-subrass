@@ -4,8 +4,10 @@ import test from "node:test";
 import {
  isValidMasterClassRegistration,
  isValidEducatorMasterClassRegistration,
+ isValidCommunityMasterClassRegistration,
  normalizeMasterClassRegistration,
  normalizeEducatorMasterClassRegistration,
+ normalizeCommunityMasterClassRegistration,
 } from "../lib/master-class-registration.mjs";
 
 const validPayload = {
@@ -135,4 +137,42 @@ test("rejects invalid students within an educator registration", () => {
  ]) {
   assert.equal(isValidEducatorMasterClassRegistration(normalizeEducatorMasterClassRegistration({ ...validEducatorPayload, students })), false);
  }
+});
+
+const validCommunityPayload = {
+ firstName: "Louise",
+ lastName: "Musician",
+ email: "louise@example.com",
+ phone: "315-555-0124",
+ affiliation: "Central New York Community Band",
+ instrument: "French horn",
+ notes: "Interested in audition preparation",
+ ageConfirmed: "yes",
+ consentToContact: "yes",
+ website: "",
+};
+
+test("accepts a college or community musician registration without student fields", () => {
+ const registration = normalizeCommunityMasterClassRegistration(validCommunityPayload);
+ assert.equal(isValidCommunityMasterClassRegistration(registration), true);
+ assert.equal(registration.affiliation, "Central New York Community Band");
+ assert.equal(registration.email, "louise@example.com");
+});
+
+test("allows an independent community musician to omit an affiliation", () => {
+ const registration = normalizeCommunityMasterClassRegistration({ ...validCommunityPayload, affiliation: "" });
+ assert.equal(isValidCommunityMasterClassRegistration(registration), true);
+});
+
+test("validates required community musician fields and manual instruments", () => {
+ const manual = normalizeCommunityMasterClassRegistration({ ...validCommunityPayload, instrument: "Other", otherInstrument: "Alto horn" });
+ assert.equal(manual.instrument, "Alto horn");
+ assert.equal(isValidCommunityMasterClassRegistration(manual), true);
+ for (const payload of [
+  { ...validCommunityPayload, firstName: "" },
+  { ...validCommunityPayload, email: "invalid" },
+  { ...validCommunityPayload, instrument: "" },
+  { ...validCommunityPayload, ageConfirmed: "" },
+  { ...validCommunityPayload, consentToContact: "" },
+ ]) assert.equal(isValidCommunityMasterClassRegistration(normalizeCommunityMasterClassRegistration(payload)), false);
 });

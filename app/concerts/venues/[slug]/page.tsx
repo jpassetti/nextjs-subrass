@@ -244,6 +244,7 @@ export default async function VenuePage({ params }) {
        <Breadcrumbs
         theme="dark"
         overlay
+        gutter="page"
         items={[
          { label: "Home", href: "/" },
          { label: "Concerts", href: "/concerts" },
@@ -263,6 +264,7 @@ export default async function VenuePage({ params }) {
      ) : (
       <Breadcrumbs
        theme="dark"
+       gutter="page"
        items={[
         { label: "Home", href: "/" },
         { label: "Concerts", href: "/concerts" },

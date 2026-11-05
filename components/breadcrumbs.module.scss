@@ -29,13 +29,45 @@
  span { color: #555; }
 }
 
-.dark {
- padding-left: 2rem;
- padding-right: 2rem;
+.breadcrumbHome {
+ align-items: center;
+ background: variables.$color__orange_10;
+ border-radius: 50%;
+ display: inline-flex;
+ height: 2rem;
+ justify-content: center;
+ text-decoration: none;
+ transition: background-color .2s ease, color .2s ease;
+ width: 2rem;
 
+ svg { width: .85rem; }
+
+ &:hover,
+ &:focus-visible {
+  background: variables.$color__orange;
+  color: variables.$color__blue;
+ }
+}
+
+.dark {
  a, span { color: white; }
  a { text-underline-offset: .18rem; }
  span { opacity: .78; }
+
+ .breadcrumbHome {
+  background: rgba(255, 255, 255, .14);
+
+  &:hover,
+  &:focus-visible {
+   background: variables.$color__orange;
+   color: variables.$color__blue;
+  }
+ }
+}
+
+.pageGutter {
+ padding-left: 2rem;
+ padding-right: 2rem;
 }
 
 .overlay {

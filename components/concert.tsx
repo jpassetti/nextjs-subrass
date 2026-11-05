@@ -149,6 +149,7 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
       <Breadcrumbs
        theme="dark"
        overlay
+       gutter="page"
        items={[
         { label: "Home", href: "/" },
         { label: "Concerts", href: "/concerts" },
@@ -168,6 +169,7 @@ const Concert = ({ data, teaser = false, previousConcert = null, nextConcert = n
     ) : (
      <Breadcrumbs
       theme="dark"
+      gutter="page"
       items={[
        { label: "Home", href: "/" },
        { label: "Concerts", href: "/concerts" },

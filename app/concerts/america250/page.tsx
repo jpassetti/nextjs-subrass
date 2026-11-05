@@ -156,9 +156,9 @@ export default async function America250Page() {
        <p className={styles.eyebrow}>Friday, Nov. 13, 2026 · Hendricks Chapel</p>
        <h1 className={styles.title}>A Celebration of Service, Education, and Musical Excellence</h1>
        <p className={styles.lede}>Featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
-       <p className={styles.heroMeta}>Free student masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Free concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Open to the public.</p>
+       <p className={styles.heroMeta}>Free musician masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Free concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Open to the public.</p>
        <div className={styles.heroActions}>
-        <a className={styles.button} href="#masterclass">Student masterclass</a>
+        <a className={styles.button} href="#masterclass">Musician masterclass</a>
         <a className={styles.button} href="#program">Concert information</a>
        </div>
       </div>
@@ -166,7 +166,7 @@ export default async function America250Page() {
 
      <nav className={styles.quickNav} aria-label="On this page">
       <a href="#details">Concert details</a>
-      <a href="#masterclass">Student masterclass</a>
+      <a href="#masterclass">Musician masterclass</a>
       <a href="#program">Concert program</a>
       <a href="#parking">Parking and access</a>
      <Link href="/concerts/america250/promotions">Promotions</Link>
@@ -175,7 +175,7 @@ export default async function America250Page() {
 
      <div className={styles.detailsGrid} id="details">
       <div className={styles.detailCard}><h2>Date</h2><p>Friday, Nov. 13, 2026</p></div>
-      <div className={styles.detailCard}><h2>Student masterclass</h2><p>4–5 p.m.<br />Free</p></div>
+      <div className={styles.detailCard}><h2>Musician masterclass</h2><p>4–5 p.m.<br />Free</p></div>
       <div className={styles.detailCard}><h2>Concert</h2><p>6:30–8 p.m.<br />Free and open to the public</p></div>
       <div className={styles.detailCard}>
        <h2>Location</h2>
@@ -212,11 +212,11 @@ export default async function America250Page() {
      </div>
 
      <section className={`${styles.section} ${styles.masterclass}`} id="masterclass">
-      <p className={styles.sectionLabel}>Free student masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
+      <p className={styles.sectionLabel}>Free musician masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
       <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faGraduationCap} aria-hidden="true" />Explore a life in music</h2>
-      <p>High school musicians are invited to join members of the 10th Mountain Division Band for a conversation about music careers, audition preparation, performance confidence, effective practice methods, and life as a professional military musician.</p>
+      <p>High school students, college musicians, and adult musicians from community ensembles and across the region are invited to join members of the 10th Mountain Division Band for a conversation about music careers, audition preparation, performance confidence, effective practice methods, and life as a professional military musician.</p>
       <p>Band members will share their musical journeys, offer practical guidance, demonstrate techniques, and answer questions about performance, education, military service, and other music-related career opportunities.</p>
-      <Link className={styles.button} href="/concerts/america250/master-class">High school students: learn more and RSVP</Link>
+      <Link className={styles.button} href="/concerts/america250/master-class">Learn more and RSVP</Link>
      </section>
 
      <section className={styles.programSection} id="program">
@@ -263,7 +263,7 @@ export default async function America250Page() {
       <div className={styles.accessGrid}>
        <article className={styles.accessCard}>
         <h3>Admission</h3>
-        <p><strong>The concert is free and open to the public.</strong> The student masterclass is also free, but advance registration is requested for participating high school musicians.</p>
+        <p><strong>The concert is free and open to the public.</strong> The musician masterclass is also free, but advance registration is requested for participating high school, college, and community musicians.</p>
        </article>
        <article className={styles.accessCard}>
         <h3>Parking</h3>
