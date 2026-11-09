@@ -234,7 +234,7 @@ export default async function America250Page() {
         </div>
        </article>
        <article>
-        <Image className={styles.programImage} src="/america250/10th-mountain-division-band.jpeg" alt="Members of the 10th Mountain Division Band performing" width={1732} height={1154} sizes="(min-width: 700px) 36vw, 100vw" />
+        <Image className={styles.programImage} src="/america250/10th-mountain-division-band.jpg" alt="Members of the 10th Mountain Division Band performing" width={2048} height={1640} sizes="(min-width: 700px) 36vw, 100vw" />
         <div className={styles.programCardBody}>
          <div className={styles.programNumber} aria-hidden="true">2</div>
          <div>
