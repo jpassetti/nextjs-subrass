@@ -293,50 +293,35 @@
 .featuredPiece p { font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.6; }
 
 .sube { background: #fff; color: #15265e; }
-.mountain { background: #c8202f; padding: 0; }
+.mountain {
+ background: linear-gradient(135deg, #0a145a 0%, #171f70 100%);
+ box-shadow: inset 0 .4rem 0 #d92732;
+ color: white;
+}
 .finale { background: #15265e; }
 .sponsors {
  background: linear-gradient(180deg, variables.$color__blue_05 0%, variables.$color__blue_05 72%, white 100%);
  color: variables.$color__blue;
 }
 
-.mountainGrid {
+.tabbedEnsembleInner { margin-inline: auto; width: min(100%, 74rem); }
+
+.tabbedEnsembleHeading {
+ align-items: end;
  display: grid;
- min-height: inherit;
- width: 100%;
-
- @include mixins.breakpoint(md) { grid-template-columns: minmax(0, 1.15fr) minmax(22rem, .85fr); }
+ gap: 2rem;
+ grid-template-columns: minmax(0, 1fr) auto;
+ justify-items: start;
+ margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+ text-align: left;
 }
 
-.mountainVisual {
- min-height: clamp(22rem, 66vw, 36rem);
- overflow: hidden;
- position: relative;
-
- @include mixins.breakpoint(md) { min-height: 100%; }
-}
-
-.mountainPhoto {
- height: 100%;
- object-fit: cover;
- object-position: center;
- width: 100%;
-}
+.tabbedEnsembleHeading > div { justify-self: start; text-align: left; }
 
 .mountainPatch {
- bottom: clamp(1rem, 3vw, 2rem);
  filter: drop-shadow(0 .7rem 1rem rgba(0, 0, 0, .3));
  height: auto;
- position: absolute;
- right: clamp(1rem, 3vw, 2rem);
- width: clamp(4.75rem, 10vw, 7.5rem);
- z-index: 1;
-}
-
-.mountainContent {
- align-content: center;
- display: grid;
- padding: clamp(3rem, 7vw, 7rem) clamp(1.5rem, 6vw, 5rem);
+ width: clamp(4.5rem, 9vw, 7rem);
 }
 
 .sectionContentWide {
@@ -388,6 +373,31 @@
 
 .tabPanel { min-height: 22rem; padding-top: 1rem; }
 
+.darkTabs .tabList { border-bottom-color: rgba(255, 255, 255, .3); }
+
+.darkTabs .tabList button { color: white; }
+
+.darkTabs .tabList button:hover,
+.darkTabs .tabList button:focus-visible,
+.darkTabs .tabList .activeTab {
+ border-bottom-color: #ef4651;
+ color: white;
+}
+
+.darkTabs .tabList button:focus-visible { outline-color: #ef4651; }
+
+.darkTabs .piece { border-bottom-color: rgba(255, 255, 255, .22); }
+.darkTabs .piece::before,
+.darkTabs .tabEyebrow,
+.darkTabs .rosterSection > h3 { color: white; }
+
+.mountain .sectionLabel,
+.darkTabs .tabEyebrow,
+.darkTabs .rosterSection > h3 {
+ border-left: .25rem solid #ef4651;
+ padding-left: .65rem;
+}
+
 .comingSoon {
  align-content: center;
  display: grid;
@@ -421,6 +431,8 @@
  min-width: 0;
 }
 
+.personWithoutImage { grid-template-columns: minmax(0, 1fr); }
+
 .leaderImageLink {
  aspect-ratio: 1 / 1;
  border-radius: 50%;
@@ -430,8 +442,7 @@
  width: 100%;
 }
 
-.leaderImage,
-.imagePlaceholder {
+.leaderImage {
  border: 3px solid variables.$color__orange;
  border-radius: 50%;
  display: block;
@@ -441,14 +452,14 @@
  width: 100%;
 }
 
-.imagePlaceholder {
+.profilePlaceholder {
  align-items: center;
- background: #f3f5fb;
- color: #7f8bb5;
+ background: #e6e6e6;
+ color: #ccc;
  display: flex;
  justify-content: center;
 
- svg { width: 52%; }
+ svg { width: 48%; }
 }
 
 .leaderDetails h3 {
@@ -473,6 +484,11 @@
 .leaderDetails a:hover,
 .leaderDetails a:focus-visible { color: variables.$color__orange__medium; }
 
+.armyPerson .leaderDetails h3 { color: white; }
+
+.armyPerson .personTitle { color: white; }
+
+
 .rosterPanel { padding: 1.5rem 0 2rem; }
 
 .rosterIntro {
@@ -496,6 +512,13 @@
 
 .rosterSection + .rosterSection { margin-top: 2.5rem; }
 
+.instrumentSection {
+ border-top: 1px solid variables.$color__orange;
+ padding-top: .85rem;
+}
+
+.darkTabs .instrumentSection { border-top-color: #ef4651; }
+
 .rosterSection > h3 {
  color: variables.$color__orange__medium;
  font-family: variables.$font__sherman_sans;
@@ -504,6 +527,13 @@
  letter-spacing: .08em;
  margin-bottom: 1.25rem;
  text-transform: uppercase;
+}
+
+.instrumentSection > h3 { color: variables.$color__orange; }
+.darkTabs .instrumentSection > h3 {
+ border-left: 0;
+ color: #ef4651;
+ padding-left: 0;
 }
 
 .rosterGrid {

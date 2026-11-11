@@ -87,6 +87,32 @@ const combinedPieces: ProgramPiece[] = [
  { title: "The Stars and Stripes Forever", composer: "John Philip Sousa" },
 ];
 
+const mountainPieces: ProgramPiece[] = [
+ { title: "Americans We", composer: "Henry Fillmore" },
+ { title: "God Bless America", composer: "Irving Berlin", credit: "Arranged by Erik W. G. Leidzén" },
+ { title: "American Soldier", composer: "Charles Koff and Tom Jones" },
+ { title: "Rolling Thunder", composer: "Henry Fillmore" },
+ { title: "Hands Across the Sea", composer: "John Philip Sousa" },
+ { title: "Battle Hymn of the Republic", composer: "Steffe–Howe", credit: "Arranged by John Kinyon" },
+ { title: "America the Beautiful", credit: "Arranged by John Higgins" },
+];
+
+const mountainLeadership = [
+ { name: "WO1 Henry James Soriano", role: "10th Mountain Division Band Commander" },
+ { name: "1SG Andrew Smicker", role: "10th Mountain Division Band First Sergeant" },
+];
+
+const mountainMusicians = [
+ { instrument: "Flute/Piccolo", names: ["SSG Sheila Luta"] },
+ { instrument: "Clarinet", names: ["SSG Arthur Lukomyansky", "SGT Catherine Minnier"] },
+ { instrument: "Saxophone", names: ["SSG Shaya Bornstein", "SGT Timothy Hecker", "SPC Giovanna Liu"] },
+ { instrument: "Trumpet", names: ["SFC Jonathan Bosarge", "SSG Jonathan Gifford", "SSG Trevor Lundquist", "SSG Kendra Pochop", "SGT Willis Dotson"] },
+ { instrument: "Horn", names: ["SFC Karen Oliver", "SGT Aaron Atwood"] },
+ { instrument: "Trombones", names: ["SGT Rom Larson", "CPL Matthew Darr", "CPL Benjamin Grief"] },
+ { instrument: "Tuba", names: ["SGT Michael Saias"] },
+ { instrument: "Percussion", names: ["SSG Jon Norris", "SSG Melvin Newton", "SGT Karl Lingner"] },
+];
+
 const programChapters = [
  { id: "overview", label: "Overview" },
  { id: "opening", label: "National Anthem" },
@@ -181,7 +207,7 @@ type ProgramTab = {
  content: React.ReactNode;
 };
 
-function ProgramTabs({ label, tabs }: { label: string; tabs: ProgramTab[] }) {
+function ProgramTabs({ label, tabs, theme = "light" }: { label: string; tabs: ProgramTab[]; theme?: "light" | "dark" }) {
  const [activeTab, setActiveTab] = useState(tabs[0].id);
  const groupId = useId();
  const reduceMotion = useReducedMotion();
@@ -195,7 +221,7 @@ function ProgramTabs({ label, tabs }: { label: string; tabs: ProgramTab[] }) {
  }
 
  return (
-  <div className={styles.tabs}>
+  <div className={`${styles.tabs} ${theme === "dark" ? styles.darkTabs : ""}`}>
    <div className={styles.tabList} role="tablist" aria-label={label}>
     {tabs.map((tab) => {
      const selected = tab.id === activeTab;
@@ -353,11 +379,13 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
    </section>
 
    <section className={`${styles.panel} ${styles.sube}`} id="sube-selections" aria-labelledby="sube-heading">
-    <div className={styles.sectionContentWide}>
-     <Reveal className={styles.sectionIntro}>
-      <p className={styles.sectionNumber}>03</p>
-      <p className={styles.sectionLabel}>Featured ensemble</p>
-      <h2 id="sube-heading" className={styles.ensembleHeading}>Syracuse University Brass Ensemble</h2>
+    <div className={styles.tabbedEnsembleInner}>
+     <Reveal className={styles.tabbedEnsembleHeading}>
+      <div>
+       <p className={styles.sectionNumber}>03</p>
+       <p className={styles.sectionLabel}>Featured ensemble</p>
+       <h2 id="sube-heading" className={styles.ensembleHeading}>Syracuse University Brass Ensemble</h2>
+      </div>
      </Reveal>
      <ProgramTabs
       label="Syracuse University Brass Ensemble program information"
@@ -372,8 +400,8 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
           <div className={styles.leadershipGrid}>
            {leadership.map((leader) => (
             <article className={styles.leaderCard} key={leader.slug}>
-             <Link className={styles.leaderImageLink} href={`/about/musicians/${leader.slug}`}>
-              {leader.image ? (
+             {leader.image ? (
+              <Link className={styles.leaderImageLink} href={`/about/musicians/${leader.slug}`}>
                <Image
                 className={styles.leaderImage}
                 src={leader.image.src}
@@ -382,8 +410,8 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
                 height={leader.image.height}
                 sizes="(min-width: 900px) 12rem, (min-width: 560px) 30vw, 50vw"
                />
-              ) : <span className={styles.imagePlaceholder} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
-             </Link>
+              </Link>
+             ) : <span className={`${styles.leaderImageLink} ${styles.profilePlaceholder}`} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
              <div className={styles.leaderDetails}>
               <h3><Link href={`/about/musicians/${leader.slug}`}>{leader.name}</Link></h3>
               <p className={styles.personTitle}>{leader.role}</p>
@@ -409,8 +437,8 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
             <div className={styles.rosterGrid}>
              {conductors.map((musician, musicianIndex) => (
               <article className={styles.leaderCard} key={musician.slug ?? `conductor-${musicianIndex}`}>
-               <Link className={styles.leaderImageLink} href={`/about/musicians/${musician.slug}`}>
-                {musician.featuredImage?.node?.sourceUrl ? (
+               {musician.featuredImage?.node?.sourceUrl ? (
+                <Link className={styles.leaderImageLink} href={`/about/musicians/${musician.slug}`}>
                  <Image
                   className={styles.leaderImage}
                   src={musician.featuredImage.node.sourceUrl}
@@ -419,8 +447,8 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
                   height={musician.featuredImage.node.mediaDetails?.height || 400}
                   sizes="(min-width: 900px) 6rem, 5rem"
                  />
-                ) : <span className={styles.imagePlaceholder} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
-               </Link>
+                </Link>
+               ) : <span className={`${styles.leaderImageLink} ${styles.profilePlaceholder}`} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
                <div className={styles.leaderDetails}>
                 <h3><Link href={`/about/musicians/${musician.slug}`}>{rosterName(musician)}</Link></h3>
                 {rosterJobTitles(musician) ? <p className={styles.personTitle}>{rosterJobTitles(musician)}</p> : null}
@@ -436,13 +464,13 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
            if (!instrumentName || musicians.length === 0) return null;
 
            return (
-            <section className={styles.rosterSection} key={section.instrument?.id ?? `${instrumentName}-${sectionIndex}`}>
+            <section className={`${styles.rosterSection} ${styles.instrumentSection}`} key={section.instrument?.id ?? `${instrumentName}-${sectionIndex}`}>
              <h3>{instrumentName}{instrumentName !== "Percussion" ? "s" : ""}</h3>
              <div className={styles.rosterGrid}>
               {musicians.map((musician, musicianIndex) => (
                <article className={styles.leaderCard} key={musician.slug ?? `${instrumentName}-${musicianIndex}`}>
-                <Link className={styles.leaderImageLink} href={`/about/musicians/${musician.slug}`}>
-                 {musician.featuredImage?.node?.sourceUrl ? (
+                {musician.featuredImage?.node?.sourceUrl ? (
+                 <Link className={styles.leaderImageLink} href={`/about/musicians/${musician.slug}`}>
                   <Image
                    className={styles.leaderImage}
                    src={musician.featuredImage.node.sourceUrl}
@@ -451,8 +479,8 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
                    height={musician.featuredImage.node.mediaDetails?.height || 400}
                    sizes="(min-width: 900px) 6rem, 5rem"
                   />
-                 ) : <span className={styles.imagePlaceholder} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
-                </Link>
+                 </Link>
+                ) : <span className={`${styles.leaderImageLink} ${styles.profilePlaceholder}`} aria-hidden="true"><FontAwesomeIcon icon={faUser} /></span>}
                 <div className={styles.leaderDetails}>
                  <h3><Link href={`/about/musicians/${musician.slug}`}>{rosterName(musician)}</Link></h3>
                  {rosterJobTitles(musician) ? <p className={styles.personTitle}>{rosterJobTitles(musician)}</p> : null}
@@ -472,30 +500,68 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
    </section>
 
    <section className={`${styles.panel} ${styles.mountain}`} id="tenth-mountain" aria-labelledby="mountain-heading">
-    <div className={styles.mountainGrid}>
-     <Reveal className={styles.mountainVisual}>
-      <Image
-       className={styles.mountainPhoto}
-       src="/america250/10th-mountain-division-band.jpg"
-       alt="The 10th Mountain Division Band marching in formation"
-       fill
-       sizes="(min-width: 980px) 55vw, 100vw"
-      />
+    <div className={styles.tabbedEnsembleInner}>
+     <Reveal className={styles.tabbedEnsembleHeading}>
+      <div>
+       <p className={styles.sectionNumber}>04</p>
+       <p className={styles.sectionLabel}>Featured ensemble</p>
+       <h2 id="mountain-heading" className={styles.ensembleHeading}>10th Mountain Division Band</h2>
+      </div>
       <Image
        className={styles.mountainPatch}
        src="/america250/branding/10th-mountain-patch--transparent.png"
        alt="10th Mountain Division shoulder sleeve insignia"
        width={1029}
        height={1528}
-       sizes="8rem"
+       sizes="7rem"
       />
      </Reveal>
-     <Reveal className={styles.mountainContent}>
-      <p className={styles.sectionNumber}>04</p>
-      <p className={styles.sectionLabel}>Featured ensemble</p>
-      <h2 id="mountain-heading" className={styles.ensembleHeading}>10th Mountain Division Band</h2>
-      <p className={styles.awaiting}>Program selections will be announced.</p>
-     </Reveal>
+      <ProgramTabs
+       label="10th Mountain Division Band program information"
+       theme="dark"
+       tabs={[
+        { id: "mountain-selections", label: "Selections", content: <PieceList pieces={mountainPieces} /> },
+        {
+         id: "mountain-leadership",
+         label: "Leadership",
+         content: (
+          <div className={styles.leadershipPanel}>
+           <p className={styles.tabEyebrow}>Band leadership</p>
+           <div className={styles.leadershipGrid}>
+            {mountainLeadership.map((leader) => (
+             <article className={`${styles.leaderCard} ${styles.armyPerson} ${styles.personWithoutImage}`} key={leader.name}>
+              <div className={styles.leaderDetails}>
+               <h3>{leader.name}</h3>
+               <p className={styles.personTitle}>{leader.role}</p>
+              </div>
+             </article>
+            ))}
+           </div>
+          </div>
+         ),
+        },
+        {
+         id: "mountain-musicians",
+         label: "Musicians",
+         content: (
+          <div className={styles.rosterPanel}>
+           {mountainMusicians.map((section) => (
+            <section className={`${styles.rosterSection} ${styles.instrumentSection}`} key={section.instrument}>
+             <h3>{section.instrument}</h3>
+             <div className={styles.rosterGrid}>
+              {section.names.map((name) => (
+               <article className={`${styles.leaderCard} ${styles.armyPerson} ${styles.personWithoutImage}`} key={name}>
+                <div className={styles.leaderDetails}><h3>{name}</h3></div>
+               </article>
+              ))}
+             </div>
+            </section>
+           ))}
+          </div>
+         ),
+        },
+       ]}
+      />
     </div>
    </section>
 
@@ -535,9 +601,10 @@ export default function ProgramExperience({ leadership, ensemble }: { leadership
       </div>
      </Reveal>
      <Reveal className={styles.sponsorCopy}>
-      <p>The Syracuse University Brass Ensemble gratefully acknowledges <a href="https://veterans.syracuse.edu/" target="_blank" rel="noopener noreferrer">Syracuse University’s Office of Veteran and Military Affairs</a> and <a href="https://chapel.syracuse.edu/" target="_blank" rel="noopener noreferrer">Hendricks Chapel</a> for their support of today’s masterclass and America 250 concert.</p>
-      <p>Special thanks to <a href="https://veterans.syracuse.edu/about-us/office-of-veteran-and-military-affairs/" target="_blank" rel="noopener noreferrer"><strong>Ron Novack</strong></a> and <a href="https://veterans.syracuse.edu/about-us/office-of-veteran-and-military-affairs/" target="_blank" rel="noopener noreferrer"><strong>Dwayne Murray</strong></a> of the Office of Veteran and Military Affairs, and to <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>the Rev. Corey S. MacPherson</strong></a>, <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>Dara Harper</strong></a>, and <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>Alex Snow</strong></a> of Hendricks Chapel for their coordination, hospitality, and help bringing these events to our community.</p>
-      <p>We also thank WCNY’s <a href="https://www.wcny.org/radio/meet-the-hosts/" target="_blank" rel="noopener noreferrer"><strong>Bruce Paulsen</strong></a> for serving as emcee during the Syracuse University Brass Ensemble’s portion of today’s concert, introducing the ensemble’s selections and narrating <em>Liberty Fanfare</em>.</p>
+      <p>The Syracuse University Brass Ensemble gratefully acknowledges <a href="https://veterans.syracuse.edu/" target="_blank" rel="noopener noreferrer">Syracuse University’s Office of Veteran and Military Affairs</a> and <a href="https://chapel.syracuse.edu/" target="_blank" rel="noopener noreferrer">Hendricks Chapel</a> for supporting today’s masterclass and America 250 concert, along with the <a href="https://artsandsciences.syracuse.edu/" target="_blank" rel="noopener noreferrer">College of Arts and Sciences</a> and <a href="https://artsandsciences.syracuse.edu/about-arts-and-sciences/arts-sciences-dean/" target="_blank" rel="noopener noreferrer">Dean Behzad Mortazavi</a> for their support of the ensemble and this event.</p>
+      <p>We extend our sincere thanks to <a href="https://home.army.mil/drum/units-tenants/10th-mountain-division-band" target="_blank" rel="noopener noreferrer">MSG Hannah Smicker</a> and the <a href="https://home.army.mil/drum/units-tenants/10th-mountain-division-band" target="_blank" rel="noopener noreferrer">10th Mountain Division Band</a> for their partnership, musical collaboration, and work bringing this joint concert and masterclass to life.</p>
+      <p>Special recognition goes to <a href="https://veterans.syracuse.edu/about-us/office-of-veteran-and-military-affairs/" target="_blank" rel="noopener noreferrer"><strong>Ron Novack</strong></a> and <a href="https://veterans.syracuse.edu/about-us/office-of-veteran-and-military-affairs/" target="_blank" rel="noopener noreferrer"><strong>Dwayne Murray</strong></a> of the Office of Veteran and Military Affairs, and to <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>the Rev. Corey S. MacPherson</strong></a>, <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>Dara Harper</strong></a>, and <a href="https://chapel.syracuse.edu/about/contact/staff/" target="_blank" rel="noopener noreferrer"><strong>Alex Snow</strong></a> of Hendricks Chapel for their coordination, hospitality, and help bringing these events to our community.</p>
+      <p>We are grateful to WCNY’s <a href="https://www.wcny.org/radio/meet-the-hosts/" target="_blank" rel="noopener noreferrer"><strong>Bruce Paulsen</strong></a> for serving as emcee during the Syracuse University Brass Ensemble’s portion of today’s concert, introducing the ensemble’s selections and narrating <em>Liberty Fanfare</em>.</p>
       <Link className={styles.returnLink} href="/concerts/america250">Return to event details</Link>
      </Reveal>
     </div>
