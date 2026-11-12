@@ -251,6 +251,19 @@
  margin-top: .25rem;
 }
 
+.parkingGuideLink {
+ color: variables.$color__blue;
+ display: inline-block;
+ font-weight: 700;
+ line-height: 1.4;
+ margin-top: .5rem;
+ text-decoration-color: variables.$color__orange;
+ text-decoration-thickness: .1rem;
+ text-underline-offset: .25rem;
+
+ span { color: variables.$color__orange__medium; }
+}
+
 .quoteGrid {
  margin-top: 1.5rem;
  max-width: 48rem;

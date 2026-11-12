@@ -235,7 +235,7 @@ test("concert page displays an accessible visual breadcrumb trail", () => {
 test("concert program retains both ensembles, numbered sections, and official Army link", () => {
  const page = source("app/concerts/america250/page.tsx");
  assert.match(page, /src="\/syracuse-university-brass-ensemble-2025\.webp"/);
- assert.match(page, /src="\/america250\/10th-mountain-division-band\.jpeg"/);
+ assert.match(page, /src="\/america250\/10th-mountain-division-band\.jpg"/);
  assert.match(page, /programNumber[^>]*>1</);
  assert.match(page, /programNumber[^>]*>2</);
  assert.match(page, /programNumber[^>]*>3</);

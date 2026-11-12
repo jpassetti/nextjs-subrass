@@ -268,6 +268,7 @@ export default async function America250Page() {
        <article className={styles.accessCard}>
         <h3>Parking</h3>
         <p><strong>Parking is free.</strong> Public parking is available at Irving Garage. Please allow additional time for parking and walking to Hendricks Chapel.</p>
+        <Link className={styles.parkingGuideLink} href="/concerts/america250/parking">View parking, accessibility, and drop-off instructions <span aria-hidden="true">&rarr;</span></Link>
         <a className={styles.mapLink} href="https://www.google.com/maps/search/?api=1&amp;query=Irving+Garage%2C+Stadium+Place%2C+Syracuse%2C+NY+13210" target="_blank" rel="noopener noreferrer">
          <strong>Irving Garage</strong>
          <span>Stadium Pl<br />Syracuse, NY 13210</span>
