@@ -6,8 +6,13 @@ import {
  isValidCommunityMasterClassRegistration,
  normalizeCommunityMasterClassRegistration,
 } from "../../../../lib/master-class-registration.mjs";
+import { MASTER_CLASS_REGISTRATION_CLOSED_MESSAGE, MASTER_CLASS_REGISTRATION_OPEN } from "../../../../lib/master-class-registration-status";
 
 export async function POST(request: Request) {
+ if (!MASTER_CLASS_REGISTRATION_OPEN) {
+  return NextResponse.json({ message: MASTER_CLASS_REGISTRATION_CLOSED_MESSAGE }, { status: 410 });
+ }
+
  try {
   const body = await request.json();
   const registration = normalizeCommunityMasterClassRegistration(body);

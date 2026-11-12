@@ -29,7 +29,7 @@ test("America 250 promotions page publishes downloadable and shareable assets", 
  const landing = source("app/concerts/america250/page.tsx");
  const promotions = source("app/concerts/america250/promotions/page.tsx");
  const shareActions = source("app/concerts/america250/promotions/share-actions.tsx");
- assert.match(landing, /href="\/concerts\/america250\/promotions">Promotions/);
+ assert.match(landing, /href="\/concerts\/america250\/promotions">Share the event/);
  for (const asset of [
   "america250-facebook-1224x792px.jpg",
   "america250--8x11.pdf",
@@ -98,7 +98,7 @@ test("concert page recognizes event partners", () => {
  assert.match(styles, /grid-template-columns:\s*minmax\(0, 2fr\) minmax\(14rem, 1fr\)/);
 });
 
-test("concert landing page preserves essential event facts and navigation targets", () => {
+test("concert landing page prioritizes imminent event facts and navigation targets", () => {
  const page = source("app/concerts/america250/page.tsx");
  for (const expected of [
   "Friday, Nov. 13, 2026",
@@ -112,28 +112,34 @@ test("concert landing page preserves essential event facts and navigation target
   'id="program"',
   'id="parking"',
  ]) assert.match(page, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
- assert.match(page, /Free musician masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
- assert.match(page, /Free concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
+ assert.match(page, /<America250DayLabel \/> · Friday, Nov\. 13, 2026/);
+ assert.match(page, /Musician masterclass <span className=\{styles\.noWrap\}>4–5 p\.m\.<\/span>/);
+ assert.match(page, /Concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
+ assert.match(page, /Masterclass participants should arrive around <strong>3:45 p\.m\.<\/strong>/);
+ assert.match(page, /Concert guests are encouraged to be seated by <strong>6:20 p\.m\.<\/strong>/);
  assert.match(page, /The concert is free and open to the public/);
- assert.match(page, /musician masterclass is also free/);
  assert.match(page, /Parking is free/);
 });
 
 test("sitewide America 250 announcement expires after the event and skips its landing page", () => {
  const main = source("components/main.tsx");
  const banner = source("components/announcement-banner.tsx");
+ const dayLabel = source("components/america250-day-label.tsx");
  assert.match(main, /<AnnouncementBanner \/>/);
  assert.match(banner, /2026-11-14T00:00:00-05:00/);
  assert.match(banner, /normalizedPath === "\/concerts\/america250"/);
  assert.match(banner, /normalizedPath\.startsWith\("\/concerts\/america250\/"\)/);
  assert.match(banner, /Date\.now\(\) < expiration/);
  assert.match(banner, /America 250 at Hendricks Chapel/);
- assert.match(banner, /Free musician masterclass and concert/);
- assert.match(banner, /<span className=\{styles\.badge\}>Upcoming<\/span>/);
+ assert.match(banner, /Masterclass 4 p\.m\./);
+ assert.match(banner, /Concert 6:30 p\.m\./);
+ assert.match(banner, /<span className=\{styles\.badge\}><America250DayLabel fallback="Upcoming" \/><\/span>/);
  assert.match(banner, /className=\{styles\.noWrap\}>Friday, Nov\. 13/);
- assert.match(banner, /className=\{styles\.noWrap\}>Free musician masterclass and concert/);
  assert.match(banner, /href="\/concerts\/america250"/);
- assert.match(banner, /href="\/concerts\/america250\/master-class\/rsvp"/);
+ assert.match(banner, /href="\/concerts\/america250\/parking"/);
+ assert.match(dayLabel, /timeZone: EVENT_TIME_ZONE/);
+ assert.match(dayLabel, /if \(difference === 0\) return "Today"/);
+ assert.match(dayLabel, /if \(difference === 1\) return "Tomorrow"/);
 });
 
 test("full-width layout offsets row gutters to prevent mobile horizontal scrolling", () => {
@@ -245,9 +251,9 @@ test("concert program retains both ensembles, numbered sections, and official Ar
  assert.match(page, /https:\/\/home\.army\.mil\/drum\/units-tenants\/10th-mountain-division-band/);
 });
 
-test("visitor information separates admission, parking, and accommodations", () => {
+test("visitor information separates concert arrival, parking, and accommodations", () => {
  const page = source("app/concerts/america250/page.tsx");
- for (const heading of ["Admission", "Parking", "Accommodations"]) {
+ for (const heading of ["Concert arrival", "Parking", "Accommodations"]) {
   assert.match(page, new RegExp(`<h3>${heading}<\\/h3>`));
  }
  assert.match(page, /Irving Garage/);
@@ -257,24 +263,23 @@ test("visitor information separates admission, parking, and accommodations", () 
  assert.match(page, /Parking is free/);
 });
 
-test("master class routes welcome high school, college, and community musicians", () => {
+test("master class routes preserve event details while showing registration is closed", () => {
  const landing = source("app/concerts/america250/master-class/page.tsx");
  const rsvp = source("app/concerts/america250/master-class/rsvp/page.tsx");
  assert.match(landing, /High school, college, and community musicians/);
- assert.match(landing, /\/concerts\/america250\/master-class\/rsvp/);
  assert.match(landing, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(landing, /<span aria-current="page">Masterclass<\/span>/);
- assert.match(rsvp, /welcomes high school students, college musicians, and adult musicians/);
- assert.match(rsvp, /RegistrationOptions/);
+ assert.match(landing, /Registration Is Closed/);
+ assert.match(landing, /Registered participants should arrive around 3:45 p\.m\./);
+ assert.match(rsvp, /Masterclass Registration Is Closed/);
+ assert.doesNotMatch(rsvp, /RegistrationOptions/);
  assert.match(rsvp, /<nav className=\{styles\.breadcrumbs\} aria-label="Breadcrumb">/);
  assert.match(rsvp, /<Link href="\/concerts\/america250\/master-class">Masterclass<\/Link>/);
  assert.match(rsvp, /<span aria-current="page">RSVP<\/span>/);
- assert.match(landing, /master class is free/);
- assert.match(landing, /concert is free and open to the public/);
+ assert.match(landing, /concert is open to the public/);
  assert.match(landing, /Parking is free/);
- assert.match(rsvp, /free master class/);
- assert.match(rsvp, /concert is free and open to the public/);
- assert.match(rsvp, /parking is free/);
+ assert.match(rsvp, /concert is open to the public/);
+ assert.match(rsvp, /mailto:subrass@syr\.edu/);
 });
 
 test("RSVP form requires student, parent, school, grade, instrument, and instructor details", () => {
@@ -303,14 +308,13 @@ test("RSVP form requires student, parent, school, grade, instrument, and instruc
  assert.doesNotMatch(form, />Adult</);
 });
 
-test("RSVP page offers a multi-student music educator registration flow", () => {
+test("educator registration implementation remains available for future events", () => {
  const page = source("app/concerts/america250/master-class/rsvp/page.tsx");
  const options = source("app/master-class/registration-options.tsx");
  const educatorForm = source("app/master-class/educator-registration-form.tsx");
  const route = source("app/api/master-class/register-educator/route.ts");
  const schema = source("database/master-class-registrations.sql");
- assert.match(page, /RegistrationOptions/);
- assert.match(page, /music educators may register multiple high school students/);
+ assert.doesNotMatch(page, /RegistrationOptions/);
  assert.match(options, /Individual registration/);
  assert.match(options, /Music educator registration/);
  assert.match(educatorForm, /Add another student/);
@@ -368,6 +372,7 @@ test("navigation, redirects, and sitemap point to canonical America 250 routes",
  assert.match(config, /source: '\/master-class'[\s\S]*destination: '\/concerts\/america250\/master-class'/);
  assert.match(config, /celebrate-americas-250th-anniversary-concert'[\s\S]*destination: '\/concerts\/america250'/);
  assert.doesNotMatch(sitemap, /"\/concerts\/america250\/master-class\/rsvp"/);
+ assert.match(sitemap, /"\/concerts\/america250\/program"/);
  assert.doesNotMatch(sitemap, /changeFrequency/);
  assert.match(sitemap, /\["", "\/about"/);
  assert.match(sitemap, /normalizeSitemapPath/);
@@ -402,9 +407,33 @@ test("smooth section navigation respects reduced-motion preferences", () => {
  for (const id of ["details", "masterclass", "program", "parking"]) assert.match(pageStyles, new RegExp(`#${id}`));
 });
 
-test("master class callout heading has accessible contrast", () => {
+test("closed-registration callout heading has accessible contrast", () => {
  const landing = source("app/concerts/america250/master-class/page.tsx");
- assert.match(landing, /<Heading level=\{2\} color="white"[^>]*>Reserve Your Place<\/Heading>/);
+ assert.match(landing, /<Heading level=\{2\} color="white"[^>]*>Registration Is Closed<\/Heading>/);
+});
+
+test("public registration pages and APIs are closed", () => {
+ const status = source("lib/master-class-registration-status.ts");
+ const rsvp = source("app/concerts/america250/master-class/rsvp/page.tsx");
+ assert.match(status, /MASTER_CLASS_REGISTRATION_OPEN = false/);
+ assert.match(rsvp, /Online registration for the musician masterclass is now closed/);
+ assert.doesNotMatch(rsvp, /RegistrationOptions/);
+ for (const route of [
+  "app/api/master-class/register/route.ts",
+  "app/api/master-class/register-educator/route.ts",
+  "app/api/master-class/register-community/route.ts",
+ ]) {
+  const contents = source(route);
+  assert.match(contents, /if \(!MASTER_CLASS_REGISTRATION_OPEN\)/);
+  assert.match(contents, /status: 410/);
+ }
+});
+
+test("digital America 250 program is public and linked", () => {
+ const landing = source("app/concerts/america250/page.tsx");
+ const program = source("app/concerts/america250/program/page.tsx");
+ assert.match(landing, /href="\/concerts\/america250\/program">View the digital concert program/);
+ assert.match(program, /robots: \{ index: true, follow: true \}/);
 });
 
 test("health check blocks production vulnerabilities while reporting development advisories", () => {

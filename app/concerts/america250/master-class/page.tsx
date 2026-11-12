@@ -12,10 +12,9 @@ import { ensembleReference } from "../../../../lib/site-identity";
 
 const CANONICAL_URL = "https://subrass.syr.edu/concerts/america250/master-class";
 
-const TITLE = "Free Musician Master Class | America 250";
-const DESCRIPTION = "Free master class for high school, college, and community musicians with the 10th Mountain Division Band, Nov. 13, 2026, 4–5 p.m. EST at Hendricks Chapel. RSVP requested.";
+const TITLE = "Musician Masterclass | America 250";
+const DESCRIPTION = "Musician master class for high school, college, and community musicians with the 10th Mountain Division Band, Nov. 13, 2026, 4–5 p.m. EST at Hendricks Chapel.";
 const SHARE_IMAGE = "/america250/kit/social-media/facebook/america250-fb-1200x630px.jpg";
-const RSVP_URL = `${CANONICAL_URL}/rsvp`;
 
 export const revalidate = 3600;
 
@@ -61,7 +60,6 @@ const eventSchema = {
  performer: { "@type": "MusicGroup", name: "10th Mountain Division Band", url: "https://home.army.mil/drum/units-tenants/10th-mountain-division-band" },
  organizer: ensembleReference,
  isAccessibleForFree: true,
- offers: { "@type": "Offer", url: RSVP_URL, price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const breadcrumbSchema = {
@@ -94,7 +92,7 @@ export default function America250MasterClassPage() {
       <p className={styles.eyebrow}>Free master class for high school, college, and community musicians</p>
       <Heading level={1} marginTop="0" marginBottom="3">Explore a Life in Music</Heading>
       <p className={styles.lede}>Meet members of the 10th Mountain Division Band and discover how preparation, performance, education, and service can shape a professional life in music.</p>
-      <Link className={styles.button} href="/concerts/america250/master-class/rsvp">RSVP for the master class</Link>
+      <Link className={styles.button} href="/concerts/america250">View the event schedule</Link>
      </header>
 
 
@@ -123,15 +121,15 @@ export default function America250MasterClassPage() {
      <section className={styles.rsvpCallout}>
       <div>
        <p className={styles.eyebrow}>High school, college, and community musicians are welcome</p>
-       <Heading level={2} color="white" marginTop="0" marginBottom="2">Reserve Your Place</Heading>
-       <p>The master class is free, but advance RSVP is requested. Students and parents may register one high school student, music educators may register multiple high school students at once, and college and community musicians age 18 and older may register themselves. The evening America 250 concert is free and open to the public; no concert registration is required. Parking is free.</p>
+       <Heading level={2} color="white" marginTop="0" marginBottom="2">Registration Is Closed</Heading>
+       <p>Online registration is now closed. Registered participants should arrive around 3:45 p.m. Family and friends are welcome to observe the masterclass, and the evening America 250 concert is open to the public. Parking is free.</p>
       </div>
-      <Link className={styles.button} href="/concerts/america250/master-class/rsvp">Choose a registration option</Link>
+      <a className={styles.button} href="mailto:subrass@syr.edu">Questions about participating?</a>
      </section>
      <EventTools title="America 250: Explore a Life in Music — Musician Master Class"
       start={eventSchema.startDate} end={eventSchema.endDate}
       location="Hendricks Chapel, 121 Crouse Drive, Syracuse, NY 13244" url={CANONICAL_URL}
-      admission="Free for high school, college, and community musicians. Advance RSVP requested." rsvpUrl={RSVP_URL}
+      admission="Registration is closed. Family and friends may attend as audience members."
       parkingText="Free public parking is available at Irving Garage."
       parkingUrl="https://www.google.com/maps/dir/?api=1&destination=Irving+Garage+Syracuse+NY" />
     </main>

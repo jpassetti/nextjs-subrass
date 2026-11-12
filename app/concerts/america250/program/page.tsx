@@ -12,7 +12,7 @@ export const metadata: Metadata = {
  title: "America 250 Concert Program",
  description: "Explore the full program for the America 250 concert featuring the Syracuse University Brass Ensemble and 10th Mountain Division Band at Hendricks Chapel.",
  alternates: { canonical: CANONICAL_URL },
- robots: { index: false, follow: false },
+ robots: { index: true, follow: true },
  openGraph: {
   type: "website",
   url: CANONICAL_URL,

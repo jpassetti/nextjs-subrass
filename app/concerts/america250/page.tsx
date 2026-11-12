@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faCircleInfo, faGraduationCap, faHouse, faLandmark } from "@fortawesome/free-solid-svg-icons";
 
 import EventTools from "../../../components/event-tools";
+import America250DayLabel from "../../../components/america250-day-label";
 import Layout from "../../../components/layout";
 import Section from "../../../components/section";
 import { getConcertBySlug } from "../../../lib/api";
@@ -153,30 +154,42 @@ export default async function America250Page() {
        />
       </div>
       <div className={styles.heroContent}>
-       <p className={styles.eyebrow}>Friday, Nov. 13, 2026 · Hendricks Chapel</p>
+       <p className={styles.eyebrow}><America250DayLabel /> · Friday, Nov. 13, 2026 · Hendricks Chapel</p>
        <h1 className={styles.title}>A Celebration of Service, Education, and Musical Excellence</h1>
        <p className={styles.lede}>Featuring the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
-       <p className={styles.heroMeta}>Free musician masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Free concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Open to the public.</p>
+       <p className={styles.heroMeta}>Musician masterclass <span className={styles.noWrap}>4–5 p.m.</span><br />Concert <span className={styles.noWrap}>6:30–8 p.m.</span><br />Free parking and admission.</p>
        <div className={styles.heroActions}>
-        <a className={styles.button} href="#masterclass">Musician masterclass</a>
-        <a className={styles.button} href="#program">Concert information</a>
+        <Link className={styles.button} href="/concerts/america250/parking">Plan your arrival</Link>
+        <a className={`${styles.button} ${styles.buttonSecondary}`} href="#details">View the schedule</a>
        </div>
       </div>
      </div>
 
      <nav className={styles.quickNav} aria-label="On this page">
-      <a href="#details">Concert details</a>
-      <a href="#masterclass">Musician masterclass</a>
+      <a href="#details">Event schedule</a>
+      <a href="#parking">Parking and arrival</a>
+      <a href="#masterclass">Masterclass information</a>
       <a href="#program">Concert program</a>
-      <a href="#parking">Parking and access</a>
-     <Link href="/concerts/america250/promotions">Promotions</Link>
+      <Link href="/concerts/america250/promotions">Share the event</Link>
      </nav>
+
+     <section className={styles.tomorrowGuide} aria-labelledby="tomorrow-heading">
+      <div>
+       <p className={styles.sectionLabel}><America250DayLabel /> at Hendricks Chapel</p>
+       <h2 id="tomorrow-heading">Know before you go</h2>
+       <p>Give yourself plenty of time to drive, park in Irving Garage, cross the pedestrian bridge, and walk to Hendricks Chapel. Masterclass participants should arrive around <strong>3:45 p.m.</strong> Concert guests are encouraged to be seated by <strong>6:20 p.m.</strong></p>
+      </div>
+      <div className={styles.tomorrowActions}>
+       <Link className={styles.button} href="/concerts/america250/parking">Parking and walking directions</Link>
+       <a className={styles.textLink} href="https://www.google.com/maps/search/?api=1&amp;query=Irving+Garage%2C+Stadium+Place%2C+Syracuse%2C+NY+13210" target="_blank" rel="noopener noreferrer">Open Irving Garage in maps <span aria-hidden="true">&rarr;</span></a>
+      </div>
+     </section>
 
 
      <div className={styles.detailsGrid} id="details">
       <div className={styles.detailCard}><h2>Date</h2><p>Friday, Nov. 13, 2026</p></div>
-      <div className={styles.detailCard}><h2>Musician masterclass</h2><p>4–5 p.m.<br />Free</p></div>
-      <div className={styles.detailCard}><h2>Concert</h2><p>6:30–8 p.m.<br />Free and open to the public</p></div>
+      <div className={styles.detailCard}><h2>Musician masterclass</h2><p>Arrive by 3:45 p.m.<br />Begins at 4 p.m.</p></div>
+      <div className={styles.detailCard}><h2>Concert</h2><p>Seating by 6:20 p.m.<br />Begins at 6:30 p.m.</p></div>
       <div className={styles.detailCard}>
        <h2>Location</h2>
        <p><Link href={venuePath}>{venue.title}</Link><br />{venueInformation.street}<br />{venueInformation.city}, {venueInformation.state.toUpperCase()} {venueInformation.zipCode}</p>
@@ -212,16 +225,19 @@ export default async function America250Page() {
      </div>
 
      <section className={`${styles.section} ${styles.masterclass}`} id="masterclass">
-      <p className={styles.sectionLabel}>Free musician masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
-      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faGraduationCap} aria-hidden="true" />Explore a life in music</h2>
-      <p>High school students, college musicians, and adult musicians from community ensembles and across the region are invited to join members of the 10th Mountain Division Band for a conversation about music careers, audition preparation, performance confidence, effective practice methods, and life as a professional military musician.</p>
-      <p>Band members will share their musical journeys, offer practical guidance, demonstrate techniques, and answer questions about performance, education, military service, and other music-related career opportunities.</p>
-      <Link className={styles.button} href="/concerts/america250/master-class">Learn more and RSVP</Link>
+      <p className={styles.sectionLabel}>Musician masterclass · <span className={styles.noWrap}>4–5 p.m.</span></p>
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faGraduationCap} aria-hidden="true" />Information for masterclass participants</h2>
+      <p>Registered participants should arrive around <strong>3:45 p.m.</strong> Please bring your instrument and any necessary accessories. Sheet music and music stands will be provided, along with a secure area for instrument cases.</p>
+      <p>Family and friends are welcome to attend the masterclass and sit in the general audience area. After the masterclass, participants will rehearse the two joint finale selections with the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
+      <p>A dinner break will follow the rehearsal. Participants may bring food or join an escorted group walking to the Schine Student Center food court. Those purchasing dinner should plan to bring approximately $15–$30.</p>
+      <Link className={styles.textLink} href="/concerts/america250/master-class">View complete masterclass information <span aria-hidden="true">&rarr;</span></Link>
      </section>
 
      <section className={styles.programSection} id="program">
       <p className={styles.sectionLabel}>Concert · 6:30 p.m.</p>
       <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faBookOpen} aria-hidden="true" />Concert program</h2>
+      <p className={styles.programIntro}>Explore the complete digital program, including repertoire, leadership, musicians, event acknowledgments, and the joint finale.</p>
+      <Link className={styles.button} href="/concerts/america250/program">View the digital concert program</Link>
       <div className={styles.programGrid}>
        <article>
         <Image className={styles.programImage} src="/syracuse-university-brass-ensemble-2025.webp" alt="Members of the Syracuse University Brass Ensemble" width={2400} height={1567} sizes="(min-width: 700px) 36vw, 100vw" />
@@ -259,11 +275,11 @@ export default async function America250Page() {
      </section>
 
      <section className={`${styles.section} ${styles.accessSection}`} id="parking">
-      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faCircleInfo} aria-hidden="true" />Admission, parking, and accommodations</h2>
+      <h2 className={styles.sectionHeading}><FontAwesomeIcon className={styles.sectionHeadingIcon} icon={faCircleInfo} aria-hidden="true" />Parking, arrival, and accommodations</h2>
       <div className={styles.accessGrid}>
        <article className={styles.accessCard}>
-        <h3>Admission</h3>
-        <p><strong>The concert is free and open to the public.</strong> The musician masterclass is also free, but advance registration is requested for participating high school, college, and community musicians.</p>
+        <h3>Concert arrival</h3>
+        <p><strong>The concert is free and open to the public.</strong> Doors will be open before the 6:30 p.m. performance. Please plan to be seated by approximately 6:20 p.m.</p>
        </article>
        <article className={styles.accessCard}>
         <h3>Parking</h3>

@@ -7,12 +7,11 @@ import Heading from "../../../../../components/heading";
 import Layout from "../../../../../components/layout";
 import Paragraph from "../../../../../components/paragraph";
 import Section from "../../../../../components/section";
-import RegistrationOptions from "../../../../master-class/registration-options";
 import styles from "../../../../master-class/master-class.module.scss";
 
 export const metadata: Metadata = {
- title: "RSVP | America 250 Musician Master Class",
- description: "High school, college, and community musicians can RSVP for the free America 250 master class with members of the 10th Mountain Division Band.",
+ title: "Registration Closed | America 250 Musician Master Class",
+ description: "Online registration is closed for the America 250 musician master class with members of the 10th Mountain Division Band.",
  alternates: { canonical: "https://subrass.syr.edu/concerts/america250/master-class/rsvp" },
  robots: { index: false, follow: true },
 };
@@ -31,12 +30,12 @@ export default function MasterClassRsvpPage() {
        <li><span aria-current="page">RSVP</span></li>
       </ol>
      </nav>
-     <Heading level={1} marginTop="4" marginBottom="4">Musician Master Class RSVP</Heading>
+     <Heading level={1} marginTop="4" marginBottom="4">Masterclass Registration Is Closed</Heading>
      <Paragraph type="intro" marginBottom="4">
-      This free master class welcomes high school students, college musicians, and adult musicians from community ensembles and across the region. Students and parents may register one high school student, music educators may register multiple high school students, and college and community musicians age 18 and older may register themselves. The evening concert is free and open to the public, and parking is free.
+      Thank you for your interest. Online registration for the musician masterclass is now closed.
      </Paragraph>
-     <p className={styles.small}>Fields marked with an asterisk (*) are required.</p>
-     <RegistrationOptions />
+     <Paragraph marginBottom="3">If you have a question about participating, please email <a href="mailto:subrass@syr.edu">subrass@syr.edu</a>. Family and friends are welcome to attend the masterclass as audience members, and the 6:30 p.m. concert is open to the public.</Paragraph>
+     <Paragraph><Link href="/concerts/america250">View the event schedule and arrival information</Link></Paragraph>
     </div>
    </Section>
   </Layout>
