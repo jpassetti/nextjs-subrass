@@ -161,6 +161,7 @@ export default async function America250Page() {
        <div className={styles.heroActions}>
         <Link className={styles.button} href="/concerts/america250/parking">Plan your arrival</Link>
         <a className={`${styles.button} ${styles.buttonSecondary}`} href="#details">View the schedule</a>
+        <Link className={`${styles.button} ${styles.buttonSecondary}`} href="/concerts/america250/program">View digital program</Link>
        </div>
       </div>
      </div>
@@ -178,6 +179,10 @@ export default async function America250Page() {
        <p className={styles.sectionLabel}><America250DayLabel /> at Hendricks Chapel</p>
        <h2 id="tomorrow-heading">Know before you go</h2>
        <p>Give yourself plenty of time to drive, park in Irving Garage, cross the pedestrian bridge, and walk to Hendricks Chapel. Masterclass participants should arrive around <strong>3:45 p.m.</strong> Concert guests are encouraged to be seated by <strong>6:20 p.m.</strong></p>
+       <div className={styles.ensembleNotice}>
+        <h3>Syracuse University Brass Ensemble members</h3>
+        <p>Ensemble members who are not participating in the masterclass should arrive around <strong>4:50 p.m.</strong> The masterclass will still be in session, so please enter Hendricks Chapel quietly and sit in the general audience area. The joint rehearsal with the 10th Mountain Division Band and masterclass participants is scheduled for <strong>5–5:15 p.m.</strong></p>
+       </div>
       </div>
       <div className={styles.tomorrowActions}>
        <Link className={styles.button} href="/concerts/america250/parking">Parking and walking directions</Link>
@@ -186,15 +191,41 @@ export default async function America250Page() {
      </section>
 
 
-     <div className={styles.detailsGrid} id="details">
-      <div className={styles.detailCard}><h2>Date</h2><p>Friday, Nov. 13, 2026</p></div>
-      <div className={styles.detailCard}><h2>Musician masterclass</h2><p>Arrive by 3:45 p.m.<br />Begins at 4 p.m.</p></div>
-      <div className={styles.detailCard}><h2>Concert</h2><p>Seating by 6:20 p.m.<br />Begins at 6:30 p.m.</p></div>
-      <div className={styles.detailCard}>
-       <h2>Location</h2>
-       <p><Link href={venuePath}>{venue.title}</Link><br />{venueInformation.street}<br />{venueInformation.city}, {venueInformation.state.toUpperCase()} {venueInformation.zipCode}</p>
+     <section className={styles.scheduleSection} id="details" aria-labelledby="schedule-heading">
+      <div className={styles.scheduleHeader}>
+       <div>
+        <p className={styles.sectionLabel}>Friday, Nov. 13, 2026</p>
+        <h2 id="schedule-heading">Event-day schedule</h2>
+       </div>
+       <p><strong><Link href={venuePath}>{venue.title}</Link></strong><br />{venueInformation.street}<br />{venueInformation.city}, {venueInformation.state.toUpperCase()} {venueInformation.zipCode}</p>
       </div>
-     </div>
+      <div className={styles.primarySchedule} aria-label="Main events">
+       <article className={styles.primaryEvent}>
+        <p className={styles.primaryEventLabel}>Main event</p>
+        <h3>Musician Masterclass</h3>
+        <p className={styles.primaryEventTime}>4–5 p.m.</p>
+        <p>Registered participants should arrive around <strong>3:45 p.m.</strong> Family and friends are welcome to observe from the general audience area.</p>
+       </article>
+       <article className={styles.primaryEvent}>
+        <p className={styles.primaryEventLabel}>Main event</p>
+        <h3>America 250 Concert</h3>
+        <p className={styles.primaryEventTime}>6:30–8 p.m.</p>
+        <p>Concert guests are encouraged to be seated by <strong>6:20 p.m.</strong> The concert is free and open to the public.</p>
+       </article>
+      </div>
+      <div className={styles.secondaryScheduleHeader}>
+       <p className={styles.sectionLabel}>For participants and ensemble members</p>
+       <h3>Arrival, rehearsal, and preparation</h3>
+      </div>
+      <div className={styles.scheduleTimeline}>
+       <article><time dateTime="2026-11-13T16:50:00-05:00">4:50 p.m.</time><div><h3>Syracuse University Brass Ensemble arrival</h3><p>Members not participating in the masterclass should enter quietly and sit in the general audience area while the session concludes.</p></div></article>
+       <article><time dateTime="2026-11-13T17:00:00-05:00">5 p.m.</time><div><h3>Transition and concert setup</h3><p>After the masterclass, ensemble members will arrange the chairs into concert formation on the main stage and floor stage.</p></div></article>
+       <article><time dateTime="2026-11-13T17:00:00-05:00">5–5:15 p.m.</time><div><h3>Joint rehearsal</h3><p>The Syracuse University Brass Ensemble, 10th Mountain Division Band, and masterclass participants will rehearse the two joint finale selections.</p></div></article>
+       <article><time dateTime="2026-11-13T17:15:00-05:00">5:15 p.m.</time><div><h3>Dinner break</h3><p>Participants may bring food or join an escorted group walking to the Schine Student Center food court. Those purchasing dinner should plan to bring approximately $15–$30.</p></div></article>
+       <article><time dateTime="2026-11-13T18:15:00-05:00">6:15 p.m.</time><div><h3>Return and final concert preparation</h3><p>Musicians should be back in Hendricks Chapel and ready to take their places.</p></div></article>
+       <article><time dateTime="2026-11-13T18:20:00-05:00">6:20 p.m.</time><div><h3>Everyone seated and ready</h3><p>Concert guests are encouraged to be seated. Masterclass participants may sit with family and friends until they are called forward for the joint finale.</p></div></article>
+      </div>
+     </section>
 
      <div className={styles.introGrid}>
       <section className={styles.section}>

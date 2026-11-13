@@ -117,6 +117,14 @@ test("concert landing page prioritizes imminent event facts and navigation targe
  assert.match(page, /Concert <span className=\{styles\.noWrap\}>6:30–8 p\.m\.<\/span>/);
  assert.match(page, /Masterclass participants should arrive around <strong>3:45 p\.m\.<\/strong>/);
  assert.match(page, /Concert guests are encouraged to be seated by <strong>6:20 p\.m\.<\/strong>/);
+ assert.match(page, /href="\/concerts\/america250\/program">View digital program<\/Link>/);
+ for (const scheduleItem of ["Musician Masterclass", "America 250 Concert", "Syracuse University Brass Ensemble arrival", "Transition and concert setup", "Joint rehearsal", "Dinner break", "Return and final concert preparation", "Everyone seated and ready"]) {
+  assert.match(page, new RegExp(scheduleItem));
+ }
+ assert.match(page, /className=\{styles\.primarySchedule\} aria-label="Main events"/);
+ assert.match(page, /For participants and ensemble members/);
+ assert.match(page, /Ensemble members who are not participating in the masterclass should arrive around <strong>4:50 p\.m\.<\/strong>/);
+ assert.match(page, /joint rehearsal with the 10th Mountain Division Band and masterclass participants is scheduled for <strong>5–5:15 p\.m\.<\/strong>/);
  assert.match(page, /The concert is free and open to the public/);
  assert.match(page, /Parking is free/);
 });
