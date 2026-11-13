@@ -124,6 +124,7 @@ test("concert landing page prioritizes imminent event facts and navigation targe
  assert.match(page, /className=\{styles\.primarySchedule\} aria-label="Main events"/);
  assert.match(page, /For participants and ensemble members/);
  assert.match(page, /Ensemble members who are not participating in the masterclass should arrive around <strong>4:50 p\.m\.<\/strong>/);
+ assert.match(page, /Please bring your instrument, music, and your own music stand/);
  assert.match(page, /joint rehearsal with the 10th Mountain Division Band and masterclass participants is scheduled for <strong>5–5:15 p\.m\.<\/strong>/);
  assert.match(page, /The concert is free and open to the public/);
  assert.match(page, /Parking is free/);

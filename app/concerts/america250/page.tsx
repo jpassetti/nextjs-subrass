@@ -181,7 +181,7 @@ export default async function America250Page() {
        <p>Give yourself plenty of time to drive, park in Irving Garage, cross the pedestrian bridge, and walk to Hendricks Chapel. Masterclass participants should arrive around <strong>3:45 p.m.</strong> Concert guests are encouraged to be seated by <strong>6:20 p.m.</strong></p>
        <div className={styles.ensembleNotice}>
         <h3>Syracuse University Brass Ensemble members</h3>
-        <p>Ensemble members who are not participating in the masterclass should arrive around <strong>4:50 p.m.</strong> The masterclass will still be in session, so please enter Hendricks Chapel quietly and sit in the general audience area. The joint rehearsal with the 10th Mountain Division Band and masterclass participants is scheduled for <strong>5–5:15 p.m.</strong></p>
+        <p>Ensemble members who are not participating in the masterclass should arrive around <strong>4:50 p.m.</strong> Please bring your instrument, music, and your own music stand. The masterclass will still be in session, so enter Hendricks Chapel quietly and sit in the general audience area. The joint rehearsal with the 10th Mountain Division Band and masterclass participants is scheduled for <strong>5–5:15 p.m.</strong></p>
        </div>
       </div>
       <div className={styles.tomorrowActions}>
@@ -218,7 +218,7 @@ export default async function America250Page() {
        <h3>Arrival, rehearsal, and preparation</h3>
       </div>
       <div className={styles.scheduleTimeline}>
-       <article><time dateTime="2026-11-13T16:50:00-05:00">4:50 p.m.</time><div><h3>Syracuse University Brass Ensemble arrival</h3><p>Members not participating in the masterclass should enter quietly and sit in the general audience area while the session concludes.</p></div></article>
+       <article><time dateTime="2026-11-13T16:50:00-05:00">4:50 p.m.</time><div><h3>Syracuse University Brass Ensemble arrival</h3><p>Members should bring their instruments, music, and their own music stands. Those not participating in the masterclass should enter quietly and sit in the general audience area while the session concludes.</p></div></article>
        <article><time dateTime="2026-11-13T17:00:00-05:00">5 p.m.</time><div><h3>Transition and concert setup</h3><p>After the masterclass, ensemble members will arrange the chairs into concert formation on the main stage and floor stage.</p></div></article>
        <article><time dateTime="2026-11-13T17:00:00-05:00">5–5:15 p.m.</time><div><h3>Joint rehearsal</h3><p>The Syracuse University Brass Ensemble, 10th Mountain Division Band, and masterclass participants will rehearse the two joint finale selections.</p></div></article>
        <article><time dateTime="2026-11-13T17:15:00-05:00">5:15 p.m.</time><div><h3>Dinner break</h3><p>Participants may bring food or join an escorted group walking to the Schine Student Center food court. Those purchasing dinner should plan to bring approximately $15–$30.</p></div></article>
