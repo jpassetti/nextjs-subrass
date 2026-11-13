@@ -118,7 +118,7 @@ test("concert landing page prioritizes imminent event facts and navigation targe
  assert.match(page, /Masterclass participants should arrive around <strong>3:45 p\.m\.<\/strong>/);
  assert.match(page, /Concert guests are encouraged to be seated by <strong>6:20 p\.m\.<\/strong>/);
  assert.match(page, /href="\/concerts\/america250\/program">View digital program<\/Link>/);
- for (const scheduleItem of ["Musician Masterclass", "America 250 Concert", "Syracuse University Brass Ensemble arrival", "Transition and concert setup", "Joint rehearsal", "Dinner break", "Return and final concert preparation", "Everyone seated and ready"]) {
+ for (const scheduleItem of ["Musician Masterclass", "America 250 Concert", "Masterclass participant arrival", "Syracuse University Brass Ensemble arrival", "Transition and concert setup", "Joint rehearsal", "Dinner break", "Return and final concert preparation", "Everyone seated and ready"]) {
   assert.match(page, new RegExp(scheduleItem));
  }
  assert.match(page, /className=\{styles\.primarySchedule\} aria-label="Main events"/);

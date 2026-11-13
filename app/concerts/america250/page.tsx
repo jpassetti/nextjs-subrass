@@ -218,6 +218,7 @@ export default async function America250Page() {
        <h3>Arrival, rehearsal, and preparation</h3>
       </div>
       <div className={styles.scheduleTimeline}>
+       <article><time dateTime="2026-11-13T15:45:00-05:00">3:45 p.m.</time><div><h3>Masterclass participant arrival</h3><p>Allow plenty of time to drive, park in Irving Garage, and walk to Hendricks Chapel. Participants should bring their instruments and any necessary accessories; sheet music and music stands will be provided.</p></div></article>
        <article><time dateTime="2026-11-13T16:50:00-05:00">4:50 p.m.</time><div><h3>Syracuse University Brass Ensemble arrival</h3><p>Members should bring their instruments, music, and their own music stands. Those not participating in the masterclass should enter quietly and sit in the general audience area while the session concludes.</p></div></article>
        <article><time dateTime="2026-11-13T17:00:00-05:00">5 p.m.</time><div><h3>Transition and concert setup</h3><p>After the masterclass, ensemble members will arrange the chairs into concert formation on the main stage and floor stage.</p></div></article>
        <article><time dateTime="2026-11-13T17:00:00-05:00">5–5:15 p.m.</time><div><h3>Joint rehearsal</h3><p>The Syracuse University Brass Ensemble, 10th Mountain Division Band, and masterclass participants will rehearse the two joint finale selections.</p></div></article>
