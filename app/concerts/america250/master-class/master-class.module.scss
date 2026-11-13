@@ -85,6 +85,14 @@
  text-decoration: none;
 }
 
+.heroActions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+
+ .button + .button { background: transparent; border: 2px solid variables.$color__orange; color: variables.$color__blue; }
+}
+
 .detailsGrid {
  display: grid;
  gap: 1rem;

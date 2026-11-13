@@ -20,6 +20,7 @@ test("America 250 public routes and artwork exist", () => {
   "app/concerts/america250/promotions/page.tsx",
   "app/concerts/america250/master-class/page.tsx",
   "app/concerts/america250/master-class/rsvp/page.tsx",
+  "app/concerts/america250/master-class/resources/page.tsx",
   "public/america250/america250--left.jpg",
   "public/america250/america250--featured-image.jpg",
  ]) assert.equal(existsSync(path.join(root, file)), true, `${file} should exist`);
@@ -443,6 +444,20 @@ test("digital America 250 program is public and linked", () => {
  const program = source("app/concerts/america250/program/page.tsx");
  assert.match(landing, /href="\/concerts\/america250\/program">View the digital concert program/);
  assert.match(program, /robots: \{ index: true, follow: true \}/);
+});
+
+test("masterclass resource page supports continued practice and reflection", () => {
+ const page = source("app/concerts/america250/master-class/resources/page.tsx");
+ const notes = source("app/concerts/america250/master-class/resources/reflection-notes.tsx");
+ const sitemap = source("app/sitemap.ts");
+ assert.match(page, /Keep the Music Going/);
+ assert.match(page, /Your Masterclass Resource Collection/);
+ assert.match(page, /Bring One Idea Into Your Next Practice Session/);
+ assert.match(page, /Listen With Curiosity/);
+ assert.match(page, /Notes to Take Home/);
+ assert.match(notes, /window\.localStorage/);
+ assert.match(notes, /window\.print\(\)/);
+ assert.match(sitemap, /"\/concerts\/america250\/master-class\/resources"/);
 });
 
 test("health check blocks production vulnerabilities while reporting development advisories", () => {

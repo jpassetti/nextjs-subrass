@@ -92,7 +92,10 @@ export default function America250MasterClassPage() {
       <p className={styles.eyebrow}>Free master class for high school, college, and community musicians</p>
       <Heading level={1} marginTop="0" marginBottom="3">Explore a Life in Music</Heading>
       <p className={styles.lede}>Meet members of the 10th Mountain Division Band and discover how preparation, performance, education, and service can shape a professional life in music.</p>
-      <Link className={styles.button} href="/concerts/america250">View the event schedule</Link>
+      <div className={styles.heroActions}>
+       <Link className={styles.button} href="/concerts/america250">View the event schedule</Link>
+       <Link className={styles.button} href="/concerts/america250/master-class/resources">Masterclass resources</Link>
+      </div>
      </header>
 
 

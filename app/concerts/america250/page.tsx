@@ -262,7 +262,10 @@ export default async function America250Page() {
       <p>Registered participants should arrive around <strong>3:45 p.m.</strong> Please bring your instrument and any necessary accessories. Sheet music and music stands will be provided, along with a secure area for instrument cases.</p>
       <p>Family and friends are welcome to attend the masterclass and sit in the general audience area. After the masterclass, participants will rehearse the two joint finale selections with the Syracuse University Brass Ensemble and the 10th Mountain Division Band.</p>
       <p>A dinner break will follow the rehearsal. Participants may bring food or join an escorted group walking to the Schine Student Center food court. Those purchasing dinner should plan to bring approximately $15–$30.</p>
-      <Link className={styles.textLink} href="/concerts/america250/master-class">View complete masterclass information <span aria-hidden="true">&rarr;</span></Link>
+      <div className={styles.masterclassLinks}>
+       <Link className={styles.textLink} href="/concerts/america250/master-class">View complete masterclass information <span aria-hidden="true">&rarr;</span></Link>
+       <Link className={styles.textLink} href="/concerts/america250/master-class/resources">Masterclass resources <span aria-hidden="true">&rarr;</span></Link>
+      </div>
      </section>
 
      <section className={styles.programSection} id="program">

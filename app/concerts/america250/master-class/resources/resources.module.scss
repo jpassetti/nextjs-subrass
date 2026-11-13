@@ -1,0 +1,282 @@
+@use '../../../../../styles/mixins';
+@use '../../../../../styles/variables';
+
+.page {
+ color: variables.$color__blue;
+ font-family: variables.$font__sherman_sans;
+ max-width: 72rem;
+
+ :global(#resources),
+ :global(#practice),
+ :global(#listening),
+ :global(#reflection) { scroll-margin-top: 2rem; }
+}
+
+.hero {
+ background: variables.$color__blue;
+ color: white;
+ margin: 1rem 0 0;
+ overflow: hidden;
+ padding: clamp(2rem, 7vw, 5rem);
+ position: relative;
+
+ &::after {
+  background: variables.$color__orange;
+  bottom: 0;
+  content: '';
+  height: .45rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+ }
+
+ h1 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2.8rem, 7vw, 5.75rem);
+  font-weight: 400;
+  line-height: .98;
+  max-width: 48rem;
+  text-wrap: balance;
+ }
+}
+
+.eyebrow,
+.sectionLabel,
+.resourceStatus {
+ color: variables.$color__orange;
+ font-size: .78rem;
+ font-weight: 700;
+ letter-spacing: .08em;
+ margin-bottom: .8rem;
+ text-transform: uppercase;
+}
+
+.ensembles {
+ color: variables.$color__orange;
+ font-family: variables.$font__sherman_serif;
+ font-size: clamp(1.15rem, 2vw, 1.45rem);
+ margin-top: 1.25rem;
+}
+
+.lede {
+ font-size: clamp(1.05rem, 2vw, 1.25rem);
+ line-height: 1.6;
+ margin-top: 1.5rem;
+ max-width: 48rem;
+ text-wrap: pretty;
+}
+
+.heroActions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem;
+ margin-top: 2rem;
+
+ a {
+  border: 2px solid variables.$color__orange;
+  color: white;
+  font-weight: 700;
+  padding: .8rem 1rem;
+  text-decoration: none;
+
+  &:first-child { background: variables.$color__orange; color: variables.$color__blue; }
+  &:hover, &:focus-visible { background: white; border-color: white; color: variables.$color__blue; }
+ }
+}
+
+.pageNav {
+ border-bottom: 1px solid variables.$color__gray__light;
+ display: flex;
+ flex-wrap: wrap;
+ gap: .75rem 1.5rem;
+ padding: 1rem 0;
+
+ a { color: variables.$color__blue; font-size: .9rem; font-weight: 700; }
+}
+
+.resourcesSection,
+.practiceSection,
+.reflectionSection {
+ padding: clamp(3rem, 7vw, 5.5rem) 0;
+}
+
+.resourcesSection,
+.reflectionSection {
+ > h2,
+ .sectionHeadingGroup h2 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+ }
+}
+
+.sectionIntro,
+.sectionHeadingGroup > p:last-child {
+ font-size: 1.1rem;
+ line-height: 1.6;
+ margin-top: 1rem;
+ max-width: 48rem;
+}
+
+.resourceGrid {
+ display: grid;
+ gap: 1rem;
+ margin-top: 2rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+ article {
+  border: 1px solid variables.$color__gray__light;
+  border-top: .3rem solid variables.$color__orange;
+  padding: 1.5rem;
+ }
+
+ h3 {
+  font-family: variables.$font__sherman_serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: .75rem;
+ }
+
+ article > p:last-child { line-height: 1.55; }
+ .resourceStatus { color: variables.$color__orange__medium; font-size: .68rem; }
+}
+
+.practiceSection {
+ background: white;
+ border-bottom: 1px solid variables.$color__gray__light;
+ border-top: 1px solid variables.$color__gray__light;
+
+ .sectionHeadingGroup h2 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  max-width: 48rem;
+ }
+}
+
+.practiceGrid {
+ display: grid;
+ gap: .75rem;
+ margin-top: 2rem;
+
+ @include mixins.breakpoint(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+ li {
+  align-items: start;
+  background: white;
+  border: 1px solid variables.$color__gray__light;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  padding: 1.25rem;
+
+  > span {
+   align-items: center;
+   background: variables.$color__blue;
+   border-radius: 50%;
+   color: white;
+   display: flex;
+   font-weight: 700;
+   height: 2.5rem;
+   justify-content: center;
+   width: 2.5rem;
+  }
+ }
+
+ h3 { font-size: 1rem; font-weight: 700; margin-bottom: .25rem; }
+ p { line-height: 1.5; }
+}
+
+.listeningSection {
+ background: variables.$color__blue;
+ color: white;
+ margin: 0 -2rem;
+ padding: clamp(3rem, 7vw, 5rem) 2rem;
+
+ @include mixins.breakpoint(md) { margin-left: -4rem; margin-right: -4rem; padding-left: 4rem; padding-right: 4rem; }
+
+ h2 {
+  font-family: variables.$font__sherman_serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+ }
+
+ p { font-size: 1.1rem; line-height: 1.65; max-width: 52rem; }
+ p + p { margin-top: 1rem; }
+ a { color: variables.$color__orange; font-weight: 700; }
+}
+
+.reflectionForm {
+ display: grid;
+ gap: 1rem;
+ margin-top: 2rem;
+
+ label {
+  display: grid;
+  gap: .6rem;
+
+  > span { font-family: variables.$font__sherman_serif; font-size: 1.25rem; }
+ }
+
+ textarea {
+  background: variables.$color__blue_05;
+  border: 1px solid variables.$color__gray__light;
+  border-radius: 0;
+  color: variables.$color__blue;
+  font: inherit;
+  line-height: 1.5;
+  padding: 1rem;
+  resize: vertical;
+  width: 100%;
+
+  &:focus { border-color: variables.$color__orange; outline: .15rem solid variables.$color__orange_10; }
+ }
+}
+
+.notesActions {
+ align-items: center;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1rem;
+ margin-top: .5rem;
+
+ button {
+  background: variables.$color__blue;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: .85rem 1.1rem;
+ }
+
+ p { color: variables.$color__blue; font-size: .85rem; opacity: .72; }
+}
+
+.pageFooter {
+ border-top: 1px solid variables.$color__gray__light;
+ display: grid;
+ gap: 1rem;
+ margin-bottom: 2rem;
+ padding: 2rem 0;
+
+ @include mixins.breakpoint(sm) { align-items: center; grid-template-columns: minmax(0, 1fr) auto; }
+
+ > p { font-family: variables.$font__sherman_serif; font-size: 1.2rem; line-height: 1.4; }
+ > div { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; }
+ a { color: variables.$color__blue; font-weight: 700; text-decoration-color: variables.$color__orange; }
+}
+
+@media print {
+ .hero { color: variables.$color__blue; background: white; border-bottom: .25rem solid variables.$color__orange; padding: 1rem 0 2rem; }
+ .heroActions, .pageNav, .notesActions button, .pageFooter { display: none; }
+ .practiceSection, .listeningSection { background: white; color: variables.$color__blue; margin: 0; padding-left: 0; padding-right: 0; }
+ .practiceGrid li { border: 1px solid variables.$color__gray__light; }
+ .listeningSection a { color: variables.$color__blue; }
+ .reflectionForm textarea { background: white; min-height: 6rem; }
+}
